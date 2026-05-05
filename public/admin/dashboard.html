@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACOPA Admin – Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-page">
+
+<!-- Header -->
+<header class="admin-header">
+  <div class="admin-header-brand">
+    <img src="/assets/AcopaLogo.png" alt="ACOPA" class="admin-logo">
+    <div class="admin-header-sep"></div>
+    <span class="admin-header-title">Content Management</span>
+  </div>
+  <div class="admin-header-actions">
+    <span class="admin-user-badge">Administrator</span>
+    <a href="/admin/logout" class="logout-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+      </svg>
+      Abmelden
+    </a>
+  </div>
+</header>
+
+<main class="admin-main">
+
+  <!-- Stats -->
+  <div class="admin-stats" id="adminStats">
+    <div class="admin-stat-card">
+      <span class="admin-stat-val" id="statTotal">–</span>
+      <span class="admin-stat-label">Gesamt</span>
+    </div>
+    <div class="admin-stat-card">
+      <span class="admin-stat-val green" id="statPublished">–</span>
+      <span class="admin-stat-label">Veröffentlicht</span>
+    </div>
+    <div class="admin-stat-card">
+      <span class="admin-stat-val" id="statDraft">–</span>
+      <span class="admin-stat-label">Entwürfe</span>
+    </div>
+  </div>
+
+  <!-- Panels -->
+  <div class="admin-panels">
+
+    <!-- Left: Posts Table -->
+    <div class="admin-panel">
+      <div class="panel-header">
+        <span class="panel-title">Alle Beiträge</span>
+        <span class="panel-badge" id="postsCount">0</span>
+      </div>
+      <div class="posts-table-wrap">
+        <table class="posts-table">
+          <thead>
+            <tr>
+              <th>Titel</th>
+              <th>Kategorie</th>
+              <th>Autor</th>
+              <th>Datum</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="postsTableBody">
+            <tr><td colspan="6" class="empty-state">Beiträge werden geladen…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Right: Create/Edit Form -->
+    <div class="admin-panel" id="formPanel">
+      <div class="panel-header">
+        <span class="panel-title" id="formTitle">Neuer Beitrag</span>
+        <button class="a-btn a-btn-secondary" id="formCancelBtn" style="display:none;" onclick="resetForm()">
+          Abbrechen
+        </button>
+      </div>
+
+      <form class="a-form" id="postForm" novalidate>
+        <input type="hidden" id="editingId" value="">
+
+        <!-- Titel DE -->
+        <div class="a-form-field">
+          <label class="a-label" for="titleDe">
+            Titel
+            <span class="a-lang-hint">DE</span>
+          </label>
+          <input class="a-input" id="titleDe" name="titleDe" type="text" placeholder="Titel auf Deutsch" required>
+        </div>
+
+        <!-- Titel EN -->
+        <div class="a-form-field">
+          <label class="a-label" for="titleEn">
+            Title
+            <span class="a-lang-hint">EN</span>
+          </label>
+          <input class="a-input" id="titleEn" name="titleEn" type="text" placeholder="Title in English" required>
+        </div>
+
+        <!-- Zusammenfassung DE -->
+        <div class="a-form-field">
+          <label class="a-label" for="excerptDe">
+            Kurzbeschreibung
+            <span class="a-lang-hint">DE</span>
+          </label>
+          <textarea class="a-textarea" id="excerptDe" name="excerptDe" placeholder="Kurze Zusammenfassung auf Deutsch" style="min-height:70px;"></textarea>
+        </div>
+
+        <!-- Zusammenfassung EN -->
+        <div class="a-form-field">
+          <label class="a-label" for="excerptEn">
+            Short Summary
+            <span class="a-lang-hint">EN</span>
+          </label>
+          <textarea class="a-textarea" id="excerptEn" name="excerptEn" placeholder="Short summary in English" style="min-height:70px;"></textarea>
+        </div>
+
+        <!-- Inhalt DE -->
+        <div class="a-form-field">
+          <label class="a-label" for="contentDe">
+            Inhalt
+            <span class="a-lang-hint">DE</span>
+          </label>
+          <textarea class="a-textarea" id="contentDe" name="contentDe" placeholder="Vollständiger Artikel auf Deutsch"></textarea>
+        </div>
+
+        <!-- Inhalt EN -->
+        <div class="a-form-field">
+          <label class="a-label" for="contentEn">
+            Content
+            <span class="a-lang-hint">EN</span>
+          </label>
+          <textarea class="a-textarea" id="contentEn" name="contentEn" placeholder="Full article in English"></textarea>
+        </div>
+
+        <!-- Bild-URL -->
+        <div class="a-form-field">
+          <label class="a-label" for="imageUrl">Bild-URL (optional)</label>
+          <input class="a-input" id="imageUrl" name="imageUrl" type="url" placeholder="https://images.unsplash.com/...">
+        </div>
+
+        <!-- Kategorie + Autor -->
+        <div class="a-form-row">
+          <div class="a-form-field">
+            <label class="a-label" for="category">Kategorie</label>
+            <select class="a-select" id="category" name="category">
+              <option value="SAP Consulting">SAP Consulting</option>
+              <option value="Digitalisierung">Digitalisierung</option>
+              <option value="Prozessberatung">Prozessberatung</option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Green Tech">Green Tech</option>
+              <option value="Supply Chain">Supply Chain</option>
+              <option value="UI/UX Design">UI/UX Design</option>
+              <option value="Change Management">Change Management</option>
+              <option value="Allgemein">Allgemein</option>
+            </select>
+          </div>
+          <div class="a-form-field">
+            <label class="a-label" for="author">Autor</label>
+            <input class="a-input" id="author" name="author" type="text" placeholder="Vor- und Nachname">
+          </div>
+        </div>
+
+        <!-- Veröffentlichen -->
+        <label class="a-checkbox-row">
+          <input type="checkbox" id="published" name="published" checked>
+          <span class="a-checkbox-label">Sofort veröffentlichen</span>
+        </label>
+
+        <!-- Submit -->
+        <div class="a-form-actions">
+          <button type="submit" class="a-btn a-btn-primary" id="formSubmitBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Beitrag speichern
+          </button>
+          <span class="a-form-feedback" id="formFeedback">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Gespeichert!
+          </span>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="alert" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

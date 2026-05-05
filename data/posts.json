@@ -1,0 +1,67 @@
+{
+  "posts": [
+    {
+      "id": "post-001",
+      "title": {
+        "de": "SAP S/4HANA Migration: Erfahrungen aus der Praxis",
+        "en": "SAP S/4HANA Migration: Lessons from the Field"
+      },
+      "content": {
+        "de": "Die Migration auf SAP S/4HANA ist eines der bedeutendsten IT-Transformationsprojekte für Unternehmen. Unsere Experten begleiten DAX-Unternehmen durch diesen Prozess und teilen ihre wertvollsten Erkenntnisse aus der Praxis. Von der initialen Systemanalyse über die Datenmigration bis hin zum Go-Live – wir zeigen, worauf es wirklich ankommt.",
+        "en": "Migrating to SAP S/4HANA is one of the most significant IT transformation projects for enterprises. Our experts guide DAX companies through this process and share their most valuable field insights. From initial system analysis to data migration and go-live – we show what truly matters."
+      },
+      "excerpt": {
+        "de": "Unsere Experten teilen wertvolle Erkenntnisse aus der SAP S/4HANA Migration bei Großunternehmen.",
+        "en": "Our experts share valuable insights from SAP S/4HANA migrations at large enterprises."
+      },
+      "category": "SAP Consulting",
+      "author": "Thomas Krause",
+      "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      "date": "2026-04-15",
+      "published": true,
+      "slug": "sap-s4hana-migration-praxis"
+    },
+    {
+      "id": "post-002",
+      "title": {
+        "de": "Digitale Transformation: Warum KMU jetzt handeln müssen",
+        "en": "Digital Transformation: Why SMEs Must Act Now"
+      },
+      "content": {
+        "de": "Der digitale Wandel wartet nicht. Unternehmen, die heute nicht in Digitalisierung investieren, riskieren ihre Wettbewerbsfähigkeit von morgen. ACOPA zeigt, wie mittelständische Unternehmen mit gezielten Maßnahmen schnell und kosteneffizient digitalisieren können.",
+        "en": "Digital change does not wait. Companies that do not invest in digitalization today risk their competitiveness tomorrow. ACOPA shows how mid-size companies can digitalize quickly and cost-efficiently with targeted measures."
+      },
+      "excerpt": {
+        "de": "Warum jetzt der richtige Zeitpunkt für digitale Transformation ist und wie Sie loslegen.",
+        "en": "Why now is the right time for digital transformation and how to get started."
+      },
+      "category": "Digitalisierung",
+      "author": "Sarah Müller",
+      "imageUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+      "date": "2026-03-22",
+      "published": true,
+      "slug": "digitale-transformation-kmu"
+    },
+    {
+      "id": "post-003",
+      "title": {
+        "de": "Cybersecurity 2026: Die größten Bedrohungen für Unternehmen",
+        "en": "Cybersecurity 2026: The Biggest Threats for Businesses"
+      },
+      "content": {
+        "de": "Die Bedrohungslandschaft im Cyberraum entwickelt sich rasant weiter. Ransomware-Angriffe, Phishing und Supply-Chain-Attacken nehmen zu. Unser Cybersecurity-Team analysiert die aktuellen Trends und zeigt, wie Unternehmen sich wirksam schützen können.",
+        "en": "The cybersecurity threat landscape is evolving rapidly. Ransomware attacks, phishing, and supply chain attacks are increasing. Our cybersecurity team analyzes current trends and shows how companies can protect themselves effectively."
+      },
+      "excerpt": {
+        "de": "Aktuelle Cybersecurity-Bedrohungen und effektive Schutzmaßnahmen für Unternehmen im Jahr 2026.",
+        "en": "Current cybersecurity threats and effective protective measures for companies in 2026."
+      },
+      "category": "Cybersecurity",
+      "author": "Markus Weber",
+      "imageUrl": "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?auto=format&fit=crop&w=800&q=80",
+      "date": "2026-02-10",
+      "published": true,
+      "slug": "cybersecurity-2026-bedrohungen"
+    }
+  ]
+}

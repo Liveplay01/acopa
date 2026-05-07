@@ -33,11 +33,20 @@
         <% } %>
 
         <% jobs.forEach(function(job) { %>
+          <%
+            var titleDe = (job.title && job.title.de) ? job.title.de : (job.title || '');
+            var titleEn = (job.title && job.title.en) ? job.title.en : titleDe;
+            var descDe  = (job.description && job.description.de) ? job.description.de : (job.description || '');
+            var descEn  = (job.description && job.description.en) ? job.description.en : descDe;
+          %>
           <div class="job-card reveal-up" style="display:flex;flex-direction:column;gap:1.5rem;cursor:default;">
             <div style="display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;">
               <div class="job-card-info">
                 <div class="job-card-header">
-                  <span class="job-card-title"><%= job.title %></span>
+                  <span class="job-card-title"
+                    data-cms-de="<%= titleDe %>"
+                    data-cms-en="<%= titleEn %>"
+                  ><%= titleDe %></span>
                   <span class="job-badge"><%= job.badge || 'Vollzeit' %></span>
                 </div>
                 <div class="job-card-meta" style="margin-top:0.5rem;">
@@ -55,9 +64,12 @@
                   </span>
                 </div>
               </div>
-              <a href="mailto:karriere@acopa.de?subject=<%= encodeURIComponent(job.emailSubject || 'Bewerbung ' + job.title) %>" class="btn btn-primary" style="white-space:nowrap;">Jetzt bewerben</a>
+              <a href="mailto:karriere@acopa.de?subject=<%= encodeURIComponent(job.emailSubject || 'Bewerbung ' + titleDe) %>" class="btn btn-primary" style="white-space:nowrap;">Jetzt bewerben</a>
             </div>
-            <p style="font-size:var(--text-sm);color:var(--color-gray-600);line-height:1.7;"><%= job.description %></p>
+            <p style="font-size:var(--text-sm);color:var(--color-gray-600);line-height:1.7;"
+              data-cms-de="<%= descDe %>"
+              data-cms-en="<%= descEn %>"
+            ><%= descDe %></p>
             <% if (job.tags && job.tags.length) { %>
               <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
                 <% job.tags.forEach(function(tag) { %><span class="value-tag"><%= tag %></span><% }); %>

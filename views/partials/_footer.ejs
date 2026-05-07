@@ -3,7 +3,10 @@
     <div class="footer-top">
       <div class="footer-brand">
         <img src="/assets/AcopaLogo.png" alt="ACOPA" class="footer-logo">
-        <p class="footer-tagline"><%= (pages && pages.footer && pages.footer.tagline) ? pages.footer.tagline : 'Mehrwert durch digitale Prozesse.' %></p>
+        <p class="footer-tagline"
+          data-cms-de="<%= (pages && pages.footer && pages.footer.tagline && pages.footer.tagline.de) || 'Mehrwert durch digitale Prozesse.' %>"
+          data-cms-en="<%= (pages && pages.footer && pages.footer.tagline && pages.footer.tagline.en) || 'Value through digital processes.' %>"
+        ><%= (pages && pages.footer && pages.footer.tagline && pages.footer.tagline.de) || 'Mehrwert durch digitale Prozesse.' %></p>
         <p class="footer-tagline" style="margin-top:0.25rem;font-size:0.7rem;letter-spacing:0.08em;opacity:0.4;text-transform:uppercase;">Digital · Sustainable · Passionately Curious</p>
       </div>
 

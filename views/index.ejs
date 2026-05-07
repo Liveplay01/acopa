@@ -15,13 +15,20 @@
       <p class="hero-eyebrow" id="heroEyebrow" data-i18n="hero.eyebrow">Managementberatung & IT-Consulting</p>
 
       <h1 class="hero-headline" id="heroHeadline">
-        <span class="hero-line"><span class="hero-line-inner"><%= pages.homepage.heroTitle || 'Mehrwert durch' %></span></span>
-        <span class="hero-line"><span class="hero-line-inner accent"><%= pages.homepage.heroTitleAccent || 'digitale Prozesse.' %></span></span>
+        <span class="hero-line"><span class="hero-line-inner"
+          data-cms-de="<%= (pages.homepage.heroTitle && pages.homepage.heroTitle.de) || 'Mehrwert durch' %>"
+          data-cms-en="<%= (pages.homepage.heroTitle && pages.homepage.heroTitle.en) || 'Value through' %>"
+        ><%= (pages.homepage.heroTitle && pages.homepage.heroTitle.de) || 'Mehrwert durch' %></span></span>
+        <span class="hero-line"><span class="hero-line-inner accent"
+          data-cms-de="<%= (pages.homepage.heroTitleAccent && pages.homepage.heroTitleAccent.de) || 'digitale Prozesse.' %>"
+          data-cms-en="<%= (pages.homepage.heroTitleAccent && pages.homepage.heroTitleAccent.en) || 'digital processes.' %>"
+        ><%= (pages.homepage.heroTitleAccent && pages.homepage.heroTitleAccent.de) || 'digitale Prozesse.' %></span></span>
       </h1>
 
-      <p class="hero-sub" id="heroSub">
-        <%= pages.homepage.heroSubtitle || 'Als innovatives Expertennetzwerk transformieren wir mittelständische und Großunternehmen mit maßgeschneiderten SAP-, Digitalisierungs- und Beratungslösungen.' %>
-      </p>
+      <p class="hero-sub" id="heroSub"
+        data-cms-de="<%= (pages.homepage.heroSubtitle && pages.homepage.heroSubtitle.de) || 'Als innovatives Expertennetzwerk transformieren wir mittelständische und Großunternehmen mit maßgeschneiderten SAP-, Digitalisierungs- und Beratungslösungen.' %>"
+        data-cms-en="<%= (pages.homepage.heroSubtitle && pages.homepage.heroSubtitle.en) || 'As an innovative expert network, we transform mid-size and large enterprises with tailored SAP, digitalization, and consulting solutions.' %>"
+      ><%= (pages.homepage.heroSubtitle && pages.homepage.heroSubtitle.de) || 'Als innovatives Expertennetzwerk transformieren wir mittelständische und Großunternehmen mit maßgeschneiderten SAP-, Digitalisierungs- und Beratungslösungen.' %></p>
 
       <div class="hero-ctas" id="heroCtas">
         <a href="/#contact" class="btn btn-primary" data-i18n="hero.cta1">Kostenlose Beratung</a>
@@ -308,8 +315,14 @@
         <div class="contact-form-wrap">
           <div class="reveal-up">
             <p class="section-eyebrow" data-i18n="contact.eyebrow">Kontakt</p>
-            <h2 class="section-headline section-headline--light"><%= pages.homepage.ctaHeadline || 'Starten Sie Ihr Projekt' %></h2>
-            <p class="section-sub section-sub--light" style="margin-bottom:2rem;"><%= pages.homepage.ctaSubtext || 'Vereinbaren Sie noch heute ein kostenloses Erstgespräch.' %></p>
+            <h2 class="section-headline section-headline--light"
+              data-cms-de="<%= (pages.homepage.ctaHeadline && pages.homepage.ctaHeadline.de) || 'Starten Sie Ihr Projekt' %>"
+              data-cms-en="<%= (pages.homepage.ctaHeadline && pages.homepage.ctaHeadline.en) || 'Start your project' %>"
+            ><%= (pages.homepage.ctaHeadline && pages.homepage.ctaHeadline.de) || 'Starten Sie Ihr Projekt' %></h2>
+            <p class="section-sub section-sub--light" style="margin-bottom:2rem;"
+              data-cms-de="<%= (pages.homepage.ctaSubtext && pages.homepage.ctaSubtext.de) || 'Vereinbaren Sie noch heute ein kostenloses Erstgespräch.' %>"
+              data-cms-en="<%= (pages.homepage.ctaSubtext && pages.homepage.ctaSubtext.en) || 'Schedule a free initial consultation today.' %>"
+            ><%= (pages.homepage.ctaSubtext && pages.homepage.ctaSubtext.de) || 'Vereinbaren Sie noch heute ein kostenloses Erstgespräch.' %></p>
           </div>
           <form class="contact-form reveal-up" id="contactForm" novalidate>
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">

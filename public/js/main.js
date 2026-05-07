@@ -241,6 +241,11 @@ function applyTranslations(lang) {
     if (val !== null) el.placeholder = val;
   });
 
+  // CMS-editable content (data-cms-de / data-cms-en)
+  document.querySelectorAll('[data-cms-de]').forEach(el => {
+    el.textContent = lang === 'en' ? (el.dataset.cmsEn || el.dataset.cmsDe) : el.dataset.cmsDe;
+  });
+
   // HTML lang attribute
   document.documentElement.lang = lang;
   document.documentElement.dataset.lang = lang;

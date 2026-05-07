@@ -1,12 +1,15 @@
 {
   "homepage": {
-    "heroTitle": "Mehrwert durch",
-    "heroTitleAccent": "digitale Prozesse.",
-    "heroSubtitle": "Als innovatives Expertennetzwerk transformieren wir mittelständische und Großunternehmen mit maßgeschneiderten SAP-, Digitalisierungs- und Beratungslösungen.",
-    "ctaHeadline": "Starten Sie Ihr Projekt",
-    "ctaSubtext": "Vereinbaren Sie noch heute ein kostenloses Erstgespräch."
+    "heroTitle":       { "de": "Mehrwert durch",       "en": "Value through" },
+    "heroTitleAccent": { "de": "digitale Prozesse.",   "en": "digital processes." },
+    "heroSubtitle":    {
+      "de": "Als innovatives Expertennetzwerk transformieren wir mittelständische und Großunternehmen mit maßgeschneiderten SAP-, Digitalisierungs- und Beratungslösungen.",
+      "en": "As an innovative expert network, we transform mid-size and large enterprises with tailored SAP, digitalization, and consulting solutions."
+    },
+    "ctaHeadline":     { "de": "Starten Sie Ihr Projekt",                              "en": "Start your project" },
+    "ctaSubtext":      { "de": "Vereinbaren Sie noch heute ein kostenloses Erstgespräch.", "en": "Schedule a free initial consultation today." }
   },
   "footer": {
-    "tagline": "Mehrwert durch digitale Prozesse."
+    "tagline": { "de": "Mehrwert durch digitale Prozesse.", "en": "Value through digital processes." }
   }
 }

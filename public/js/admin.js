@@ -326,12 +326,19 @@ async function loadPages() {
     const h = data.homepage || {};
     const f = data.footer   || {};
     const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
-    set('pgHeroTitle',    h.heroTitle);
-    set('pgHeroAccent',   h.heroTitleAccent);
-    set('pgHeroSub',      h.heroSubtitle);
-    set('pgCtaHeadline',  h.ctaHeadline);
-    set('pgCtaSub',       h.ctaSubtext);
-    set('pgFooterTagline',f.tagline);
+    const get = (field, lang) => (field && typeof field === 'object') ? (field[lang] || '') : (field || '');
+    set('pgHeroTitleDe',    get(h.heroTitle, 'de'));
+    set('pgHeroTitleEn',    get(h.heroTitle, 'en'));
+    set('pgHeroAccentDe',   get(h.heroTitleAccent, 'de'));
+    set('pgHeroAccentEn',   get(h.heroTitleAccent, 'en'));
+    set('pgHeroSubDe',      get(h.heroSubtitle, 'de'));
+    set('pgHeroSubEn',      get(h.heroSubtitle, 'en'));
+    set('pgCtaHeadlineDe',  get(h.ctaHeadline, 'de'));
+    set('pgCtaHeadlineEn',  get(h.ctaHeadline, 'en'));
+    set('pgCtaSubDe',       get(h.ctaSubtext, 'de'));
+    set('pgCtaSubEn',       get(h.ctaSubtext, 'en'));
+    set('pgFooterTaglineDe',get(f.tagline, 'de'));
+    set('pgFooterTaglineEn',get(f.tagline, 'en'));
   } catch (err) {
     console.error('[Admin] Failed to load pages:', err);
   }
@@ -485,16 +492,17 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const btn = document.getElementById('pagesSubmitBtn');
       btn.disabled = true;
+      const v = id => document.getElementById(id)?.value.trim() || '';
       const body = {
         homepage: {
-          heroTitle:       document.getElementById('pgHeroTitle').value.trim(),
-          heroTitleAccent: document.getElementById('pgHeroAccent').value.trim(),
-          heroSubtitle:    document.getElementById('pgHeroSub').value.trim(),
-          ctaHeadline:     document.getElementById('pgCtaHeadline').value.trim(),
-          ctaSubtext:      document.getElementById('pgCtaSub').value.trim(),
+          heroTitle:       { de: v('pgHeroTitleDe'),    en: v('pgHeroTitleEn') },
+          heroTitleAccent: { de: v('pgHeroAccentDe'),   en: v('pgHeroAccentEn') },
+          heroSubtitle:    { de: v('pgHeroSubDe'),      en: v('pgHeroSubEn') },
+          ctaHeadline:     { de: v('pgCtaHeadlineDe'),  en: v('pgCtaHeadlineEn') },
+          ctaSubtext:      { de: v('pgCtaSubDe'),       en: v('pgCtaSubEn') },
         },
         footer: {
-          tagline: document.getElementById('pgFooterTagline').value.trim(),
+          tagline: { de: v('pgFooterTaglineDe'), en: v('pgFooterTaglineEn') },
         },
       };
       try {

@@ -1,0 +1,176 @@
+<%- include('./partials/_head', { title: 'Kontakt – ACOPA GmbH', description: 'Nehmen Sie Kontakt mit ACOPA auf. Kostenlose Erstberatung für SAP, Digitalisierung, Cybersecurity und Supply Chain.' }) %>
+<%- include('./partials/_nav') %>
+
+<main id="main-content">
+
+  <section class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1920&q=80')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-accent"></div>
+    <div class="page-hero-shape"></div>
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span>/</span><span>Kontakt</span>
+      </nav>
+      <p class="section-eyebrow" style="color:var(--color-primary);margin-bottom:1rem;">Kontakt</p>
+      <h1 class="page-hero-title">Sprechen wir.<br><span class="accent">Kostenlos & unverbindlich.</span></h1>
+      <p class="page-hero-sub">Ob erste Fragen oder konkretes Projekt — wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+    </div>
+  </section>
+
+  <!-- Kontakt Split -->
+  <section class="content-section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Formular -->
+        <div class="reveal-left">
+          <p class="section-eyebrow">Nachricht senden</p>
+          <h2 class="section-headline" style="margin-bottom:2rem;">Wie können wir helfen?</h2>
+
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="cf-row">
+              <div class="cf-field">
+                <label class="cf-label" for="cfName">Name <span class="cf-req">*</span></label>
+                <input class="cf-input" id="cfName" type="text" placeholder="Max Mustermann" required autocomplete="name">
+              </div>
+              <div class="cf-field">
+                <label class="cf-label" for="cfEmail">E-Mail <span class="cf-req">*</span></label>
+                <input class="cf-input" id="cfEmail" type="email" placeholder="max@firma.de" required autocomplete="email">
+              </div>
+            </div>
+            <div class="cf-field">
+              <label class="cf-label" for="cfSubject">Betreff</label>
+              <select class="cf-select" id="cfSubject">
+                <option value="">Thema wählen…</option>
+                <option value="SAP Beratung">SAP Beratung</option>
+                <option value="Digitalisierung">Digitalisierung</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Supply Chain">Supply Chain</option>
+                <option value="Green Tech">Green Tech</option>
+                <option value="Karriere">Karriere</option>
+                <option value="Sonstiges">Sonstiges</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <label class="cf-label" for="cfMessage">Nachricht <span class="cf-req">*</span></label>
+              <textarea class="cf-textarea" id="cfMessage" placeholder="Beschreiben Sie kurz Ihr Anliegen…" required></textarea>
+            </div>
+
+            <div class="cf-actions">
+              <button type="submit" class="btn btn-primary cf-submit" id="cfSubmit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Nachricht senden
+              </button>
+              <p class="cf-privacy">Mit dem Absenden stimmen Sie unserer <a href="/datenschutz">Datenschutzerklärung</a> zu.</p>
+            </div>
+
+            <div class="cf-success" id="cfSuccess" style="display:none;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Vielen Dank! Wir melden uns innerhalb von 24 Stunden.
+            </div>
+            <div class="cf-error" id="cfError" style="display:none;">
+              Leider ist ein Fehler aufgetreten. Bitte schreiben Sie uns direkt an <a href="mailto:info@acopa.de">info@acopa.de</a>.
+            </div>
+          </form>
+        </div>
+
+        <!-- Kontaktdaten -->
+        <div class="reveal-right">
+          <div class="contact-info-card">
+            <p class="section-eyebrow">Direktkontakt</p>
+            <h3 style="font-family:var(--font-display);font-size:1.6rem;margin-bottom:1.5rem;">ACOPA GmbH & Co. KG</h3>
+
+            <div class="contact-info-list">
+              <div class="contact-info-item">
+                <div class="contact-info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <p class="contact-info-label">Adresse</p>
+                  <p class="contact-info-value">Sternstraße 68<br>42275 Wuppertal</p>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                </div>
+                <div>
+                  <p class="contact-info-label">Telefon</p>
+                  <a href="tel:+4920274722117" class="contact-info-value contact-info-link">+49 (0)202 74 72 21 17</a>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                  <p class="contact-info-label">E-Mail</p>
+                  <a href="mailto:info@acopa.de" class="contact-info-value contact-info-link">info@acopa.de</a>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div>
+                  <p class="contact-info-label">Erreichbarkeit</p>
+                  <p class="contact-info-value">Mo–Fr, 9:00–18:00 Uhr</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-response-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Antwort innerhalb von 24 Stunden garantiert
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%- include('./partials/_footer') %>
+
+<script>
+(function () {
+  const form    = document.getElementById('contactForm');
+  const success = document.getElementById('cfSuccess');
+  const error   = document.getElementById('cfError');
+  const submit  = document.getElementById('cfSubmit');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    success.style.display = 'none';
+    error.style.display   = 'none';
+    submit.disabled = true;
+    submit.textContent = 'Wird gesendet…';
+
+    const body = {
+      name:    document.getElementById('cfName').value.trim(),
+      email:   document.getElementById('cfEmail').value.trim(),
+      subject: document.getElementById('cfSubject').value,
+      message: document.getElementById('cfMessage').value.trim(),
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(body),
+      });
+      if (!res.ok) throw new Error('server');
+      success.style.display = 'flex';
+      form.reset();
+    } catch {
+      error.style.display = 'block';
+    } finally {
+      submit.disabled = false;
+      submit.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Nachricht senden';
+    }
+  });
+})();
+</script>

@@ -1,0 +1,52 @@
+{
+  "jobs": [
+    {
+      "id": "job-001",
+      "title": "Senior SAP Consultant SCM / IBP (m/w/d) Digital Supply Chain",
+      "badge": "Vollzeit",
+      "location": "Wuppertal / Remote",
+      "type": "Vollzeit",
+      "start": "Ab sofort",
+      "description": "Als Senior SAP Consultant SCM/IBP begleiten Sie unsere Kunden bei der Implementierung und Optimierung ihrer SAP-Supply-Chain-Lösung. Sie beraten bei der Prozessgestaltung, führen Workshops durch und übernehmen Teilprojektverantwortung. Idealerweise bringen Sie 5+ Jahre SAP SCM/IBP Erfahrung mit und haben Spaß an komplexen Herausforderungen in einem dynamischen Umfeld.",
+      "tags": ["SAP IBP", "SAP SCM", "Supply Chain", "Projektleitung"],
+      "emailSubject": "Bewerbung Senior SAP Consultant SCM/IBP",
+      "published": true
+    },
+    {
+      "id": "job-002",
+      "title": "Senior SAP Consultant PP/DS (m/w/d)",
+      "badge": "Vollzeit",
+      "location": "Wuppertal / Remote",
+      "type": "Vollzeit",
+      "start": "Ab sofort",
+      "description": "Für unsere Projekte im Bereich Produktionsplanung und -steuerung suchen wir erfahrene PP/DS-Consultants. Sie bringen fundierte Kenntnisse in SAP PP/DS oder APO mit und können Kunden bei der Optimierung ihrer Fertigungsplanung unterstützen. Erfahrungen in der Prozess- oder Fertigungsindustrie sind von Vorteil.",
+      "tags": ["SAP PP/DS", "SAP APO", "Produktionsplanung", "Fertigungsindustrie"],
+      "emailSubject": "Bewerbung Senior SAP Consultant PP/DS",
+      "published": true
+    },
+    {
+      "id": "job-003",
+      "title": "Developer SAP Cloud Platform / Fiori / ABAP (m/w/d)",
+      "badge": "Vollzeit",
+      "location": "Wuppertal / Remote",
+      "type": "Vollzeit",
+      "start": "Ab sofort",
+      "description": "Für die Entwicklung und Erweiterung von SAP-Lösungen suchen wir erfahrene Entwickler mit Kenntnissen in ABAP, SAP Fiori/UI5 und der SAP Business Technology Platform. Sie entwickeln individuelle Erweiterungen, APIs und moderne Benutzeroberflächen – und haben Spaß daran, komplexe Anforderungen in elegante Lösungen umzusetzen.",
+      "tags": ["ABAP", "SAP Fiori", "SAP BTP", "UI5"],
+      "emailSubject": "Bewerbung Developer SAP Cloud/Fiori/ABAP",
+      "published": true
+    },
+    {
+      "id": "job-004",
+      "title": "SAP Consultant SCM (m/w/d)",
+      "badge": "Vollzeit",
+      "location": "Wuppertal / Remote",
+      "type": "Vollzeit",
+      "start": "Ab sofort",
+      "description": "Als SAP SCM Consultant unterstützen Sie unsere Kunden bei der Optimierung ihrer Supply-Chain-Prozesse mit SAP. Sie analysieren bestehende Abläufe, erarbeiten Verbesserungskonzepte und begleiten die Implementierung. Erste Erfahrungen in SAP SCM sind erwünscht – wir unterstützen Sie aktiv bei Ihrer Weiterentwicklung.",
+      "tags": ["SAP SCM", "Supply Chain", "Beratung"],
+      "emailSubject": "Bewerbung SAP Consultant SCM",
+      "published": true
+    }
+  ]
+}

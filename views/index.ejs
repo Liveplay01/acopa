@@ -1,61 +1,5 @@
-<!DOCTYPE html>
-<html lang="de" data-lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ACOPA GmbH – Ihr Partner für SAP Consulting, Digitalisierung, Cybersecurity und digitale Transformation. Mehrwert durch digitale Prozesse.">
-  <meta name="keywords" content="SAP Consulting, Digitalisierung, Cybersecurity, Green Tech, Supply Chain, Wuppertal">
-  <meta property="og:title" content="ACOPA GmbH – Managementberatung & IT-Consulting">
-  <meta property="og:description" content="Mehrwert durch digitale Prozesse. SAP, Digitalisierung, Cybersecurity und mehr.">
-  <meta property="og:type" content="website">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main.css">
-  <title>ACOPA GmbH – Managementberatung & IT-Consulting</title>
-</head>
-<body>
-
-<!-- Skip Link -->
-<a class="skip-link" href="#main-content">Zum Inhalt springen</a>
-
-<!-- Mobile Overlay Nav -->
-<div class="nav-mobile" id="navMobile" role="dialog" aria-label="Navigation">
-  <a href="#services" class="nav-link" data-i18n="nav.services">Leistungen</a>
-  <a href="#about"    class="nav-link" data-i18n="nav.about">Über uns</a>
-  <a href="#clients"  class="nav-link" data-i18n="nav.clients">Kunden</a>
-  <a href="#news"     class="nav-link" data-i18n="nav.news">News</a>
-  <a href="#career"   class="nav-link" data-i18n="nav.career">Karriere</a>
-  <a href="#contact"  class="nav-link" data-i18n="nav.contact">Kontakt</a>
-  <a href="#contact"  class="btn btn-primary" data-i18n="nav.cta">Kostenlose Beratung</a>
-</div>
-
-<!-- Navigation -->
-<nav id="navbar" class="navbar" role="navigation" aria-label="Hauptnavigation">
-  <a href="#" class="nav-brand" aria-label="ACOPA – Startseite">
-    <img src="/assets/AcopaLogo.png" alt="ACOPA Logo" class="nav-logo">
-  </a>
-
-  <div class="nav-links">
-    <a href="#services" class="nav-link" data-i18n="nav.services">Leistungen</a>
-    <a href="#about"    class="nav-link" data-i18n="nav.about">Über uns</a>
-    <a href="#clients"  class="nav-link" data-i18n="nav.clients">Kunden</a>
-    <a href="#news"     class="nav-link" data-i18n="nav.news">News</a>
-    <a href="#career"   class="nav-link" data-i18n="nav.career">Karriere</a>
-    <a href="#contact"  class="nav-link" data-i18n="nav.contact">Kontakt</a>
-  </div>
-
-  <div class="nav-actions">
-    <div class="lang-toggle" role="group" aria-label="Sprache wählen">
-      <button class="lang-btn active" data-lang-btn="de" aria-label="Deutsch">DE</button>
-      <button class="lang-btn"        data-lang-btn="en" aria-label="English">EN</button>
-    </div>
-    <a href="#contact" class="btn btn-primary nav-cta" data-i18n="nav.cta">Kostenlose Beratung</a>
-    <button class="nav-hamburger" id="navHamburger" aria-label="Menü öffnen" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
+<%- include('partials/_head', { title: 'ACOPA GmbH – Managementberatung & IT-Consulting', description: 'ACOPA GmbH – Ihr Partner für SAP Consulting, Digitalisierung, Cybersecurity und digitale Transformation. Mehrwert durch digitale Prozesse.' }) %>
+<%- include('partials/_nav') %>
 
 <main id="main-content">
 
@@ -71,21 +15,17 @@
       <p class="hero-eyebrow" id="heroEyebrow" data-i18n="hero.eyebrow">Managementberatung & IT-Consulting</p>
 
       <h1 class="hero-headline" id="heroHeadline">
-        <span class="hero-line">
-          <span class="hero-line-inner" data-i18n="hero.headline1">Mehrwert durch</span>
-        </span>
-        <span class="hero-line">
-          <span class="hero-line-inner accent" data-i18n="hero.headline2">digitale Prozesse.</span>
-        </span>
+        <span class="hero-line"><span class="hero-line-inner"><%= pages.homepage.heroTitle || 'Mehrwert durch' %></span></span>
+        <span class="hero-line"><span class="hero-line-inner accent"><%= pages.homepage.heroTitleAccent || 'digitale Prozesse.' %></span></span>
       </h1>
 
-      <p class="hero-sub" id="heroSub" data-i18n="hero.sub">
-        Als innovatives Expertennetzwerk transformieren wir mittelständische und Großunternehmen mit maßgeschneiderten SAP-, Digitalisierungs- und Beratungslösungen.
+      <p class="hero-sub" id="heroSub">
+        <%= pages.homepage.heroSubtitle || 'Als innovatives Expertennetzwerk transformieren wir mittelständische und Großunternehmen mit maßgeschneiderten SAP-, Digitalisierungs- und Beratungslösungen.' %>
       </p>
 
       <div class="hero-ctas" id="heroCtas">
-        <a href="#contact" class="btn btn-primary" data-i18n="hero.cta1">Kostenlose Beratung</a>
-        <a href="#services" class="btn btn-ghost"  data-i18n="hero.cta2">Unsere Leistungen</a>
+        <a href="/#contact" class="btn btn-primary" data-i18n="hero.cta1">Kostenlose Beratung</a>
+        <a href="/service"  class="btn btn-ghost"   data-i18n="hero.cta2">Unsere Leistungen</a>
       </div>
     </div>
 
@@ -106,67 +46,56 @@
 
       <div class="bento-grid">
 
-        <!-- SAP – featured (2 cols) -->
-        <article class="service-card service-card--featured reveal-up" data-service="sap">
+        <article class="service-card service-card--featured reveal-up">
           <span class="service-badge" data-i18n="services.sap_badge">Enterprise Partner</span>
           <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-            <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-            <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-            <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
           </svg>
           <h3 class="service-card-title" data-i18n="services.sap_title">SAP Consulting</h3>
           <p  class="service-card-desc"  data-i18n="services.sap_desc">S/4HANA Migration, SCM, Business Intelligence, ABAP & FIORI Development – wir begleiten Sie auf dem gesamten SAP-Transformationsweg.</p>
-          <span class="service-card-arrow">
+          <a href="/service/sap-beratung" class="service-card-arrow">
             <span data-i18n="services.learn_more">Mehr erfahren</span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </span>
+          </a>
         </article>
 
-        <!-- Digitalisierung -->
         <article class="service-card reveal-up">
           <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
+            <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
           </svg>
           <h3 class="service-card-title" data-i18n="services.digital_title">Digitalisierung</h3>
           <p  class="service-card-desc"  data-i18n="services.digital_desc">Go-Digital-Programme, Data Science, Machine Learning und Prozessautomatisierung.</p>
-          <span class="service-card-arrow">
+          <a href="/service/digitalisierung" class="service-card-arrow">
             <span data-i18n="services.learn_more">Mehr erfahren</span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </span>
+          </a>
         </article>
 
-        <!-- Prozessberatung -->
         <article class="service-card reveal-up">
           <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 6h4l3 12h4l3-12h4"/>
-            <circle cx="7" cy="6" r="1"/>
-            <circle cx="17" cy="6" r="1"/>
+            <path d="M3 6h4l3 12h4l3-12h4"/><circle cx="7" cy="6" r="1"/><circle cx="17" cy="6" r="1"/>
           </svg>
           <h3 class="service-card-title" data-i18n="services.process_title">Prozessberatung</h3>
           <p  class="service-card-desc"  data-i18n="services.process_desc">Operative Effizienz und Ressourcenoptimierung für nachhaltige Wettbewerbsvorteile.</p>
-          <span class="service-card-arrow">
+          <a href="/service/supply-chain" class="service-card-arrow">
             <span data-i18n="services.learn_more">Mehr erfahren</span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </span>
+          </a>
         </article>
 
-        <!-- Cybersecurity -->
         <article class="service-card reveal-up">
           <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            <path d="M9 12l2 2 4-4"/>
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
           </svg>
           <h3 class="service-card-title" data-i18n="services.cyber_title">Cybersecurity</h3>
           <p  class="service-card-desc"  data-i18n="services.cyber_desc">Datenschutz, Sicherheitsaudits und präventive Sicherheitsmaßnahmen.</p>
-          <span class="service-card-arrow">
+          <a href="/service/cybersecurity" class="service-card-arrow">
             <span data-i18n="services.learn_more">Mehr erfahren</span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </span>
+          </a>
         </article>
 
-        <!-- Green Tech -->
         <article class="service-card reveal-up">
           <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M17 8C8 10 5.9 16.17 3.82 19.15a1 1 0 001.4 1.4C8.34 18.26 14.5 16 17 8z"/>
@@ -174,13 +103,12 @@
           </svg>
           <h3 class="service-card-title" data-i18n="services.green_title">Green Tech</h3>
           <p  class="service-card-desc"  data-i18n="services.green_desc">Nachhaltige Geschäftslösungen und IoT-Implementierungen für die Zukunft.</p>
-          <span class="service-card-arrow">
+          <a href="/service/sustainability" class="service-card-arrow">
             <span data-i18n="services.learn_more">Mehr erfahren</span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </span>
+          </a>
         </article>
 
-        <!-- Supply Chain -->
         <article class="service-card reveal-up">
           <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
@@ -188,38 +116,22 @@
           </svg>
           <h3 class="service-card-title" data-i18n="services.supply_title">Supply Chain</h3>
           <p  class="service-card-desc"  data-i18n="services.supply_desc">Fortgeschrittene Supply-Chain-Optimierung und Prozessintegration.</p>
-          <span class="service-card-arrow">
+          <a href="/service/supply-chain" class="service-card-arrow">
             <span data-i18n="services.learn_more">Mehr erfahren</span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </span>
+          </a>
         </article>
 
-        <!-- UI/UX -->
-        <article class="service-card reveal-up">
-          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <path d="M3 9h18M9 21V9"/>
-          </svg>
-          <h3 class="service-card-title" data-i18n="services.uiux_title">UI/UX Design</h3>
-          <p  class="service-card-desc"  data-i18n="services.uiux_desc">Nutzerzentrierte Designs und optimierte Benutzererfahrungen.</p>
-          <span class="service-card-arrow">
-            <span data-i18n="services.learn_more">Mehr erfahren</span>
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </span>
-        </article>
-
-        <!-- Change Management – wide (2 cols) -->
         <article class="service-card service-card--wide reveal-up">
           <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M23 4v6h-6"/>
-            <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+            <path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
           </svg>
           <h3 class="service-card-title" data-i18n="services.change_title">Change Management</h3>
           <p  class="service-card-desc"  data-i18n="services.change_desc">Anwenderschulungen und begleitetes Organisationsmanagement für erfolgreiche digitale Transformationen – wir nehmen Ihr Team mit auf die Reise.</p>
-          <span class="service-card-arrow">
+          <a href="/service/digitalisierung" class="service-card-arrow">
             <span data-i18n="services.learn_more">Mehr erfahren</span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </span>
+          </a>
         </article>
 
       </div>
@@ -269,17 +181,14 @@
             <span class="value-tag" data-i18n="about.value4">Nachhaltigkeit</span>
           </div>
           <div class="about-cta reveal-up">
-            <a href="#contact" class="btn btn-outline" data-i18n="about.cta">Gespräch vereinbaren</a>
+            <a href="/acopa" class="btn btn-outline" data-i18n="about.cta">Über ACOPA erfahren</a>
           </div>
         </div>
 
         <div class="about-image-wrap reveal-right">
-          <img
-            class="about-image"
+          <img class="about-image"
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
-            alt="ACOPA Team bei der Arbeit"
-            loading="lazy"
-          >
+            alt="ACOPA Team bei der Arbeit" loading="lazy">
           <div class="about-image-badge">
             <strong>15+</strong>
             <span data-i18n="about.badge">Jahre Erfahrung</span>
@@ -297,45 +206,26 @@
         <h2 class="section-headline section-headline--light" style="text-align:center; font-size:clamp(1.5rem,2.5vw,2rem);" data-i18n="clients.headline">Vertrauen führender Unternehmen</h2>
       </div>
     </div>
-
     <div class="marquee-wrapper">
       <div class="marquee-track">
-        <span class="client-chip">Bayer AG</span>
-        <span class="client-chip">BASF SE</span>
-        <span class="client-chip">Henkel AG</span>
-        <span class="client-chip">Haribo GmbH</span>
-        <span class="client-chip">Bosch Group</span>
-        <span class="client-chip">Siemens AG</span>
-        <span class="client-chip">Deutsche Post</span>
-        <span class="client-chip">ThyssenKrupp</span>
-        <!-- duplicate for seamless loop -->
-        <span class="client-chip">Bayer AG</span>
-        <span class="client-chip">BASF SE</span>
-        <span class="client-chip">Henkel AG</span>
-        <span class="client-chip">Haribo GmbH</span>
-        <span class="client-chip">Bosch Group</span>
-        <span class="client-chip">Siemens AG</span>
-        <span class="client-chip">Deutsche Post</span>
-        <span class="client-chip">ThyssenKrupp</span>
+        <span class="client-chip">Bayer AG</span><span class="client-chip">BASF SE</span>
+        <span class="client-chip">Henkel AG</span><span class="client-chip">Haribo GmbH</span>
+        <span class="client-chip">Bosch Group</span><span class="client-chip">Siemens AG</span>
+        <span class="client-chip">Deutsche Post</span><span class="client-chip">ThyssenKrupp</span>
+        <span class="client-chip">Bayer AG</span><span class="client-chip">BASF SE</span>
+        <span class="client-chip">Henkel AG</span><span class="client-chip">Haribo GmbH</span>
+        <span class="client-chip">Bosch Group</span><span class="client-chip">Siemens AG</span>
+        <span class="client-chip">Deutsche Post</span><span class="client-chip">ThyssenKrupp</span>
       </div>
       <div class="marquee-track marquee-track--reverse">
-        <span class="client-chip">RWE AG</span>
-        <span class="client-chip">E.ON SE</span>
-        <span class="client-chip">Volkswagen AG</span>
-        <span class="client-chip">Merck KGaA</span>
-        <span class="client-chip">SAP SE</span>
-        <span class="client-chip">Fresenius SE</span>
-        <span class="client-chip">Continental AG</span>
-        <span class="client-chip">Infineon</span>
-        <!-- duplicate -->
-        <span class="client-chip">RWE AG</span>
-        <span class="client-chip">E.ON SE</span>
-        <span class="client-chip">Volkswagen AG</span>
-        <span class="client-chip">Merck KGaA</span>
-        <span class="client-chip">SAP SE</span>
-        <span class="client-chip">Fresenius SE</span>
-        <span class="client-chip">Continental AG</span>
-        <span class="client-chip">Infineon</span>
+        <span class="client-chip">RWE AG</span><span class="client-chip">E.ON SE</span>
+        <span class="client-chip">Volkswagen AG</span><span class="client-chip">Merck KGaA</span>
+        <span class="client-chip">SAP SE</span><span class="client-chip">Fresenius SE</span>
+        <span class="client-chip">Continental AG</span><span class="client-chip">Infineon</span>
+        <span class="client-chip">RWE AG</span><span class="client-chip">E.ON SE</span>
+        <span class="client-chip">Volkswagen AG</span><span class="client-chip">Merck KGaA</span>
+        <span class="client-chip">SAP SE</span><span class="client-chip">Fresenius SE</span>
+        <span class="client-chip">Continental AG</span><span class="client-chip">Infineon</span>
       </div>
     </div>
   </section>
@@ -348,7 +238,7 @@
           <p class="section-eyebrow" data-i18n="news.eyebrow">Insights</p>
           <h2 class="section-headline" data-i18n="news.headline">Aktuelle Einblicke</h2>
         </div>
-        <a href="#" class="btn btn-outline reveal-fade" data-i18n="news.all_posts">Alle Beiträge</a>
+        <a href="/news" class="btn btn-outline reveal-fade" data-i18n="news.all_posts">Alle Beiträge</a>
       </div>
       <div class="news-grid" id="news-grid" aria-live="polite">
         <p class="news-loading" data-i18n="news.loading">Beiträge werden geladen…</p>
@@ -369,69 +259,43 @@
             Werden Sie Teil unseres wachsenden Expertennetzwerks und arbeiten Sie an spannenden Projekten mit führenden Unternehmen.
           </p>
           <div class="reveal-up">
-            <a href="#contact" class="btn btn-primary" data-i18n="career.cta">Alle Stellen ansehen
+            <a href="/karriere/offene-stellen" class="btn btn-primary" data-i18n="career.cta">Alle Stellen ansehen
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
             </a>
           </div>
         </div>
 
         <div class="career-positions reveal-right">
-          <div class="career-card">
+          <a href="/karriere/offene-stellen" class="career-card">
             <div class="career-card-info">
-              <span class="career-card-title" data-i18n="career.job1_title">SAP Consultant (m/w/d)</span>
+              <span class="career-card-title">Senior SAP Consultant SCM / IBP (m/w/d)</span>
               <div class="career-card-meta">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <span data-i18n="career.location">Wuppertal / Remote</span>
-                </span>
-                <span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
-                  <span data-i18n="career.fulltime">Vollzeit</span>
-                </span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Wuppertal / Remote</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg> Vollzeit</span>
               </div>
             </div>
-            <span class="career-card-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </span>
-          </div>
-
-          <div class="career-card">
+            <span class="career-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
+          <a href="/karriere/offene-stellen" class="career-card">
             <div class="career-card-info">
-              <span class="career-card-title" data-i18n="career.job2_title">Cybersecurity Analyst (m/w/d)</span>
+              <span class="career-card-title">Senior SAP Consultant PP/DS (m/w/d)</span>
               <div class="career-card-meta">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <span data-i18n="career.location">Wuppertal / Remote</span>
-                </span>
-                <span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
-                  <span data-i18n="career.fulltime">Vollzeit</span>
-                </span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Wuppertal / Remote</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg> Vollzeit</span>
               </div>
             </div>
-            <span class="career-card-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </span>
-          </div>
-
-          <div class="career-card">
+            <span class="career-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
+          <a href="/karriere/offene-stellen" class="career-card">
             <div class="career-card-info">
-              <span class="career-card-title" data-i18n="career.job3_title">Data Science Engineer (m/w/d)</span>
+              <span class="career-card-title">Developer SAP Cloud / Fiori / ABAP (m/w/d)</span>
               <div class="career-card-meta">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <span data-i18n="career.location">Wuppertal / Remote</span>
-                </span>
-                <span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
-                  <span data-i18n="career.fulltime">Vollzeit</span>
-                </span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Wuppertal / Remote</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg> Vollzeit</span>
               </div>
             </div>
-            <span class="career-card-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </span>
-          </div>
+            <span class="career-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
         </div>
       </div>
     </div>
@@ -444,10 +308,9 @@
         <div class="contact-form-wrap">
           <div class="reveal-up">
             <p class="section-eyebrow" data-i18n="contact.eyebrow">Kontakt</p>
-            <h2 class="section-headline section-headline--light" data-i18n="contact.headline">Starten Sie Ihr Projekt</h2>
-            <p class="section-sub section-sub--light" style="margin-bottom:2rem;" data-i18n="contact.sub">Vereinbaren Sie noch heute ein kostenloses Erstgespräch.</p>
+            <h2 class="section-headline section-headline--light"><%= pages.homepage.ctaHeadline || 'Starten Sie Ihr Projekt' %></h2>
+            <p class="section-sub section-sub--light" style="margin-bottom:2rem;"><%= pages.homepage.ctaSubtext || 'Vereinbaren Sie noch heute ein kostenloses Erstgespräch.' %></p>
           </div>
-
           <form class="contact-form reveal-up" id="contactForm" novalidate>
             <div class="form-row">
               <div class="form-field">
@@ -489,15 +352,11 @@
           </div>
           <div class="contact-info-block">
             <p class="contact-info-label" data-i18n="contact.phone_label">Telefon</p>
-            <p class="contact-info-value">
-              <a href="tel:+4920274722117">+49 (0)202 74 72 21 17</a>
-            </p>
+            <p class="contact-info-value"><a href="tel:+4920274722117">+49 (0)202 74 72 21 17</a></p>
           </div>
           <div class="contact-info-block">
             <p class="contact-info-label" data-i18n="contact.email_label">E-Mail</p>
-            <p class="contact-info-value">
-              <a href="mailto:info@acopa.de">info@acopa.de</a>
-            </p>
+            <p class="contact-info-value"><a href="mailto:info@acopa.de">info@acopa.de</a></p>
           </div>
           <div class="contact-socials">
             <a href="https://www.linkedin.com/company/acopa" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
@@ -514,58 +373,4 @@
 
 </main>
 
-<!-- ── FOOTER ─────────────────────────────────────────────── -->
-<footer class="site-footer" aria-label="Footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="/assets/AcopaLogo.png" alt="ACOPA" class="footer-logo">
-        <p class="footer-tagline" data-i18n="footer.tagline">Mehrwert durch digitale Prozesse.</p>
-      </div>
-
-      <nav class="footer-col" aria-label="Leistungen">
-        <p class="footer-col-title" data-i18n="footer.services">Leistungen</p>
-        <a href="#services" class="footer-link" data-i18n="services.sap_title">SAP Consulting</a>
-        <a href="#services" class="footer-link" data-i18n="services.digital_title">Digitalisierung</a>
-        <a href="#services" class="footer-link" data-i18n="services.cyber_title">Cybersecurity</a>
-        <a href="#services" class="footer-link" data-i18n="services.green_title">Green Tech</a>
-        <a href="#services" class="footer-link" data-i18n="services.supply_title">Supply Chain</a>
-      </nav>
-
-      <nav class="footer-col" aria-label="Unternehmen">
-        <p class="footer-col-title" data-i18n="footer.company">Unternehmen</p>
-        <a href="#about"   class="footer-link" data-i18n="nav.about">Über uns</a>
-        <a href="#clients" class="footer-link" data-i18n="nav.clients">Kunden</a>
-        <a href="#news"    class="footer-link" data-i18n="nav.news">News</a>
-        <a href="#career"  class="footer-link" data-i18n="nav.career">Karriere</a>
-      </nav>
-
-      <nav class="footer-col" aria-label="Kontakt">
-        <p class="footer-col-title" data-i18n="nav.contact">Kontakt</p>
-        <a href="tel:+4920274722117" class="footer-link">+49 (0)202 74 72 21 17</a>
-        <a href="mailto:info@acopa.de" class="footer-link">info@acopa.de</a>
-        <a href="#" class="footer-link" data-i18n="footer.impressum">Impressum</a>
-        <a href="#" class="footer-link" data-i18n="footer.privacy">Datenschutz</a>
-      </nav>
-    </div>
-
-    <div class="footer-bottom">
-      <p class="footer-copy" data-i18n="footer.copyright">© 2026 ACOPA GmbH & Co. KG. Alle Rechte vorbehalten.</p>
-      <div class="footer-legal">
-        <a href="#" data-i18n="footer.impressum">Impressum</a>
-        <a href="#" data-i18n="footer.privacy">Datenschutz</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- GSAP from CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-<!-- App Scripts -->
-<script src="/js/main.js"></script>
-<script src="/js/animations.js"></script>
-
-</body>
-</html>
+<%- include('partials/_footer') %>

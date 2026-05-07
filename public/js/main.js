@@ -293,6 +293,17 @@ function initNav() {
         document.body.style.overflow = '';
       });
     });
+
+    // Accordion toggles for mobile sub-menus
+    mobileMenu.querySelectorAll('[data-mobile-toggle]').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const targetId = toggle.dataset.mobileToggle;
+        const sub = document.getElementById(targetId);
+        if (!sub) return;
+        const isOpen = sub.classList.toggle('open');
+        toggle.classList.toggle('open', isOpen);
+      });
+    });
   }
 
   // Language buttons
@@ -364,7 +375,7 @@ async function loadNews() {
           <p class="news-card-excerpt">${escapeHTML((post.excerpt && post.excerpt[lang]) || (post.content && post.content[lang] && post.content[lang].substring(0, 120)) || '')}</p>
           <div class="news-card-footer">
             <span class="news-card-author">${escapeHTML(post.author)}</span>
-            <a href="#" class="news-card-link">
+            <a href="/news/${escapeHTML(post.slug)}" class="news-card-link">
               ${escapeHTML(t.read_more)}
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
             </a>
@@ -425,6 +436,19 @@ function initContactForm() {
   });
 }
 
+// ── Cookie Banner ─────────────────────────────────────────────
+function initCookieBanner() {
+  if (localStorage.getItem('cookie-consent')) return;
+  const banner = document.getElementById('cookieBanner');
+  const btn    = document.getElementById('cookieAccept');
+  if (!banner) return;
+  setTimeout(() => banner.classList.add('visible'), 800);
+  btn.addEventListener('click', () => {
+    localStorage.setItem('cookie-consent', '1');
+    banner.classList.remove('visible');
+  });
+}
+
 // ── Init ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const lang = getCurrentLang();
@@ -432,4 +456,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   loadNews();
   initContactForm();
+  initCookieBanner();
 });

@@ -442,6 +442,136 @@ ul { list-style: none; }
 .toast.error   { border-left: 3px solid var(--a-danger); }
 .toast svg { width: 16px; height: 16px; flex-shrink: 0; }
 
+/* ── Tabs ─────────────────────────────────────────────────── */
+.admin-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--a-white);
+  border-bottom: 1px solid var(--a-gray-200);
+  padding: 0 1.75rem;
+  overflow-x: auto;
+}
+.admin-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.1rem;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--a-gray-500);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition), border-color var(--transition);
+  margin-bottom: -1px;
+}
+.admin-tab:hover { color: var(--a-gray-900); }
+.admin-tab.active { color: var(--a-primary); border-bottom-color: var(--a-primary); }
+.tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 0.35rem;
+  background: var(--a-gray-100);
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--a-gray-700);
+}
+.admin-tab.active .tab-badge { background: rgba(164,196,0,0.15); color: var(--a-primary-d); }
+
+/* ── Single-panel layout ────────────────────────────────── */
+.admin-panels--single { grid-template-columns: 1fr !important; }
+
+/* ── Pages grid ─────────────────────────────────────────── */
+.pages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+.page-link-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--a-surface);
+  border: 1px solid var(--a-gray-200);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--a-gray-900);
+  transition: border-color var(--transition), background var(--transition), transform var(--transition);
+}
+.page-link-card:hover {
+  border-color: var(--a-primary);
+  background: rgba(164,196,0,0.06);
+  transform: translateY(-1px);
+}
+.page-link-card svg { color: var(--a-gray-500); flex-shrink: 0; }
+.page-link-name { font-size: 0.82rem; font-weight: 600; }
+.page-link-url  { font-size: 0.72rem; color: var(--a-gray-500); font-family: 'JetBrains Mono', monospace; }
+
+/* ── Admin view-site link ───────────────────────────────── */
+.admin-view-site {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--a-gray-500);
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--a-gray-200);
+  border-radius: var(--radius);
+  transition: color var(--transition), border-color var(--transition);
+}
+.admin-view-site:hover { color: var(--a-primary); border-color: var(--a-primary); }
+
+/* ── Panel divider ──────────────────────────────────────── */
+.panel-divider { border: none; border-top: 1px solid var(--a-gray-200); margin: 1.25rem 0; }
+
+/* ── Markdown preview ────────────────────────────────────── */
+.a-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+.a-label-row .a-label { margin-bottom: 0; }
+
+.a-preview-btn {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--a-primary-d);
+  background: rgba(164,196,0,0.1);
+  border: 1px solid rgba(164,196,0,0.25);
+  border-radius: 5px;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.a-preview-btn:hover { background: rgba(164,196,0,0.2); }
+
+.a-md-preview {
+  border: 1.5px solid var(--a-gray-200);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  min-height: 120px;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--a-gray-900);
+  background: var(--a-surface);
+}
+.a-md-preview h1,.a-md-preview h2,.a-md-preview h3 { font-weight: 700; margin: 0.75rem 0 0.35rem; }
+.a-md-preview p  { margin: 0.4rem 0; }
+.a-md-preview ul,.a-md-preview ol { padding-left: 1.25rem; margin: 0.4rem 0; }
+.a-md-preview strong { font-weight: 700; }
+.a-md-preview em { font-style: italic; }
+
 /* ── Misc ─────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .admin-panels { grid-template-columns: 1fr; }

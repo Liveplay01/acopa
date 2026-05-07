@@ -1,0 +1,83 @@
+<!-- Mobile Overlay Nav -->
+<div class="nav-mobile" id="navMobile" role="dialog" aria-label="Navigation">
+  <div class="nav-mobile-section">
+    <a href="/" class="nav-link">Home</a>
+
+    <div class="nav-mobile-group">
+      <button class="nav-mobile-toggle" data-mobile-toggle="mob-acopa">
+        ACOPA
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3l3 3 3-3"/></svg>
+      </button>
+      <div class="nav-mobile-sub" id="mob-acopa">
+        <a href="/acopa">Über uns / Essenz</a>
+        <a href="/acopa/netzwerk">Netzwerk</a>
+        <a href="/acopa/erfolgsgeschichte">Erfolgsgeschichte</a>
+        <a href="/acopa/referenzen">Referenzen</a>
+      </div>
+    </div>
+
+    <div class="nav-mobile-group">
+      <button class="nav-mobile-toggle" data-mobile-toggle="mob-service">
+        Service
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3l3 3 3-3"/></svg>
+      </button>
+      <div class="nav-mobile-sub" id="mob-service">
+        <a href="/service/sap-beratung">SAP Beratung</a>
+        <a href="/service/digitalisierung">Digitalisierung</a>
+        <a href="/service/supply-chain">Supply Chain</a>
+        <a href="/service/cybersecurity">Cybersecurity</a>
+        <a href="/service/sustainability">Green Tech</a>
+      </div>
+    </div>
+
+    <a href="/karriere" class="nav-link" data-i18n="nav.career">Karriere</a>
+    <a href="/news" class="nav-link" data-i18n="nav.news">News</a>
+    <a href="/kontakt" class="nav-link" data-i18n="nav.contact">Kontakt</a>
+    <a href="/kontakt" class="btn btn-primary" data-i18n="nav.cta">Kostenlose Beratung</a>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav id="navbar" class="navbar" role="navigation" aria-label="Hauptnavigation">
+  <a href="/" class="nav-brand" aria-label="ACOPA – Startseite">
+    <img src="/assets/AcopaLogo.png" alt="ACOPA Logo" class="nav-logo">
+  </a>
+
+  <div class="nav-links">
+    <div class="nav-item">
+      <a href="/acopa" class="nav-link nav-link--has-dropdown">ACOPA</a>
+      <div class="nav-dropdown">
+        <a href="/acopa" class="nav-dropdown-link">Über uns</a>
+        <a href="/acopa/netzwerk" class="nav-dropdown-link">Netzwerk</a>
+        <a href="/acopa/erfolgsgeschichte" class="nav-dropdown-link">Erfolgsgeschichte</a>
+        <a href="/acopa/referenzen" class="nav-dropdown-link">Referenzen</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <a href="/service" class="nav-link nav-link--has-dropdown">Service</a>
+      <div class="nav-dropdown">
+        <a href="/service/sap-beratung" class="nav-dropdown-link">SAP Beratung</a>
+        <a href="/service/digitalisierung" class="nav-dropdown-link">Digitalisierung</a>
+        <a href="/service/supply-chain" class="nav-dropdown-link">Supply Chain</a>
+        <a href="/service/cybersecurity" class="nav-dropdown-link">Cybersecurity</a>
+        <a href="/service/sustainability" class="nav-dropdown-link">Green Tech</a>
+      </div>
+    </div>
+
+    <a href="/karriere" class="nav-link" data-i18n="nav.career">Karriere</a>
+    <a href="/news" class="nav-link" data-i18n="nav.news">News</a>
+    <a href="/kontakt" class="nav-link" data-i18n="nav.contact">Kontakt</a>
+  </div>
+
+  <div class="nav-actions">
+    <div class="lang-toggle" role="group" aria-label="Sprache wählen">
+      <button class="lang-btn active" data-lang-btn="de" aria-label="Deutsch">DE</button>
+      <button class="lang-btn"        data-lang-btn="en" aria-label="English">EN</button>
+    </div>
+    <a href="/kontakt" class="btn btn-primary nav-cta" data-i18n="nav.cta">Kostenlose Beratung</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>

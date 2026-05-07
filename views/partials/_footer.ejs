@@ -1,0 +1,62 @@
+<footer class="site-footer" aria-label="Footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="/assets/AcopaLogo.png" alt="ACOPA" class="footer-logo">
+        <p class="footer-tagline"><%= (pages && pages.footer && pages.footer.tagline) ? pages.footer.tagline : 'Mehrwert durch digitale Prozesse.' %></p>
+        <p class="footer-tagline" style="margin-top:0.25rem;font-size:0.7rem;letter-spacing:0.08em;opacity:0.4;text-transform:uppercase;">Digital · Sustainable · Passionately Curious</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Leistungen">
+        <p class="footer-col-title" data-i18n="footer.services">Leistungen</p>
+        <a href="/service/sap-beratung"    class="footer-link">SAP Consulting</a>
+        <a href="/service/digitalisierung" class="footer-link">Digitalisierung</a>
+        <a href="/service/cybersecurity"   class="footer-link">Cybersecurity</a>
+        <a href="/service/sustainability"  class="footer-link">Green Tech</a>
+        <a href="/service/supply-chain"    class="footer-link">Supply Chain</a>
+      </nav>
+
+      <nav class="footer-col" aria-label="Unternehmen">
+        <p class="footer-col-title" data-i18n="footer.company">Unternehmen</p>
+        <a href="/acopa"              class="footer-link">Über uns</a>
+        <a href="/acopa/referenzen"   class="footer-link">Kunden</a>
+        <a href="/news"               class="footer-link">News</a>
+        <a href="/karriere"           class="footer-link">Karriere</a>
+      </nav>
+
+      <nav class="footer-col" aria-label="Kontakt">
+        <p class="footer-col-title" data-i18n="nav.contact">Kontakt</p>
+        <a href="tel:+4920274722117"    class="footer-link">+49 (0)202 74 72 21 17</a>
+        <a href="mailto:info@acopa.de"  class="footer-link">info@acopa.de</a>
+        <a href="/impressum"  class="footer-link" data-i18n="footer.impressum">Impressum</a>
+        <a href="/datenschutz" class="footer-link" data-i18n="footer.privacy">Datenschutz</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy" data-i18n="footer.copyright">© 2026 ACOPA GmbH & Co. KG. Alle Rechte vorbehalten.</p>
+      <div class="footer-legal">
+        <a href="/impressum"   data-i18n="footer.impressum">Impressum</a>
+        <a href="/datenschutz" data-i18n="footer.privacy">Datenschutz</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cookie Banner -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie-Hinweis" aria-live="polite">
+  <div class="cookie-banner-inner">
+    <p class="cookie-text">
+      Diese Website verwendet ausschließlich technisch notwendige Cookies – keine Tracking- oder Marketing-Cookies.
+      <a href="/datenschutz" class="cookie-link">Datenschutzerklärung</a>
+    </p>
+    <button class="cookie-accept" id="cookieAccept" aria-label="Cookie-Hinweis schließen">Verstanden</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/animations.js"></script>
+</body>
+</html>

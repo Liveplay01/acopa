@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ACOPA Admin – Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/admin.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 </head>
 <body class="admin-page">
 
@@ -18,190 +19,502 @@
     <span class="admin-header-title">Content Management</span>
   </div>
   <div class="admin-header-actions">
+    <a href="/" target="_blank" class="admin-view-site">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Website ansehen
+    </a>
     <span class="admin-user-badge">Administrator</span>
     <a href="/admin/logout" class="logout-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
       Abmelden
     </a>
   </div>
 </header>
 
+<!-- Tab Navigation -->
+<nav class="admin-tabs">
+  <button class="admin-tab active" data-tab="news">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    News & Beiträge
+    <span class="tab-badge" id="tabBadgeNews">–</span>
+  </button>
+  <button class="admin-tab" data-tab="jobs">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+    Offene Stellen
+    <span class="tab-badge" id="tabBadgeJobs">–</span>
+  </button>
+  <button class="admin-tab" data-tab="settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    Einstellungen
+  </button>
+  <button class="admin-tab" data-tab="pages">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    Seiten
+  </button>
+</nav>
+
 <main class="admin-main">
 
-  <!-- Stats -->
-  <div class="admin-stats" id="adminStats">
-    <div class="admin-stat-card">
-      <span class="admin-stat-val" id="statTotal">–</span>
-      <span class="admin-stat-label">Gesamt</span>
+  <!-- ── Tab: News ────────────────────────────────────────────── -->
+  <div id="tab-news" class="tab-pane active">
+
+    <!-- Stats -->
+    <div class="admin-stats">
+      <div class="admin-stat-card">
+        <span class="admin-stat-val" id="statTotal">–</span>
+        <span class="admin-stat-label">Gesamt</span>
+      </div>
+      <div class="admin-stat-card">
+        <span class="admin-stat-val green" id="statPublished">–</span>
+        <span class="admin-stat-label">Veröffentlicht</span>
+      </div>
+      <div class="admin-stat-card">
+        <span class="admin-stat-val" id="statDraft">–</span>
+        <span class="admin-stat-label">Entwürfe</span>
+      </div>
     </div>
-    <div class="admin-stat-card">
-      <span class="admin-stat-val green" id="statPublished">–</span>
-      <span class="admin-stat-label">Veröffentlicht</span>
-    </div>
-    <div class="admin-stat-card">
-      <span class="admin-stat-val" id="statDraft">–</span>
-      <span class="admin-stat-label">Entwürfe</span>
+
+    <div class="admin-panels">
+      <!-- Posts Table -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <span class="panel-title">Alle Beiträge</span>
+          <span class="panel-badge" id="postsCount">0</span>
+        </div>
+        <div class="posts-table-wrap">
+          <table class="posts-table">
+            <thead>
+              <tr>
+                <th>Titel</th>
+                <th>Kategorie</th>
+                <th>Autor</th>
+                <th>Datum</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="postsTableBody">
+              <tr><td colspan="6" class="empty-state">Beiträge werden geladen…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Create/Edit Form -->
+      <div class="admin-panel" id="formPanel">
+        <div class="panel-header">
+          <span class="panel-title" id="formTitle">Neuer Beitrag</span>
+          <button class="a-btn a-btn-secondary" id="formCancelBtn" style="display:none;" onclick="resetForm()">Abbrechen</button>
+        </div>
+
+        <form class="a-form" id="postForm" novalidate>
+          <input type="hidden" id="editingId" value="">
+
+          <div class="a-form-field">
+            <label class="a-label" for="titleDe">Titel <span class="a-lang-hint">DE</span></label>
+            <input class="a-input" id="titleDe" name="titleDe" type="text" placeholder="Titel auf Deutsch" required>
+          </div>
+          <div class="a-form-field">
+            <label class="a-label" for="titleEn">Title <span class="a-lang-hint">EN</span></label>
+            <input class="a-input" id="titleEn" name="titleEn" type="text" placeholder="Title in English" required>
+          </div>
+          <div class="a-form-field">
+            <label class="a-label" for="excerptDe">Kurzbeschreibung <span class="a-lang-hint">DE</span></label>
+            <textarea class="a-textarea" id="excerptDe" name="excerptDe" placeholder="Kurze Zusammenfassung auf Deutsch" style="min-height:70px;"></textarea>
+          </div>
+          <div class="a-form-field">
+            <label class="a-label" for="excerptEn">Short Summary <span class="a-lang-hint">EN</span></label>
+            <textarea class="a-textarea" id="excerptEn" name="excerptEn" placeholder="Short summary in English" style="min-height:70px;"></textarea>
+          </div>
+          <div class="a-form-field">
+            <div class="a-label-row">
+              <label class="a-label" for="contentDe">Inhalt <span class="a-lang-hint">DE</span></label>
+              <button type="button" class="a-preview-btn" onclick="togglePreview('contentDe','previewDe')">Vorschau</button>
+            </div>
+            <textarea class="a-textarea" id="contentDe" name="contentDe" placeholder="Vollständiger Artikel auf Deutsch&#10;&#10;Markdown wird unterstützt: **fett**, *kursiv*, ## Überschrift"></textarea>
+            <div class="a-md-preview" id="previewDe" style="display:none;"></div>
+          </div>
+          <div class="a-form-field">
+            <div class="a-label-row">
+              <label class="a-label" for="contentEn">Content <span class="a-lang-hint">EN</span></label>
+              <button type="button" class="a-preview-btn" onclick="togglePreview('contentEn','previewEn')">Preview</button>
+            </div>
+            <textarea class="a-textarea" id="contentEn" name="contentEn" placeholder="Full article in English&#10;&#10;Markdown supported: **bold**, *italic*, ## Heading"></textarea>
+            <div class="a-md-preview" id="previewEn" style="display:none;"></div>
+          </div>
+          <div class="a-form-field">
+            <label class="a-label" for="imageUrl">Bild-URL (optional)</label>
+            <input class="a-input" id="imageUrl" name="imageUrl" type="url" placeholder="https://images.unsplash.com/...">
+          </div>
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="category">Kategorie</label>
+              <select class="a-select" id="category" name="category">
+                <option value="SAP Consulting">SAP Consulting</option>
+                <option value="Digitalisierung">Digitalisierung</option>
+                <option value="Prozessberatung">Prozessberatung</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Green Tech">Green Tech</option>
+                <option value="Supply Chain">Supply Chain</option>
+                <option value="Change Management">Change Management</option>
+                <option value="Allgemein">Allgemein</option>
+              </select>
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="author">Autor</label>
+              <input class="a-input" id="author" name="author" type="text" placeholder="Vor- und Nachname">
+            </div>
+          </div>
+          <label class="a-checkbox-row">
+            <input type="checkbox" id="published" name="published" checked>
+            <span class="a-checkbox-label">Sofort veröffentlichen</span>
+          </label>
+          <div class="a-form-actions">
+            <button type="submit" class="a-btn a-btn-primary" id="formSubmitBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Beitrag speichern
+            </button>
+            <span class="a-form-feedback" id="formFeedback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Gespeichert!
+            </span>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
-  <!-- Panels -->
-  <div class="admin-panels">
+  <!-- ── Tab: Jobs ────────────────────────────────────────────── -->
+  <div id="tab-jobs" class="tab-pane" style="display:none;">
 
-    <!-- Left: Posts Table -->
-    <div class="admin-panel">
-      <div class="panel-header">
-        <span class="panel-title">Alle Beiträge</span>
-        <span class="panel-badge" id="postsCount">0</span>
-      </div>
-      <div class="posts-table-wrap">
-        <table class="posts-table">
-          <thead>
-            <tr>
-              <th>Titel</th>
-              <th>Kategorie</th>
-              <th>Autor</th>
-              <th>Datum</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="postsTableBody">
-            <tr><td colspan="6" class="empty-state">Beiträge werden geladen…</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Right: Create/Edit Form -->
-    <div class="admin-panel" id="formPanel">
-      <div class="panel-header">
-        <span class="panel-title" id="formTitle">Neuer Beitrag</span>
-        <button class="a-btn a-btn-secondary" id="formCancelBtn" style="display:none;" onclick="resetForm()">
-          Abbrechen
-        </button>
+    <div class="admin-panels">
+      <!-- Jobs Table -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <span class="panel-title">Stellenangebote</span>
+          <span class="panel-badge" id="jobsCount">0</span>
+        </div>
+        <div class="posts-table-wrap">
+          <table class="posts-table">
+            <thead>
+              <tr>
+                <th>Titel</th>
+                <th>Ort</th>
+                <th>Typ</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="jobsTableBody">
+              <tr><td colspan="5" class="empty-state">Stellen werden geladen…</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <form class="a-form" id="postForm" novalidate>
-        <input type="hidden" id="editingId" value="">
-
-        <!-- Titel DE -->
-        <div class="a-form-field">
-          <label class="a-label" for="titleDe">
-            Titel
-            <span class="a-lang-hint">DE</span>
-          </label>
-          <input class="a-input" id="titleDe" name="titleDe" type="text" placeholder="Titel auf Deutsch" required>
+      <!-- Job Form -->
+      <div class="admin-panel" id="jobFormPanel">
+        <div class="panel-header">
+          <span class="panel-title" id="jobFormTitle">Neue Stelle</span>
+          <button class="a-btn a-btn-secondary" id="jobFormCancelBtn" style="display:none;" onclick="resetJobForm()">Abbrechen</button>
         </div>
 
-        <!-- Titel EN -->
-        <div class="a-form-field">
-          <label class="a-label" for="titleEn">
-            Title
-            <span class="a-lang-hint">EN</span>
-          </label>
-          <input class="a-input" id="titleEn" name="titleEn" type="text" placeholder="Title in English" required>
-        </div>
+        <form class="a-form" id="jobForm" novalidate>
+          <input type="hidden" id="editingJobId" value="">
 
-        <!-- Zusammenfassung DE -->
-        <div class="a-form-field">
-          <label class="a-label" for="excerptDe">
-            Kurzbeschreibung
-            <span class="a-lang-hint">DE</span>
-          </label>
-          <textarea class="a-textarea" id="excerptDe" name="excerptDe" placeholder="Kurze Zusammenfassung auf Deutsch" style="min-height:70px;"></textarea>
-        </div>
-
-        <!-- Zusammenfassung EN -->
-        <div class="a-form-field">
-          <label class="a-label" for="excerptEn">
-            Short Summary
-            <span class="a-lang-hint">EN</span>
-          </label>
-          <textarea class="a-textarea" id="excerptEn" name="excerptEn" placeholder="Short summary in English" style="min-height:70px;"></textarea>
-        </div>
-
-        <!-- Inhalt DE -->
-        <div class="a-form-field">
-          <label class="a-label" for="contentDe">
-            Inhalt
-            <span class="a-lang-hint">DE</span>
-          </label>
-          <textarea class="a-textarea" id="contentDe" name="contentDe" placeholder="Vollständiger Artikel auf Deutsch"></textarea>
-        </div>
-
-        <!-- Inhalt EN -->
-        <div class="a-form-field">
-          <label class="a-label" for="contentEn">
-            Content
-            <span class="a-lang-hint">EN</span>
-          </label>
-          <textarea class="a-textarea" id="contentEn" name="contentEn" placeholder="Full article in English"></textarea>
-        </div>
-
-        <!-- Bild-URL -->
-        <div class="a-form-field">
-          <label class="a-label" for="imageUrl">Bild-URL (optional)</label>
-          <input class="a-input" id="imageUrl" name="imageUrl" type="url" placeholder="https://images.unsplash.com/...">
-        </div>
-
-        <!-- Kategorie + Autor -->
-        <div class="a-form-row">
           <div class="a-form-field">
-            <label class="a-label" for="category">Kategorie</label>
-            <select class="a-select" id="category" name="category">
-              <option value="SAP Consulting">SAP Consulting</option>
-              <option value="Digitalisierung">Digitalisierung</option>
-              <option value="Prozessberatung">Prozessberatung</option>
-              <option value="Cybersecurity">Cybersecurity</option>
-              <option value="Green Tech">Green Tech</option>
-              <option value="Supply Chain">Supply Chain</option>
-              <option value="UI/UX Design">UI/UX Design</option>
-              <option value="Change Management">Change Management</option>
-              <option value="Allgemein">Allgemein</option>
-            </select>
+            <label class="a-label" for="jobTitle">Stellentitel</label>
+            <input class="a-input" id="jobTitle" type="text" placeholder="z.B. Senior SAP Consultant SCM (m/w/d)" required>
+          </div>
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="jobBadge">Badge</label>
+              <select class="a-select" id="jobBadge">
+                <option value="Vollzeit">Vollzeit</option>
+                <option value="Teilzeit">Teilzeit</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Praktikum">Praktikum</option>
+              </select>
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="jobLocation">Standort</label>
+              <input class="a-input" id="jobLocation" type="text" placeholder="Wuppertal / Remote">
+            </div>
+          </div>
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="jobStart">Einstieg</label>
+              <input class="a-input" id="jobStart" type="text" placeholder="Ab sofort">
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="jobEmailSubject">E-Mail Betreff</label>
+              <input class="a-input" id="jobEmailSubject" type="text" placeholder="Bewerbung …">
+            </div>
           </div>
           <div class="a-form-field">
-            <label class="a-label" for="author">Autor</label>
-            <input class="a-input" id="author" name="author" type="text" placeholder="Vor- und Nachname">
+            <label class="a-label" for="jobDescription">Beschreibung</label>
+            <textarea class="a-textarea" id="jobDescription" placeholder="Aufgaben und Anforderungen…"></textarea>
           </div>
-        </div>
-
-        <!-- Veröffentlichen -->
-        <label class="a-checkbox-row">
-          <input type="checkbox" id="published" name="published" checked>
-          <span class="a-checkbox-label">Sofort veröffentlichen</span>
-        </label>
-
-        <!-- Submit -->
-        <div class="a-form-actions">
-          <button type="submit" class="a-btn a-btn-primary" id="formSubmitBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/>
-              <polyline points="17 21 17 13 7 13 7 21"/>
-              <polyline points="7 3 7 8 15 8"/>
-            </svg>
-            Beitrag speichern
-          </button>
-          <span class="a-form-feedback" id="formFeedback">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-            Gespeichert!
-          </span>
-        </div>
-      </form>
+          <div class="a-form-field">
+            <label class="a-label" for="jobTags">Tags <span style="font-weight:400;opacity:0.6;">(kommagetrennt)</span></label>
+            <input class="a-input" id="jobTags" type="text" placeholder="SAP IBP, Supply Chain, Projektleitung">
+          </div>
+          <label class="a-checkbox-row">
+            <input type="checkbox" id="jobPublished" checked>
+            <span class="a-checkbox-label">Stelle veröffentlichen</span>
+          </label>
+          <div class="a-form-actions">
+            <button type="submit" class="a-btn a-btn-primary" id="jobFormSubmitBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Stelle speichern
+            </button>
+            <span class="a-form-feedback" id="jobFormFeedback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Gespeichert!
+            </span>
+          </div>
+        </form>
+      </div>
     </div>
-
   </div>
+
+  <!-- ── Tab: Einstellungen ───────────────────────────────────── -->
+  <div id="tab-settings" class="tab-pane" style="display:none;">
+    <div class="admin-panels admin-panels--single">
+      <div class="admin-panel" style="max-width:640px;">
+        <div class="panel-header">
+          <span class="panel-title">Unternehmensdaten</span>
+        </div>
+
+        <form class="a-form" id="settingsForm" novalidate>
+          <div class="a-form-field">
+            <label class="a-label" for="settingName">Firmenname</label>
+            <input class="a-input" id="settingName" type="text" placeholder="ACOPA GmbH & Co. KG">
+          </div>
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="settingAddress">Straße</label>
+              <input class="a-input" id="settingAddress" type="text" placeholder="Sternstraße 68">
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="settingCity">PLZ / Ort</label>
+              <input class="a-input" id="settingCity" type="text" placeholder="42275 Wuppertal">
+            </div>
+          </div>
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="settingPhone">Telefon</label>
+              <input class="a-input" id="settingPhone" type="tel" placeholder="+49 (0) 202 ...">
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="settingEmail">E-Mail Allgemein</label>
+              <input class="a-input" id="settingEmail" type="email" placeholder="info@acopa.de">
+            </div>
+          </div>
+          <div class="a-form-field">
+            <label class="a-label" for="settingEmailKarriere">E-Mail Karriere</label>
+            <input class="a-input" id="settingEmailKarriere" type="email" placeholder="karriere@acopa.de">
+          </div>
+
+          <div class="panel-divider"></div>
+          <p class="a-label" style="margin-bottom:0.75rem;">Social Media</p>
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="settingLinkedin">LinkedIn URL</label>
+              <input class="a-input" id="settingLinkedin" type="url" placeholder="https://linkedin.com/company/...">
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="settingXing">Xing URL</label>
+              <input class="a-input" id="settingXing" type="url" placeholder="https://xing.com/...">
+            </div>
+          </div>
+
+          <div class="a-form-actions">
+            <button type="submit" class="a-btn a-btn-primary" id="settingsSubmitBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Einstellungen speichern
+            </button>
+            <span class="a-form-feedback" id="settingsFeedback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Gespeichert!
+            </span>
+          </div>
+        </form>
+
+        <div class="panel-divider" style="margin:2rem 0;"></div>
+
+        <p class="panel-title" style="margin-bottom:1.25rem;">Passwort ändern</p>
+        <form class="a-form" id="pwForm" novalidate>
+          <div class="a-form-field">
+            <label class="a-label" for="pwCurrent">Aktuelles Passwort</label>
+            <input class="a-input" id="pwCurrent" type="password" placeholder="••••••••" autocomplete="current-password">
+          </div>
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="pwNext">Neues Passwort</label>
+              <input class="a-input" id="pwNext" type="password" placeholder="Mind. 8 Zeichen" autocomplete="new-password">
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="pwConfirm">Wiederholen</label>
+              <input class="a-input" id="pwConfirm" type="password" placeholder="••••••••" autocomplete="new-password">
+            </div>
+          </div>
+          <div class="a-form-actions">
+            <button type="submit" class="a-btn a-btn-secondary" id="pwSubmitBtn">Passwort ändern</button>
+            <span class="a-form-feedback" id="pwFeedback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Geändert!
+            </span>
+          </div>
+          <p class="a-form-error" id="pwError" style="display:none;color:#c53030;font-size:0.82rem;margin-top:0.5rem;"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Tab: Seiten ──────────────────────────────────────────── -->
+  <div id="tab-pages" class="tab-pane" style="display:none;">
+    <div class="admin-panels admin-panels--single">
+
+      <!-- Seiten-Inhalte Editor -->
+      <div class="admin-panel" style="max-width:700px;margin-bottom:1.5rem;">
+        <div class="panel-header">
+          <span class="panel-title">Seiteninhalte bearbeiten</span>
+        </div>
+        <form class="a-form" id="pagesForm" style="padding:1.5rem;" novalidate>
+          <p class="a-label" style="margin-bottom:1rem;font-size:0.75rem;color:var(--a-gray-500);">Startseite</p>
+
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="pgHeroTitle">Hero Zeile 1</label>
+              <input class="a-input" id="pgHeroTitle" type="text" placeholder="Mehrwert durch">
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="pgHeroAccent">Hero Zeile 2 (grün)</label>
+              <input class="a-input" id="pgHeroAccent" type="text" placeholder="digitale Prozesse.">
+            </div>
+          </div>
+          <div class="a-form-field">
+            <label class="a-label" for="pgHeroSub">Hero Untertitel</label>
+            <textarea class="a-textarea" id="pgHeroSub" style="min-height:70px;" placeholder="Kurzer einleitender Text unter der Hauptüberschrift"></textarea>
+          </div>
+
+          <div class="panel-divider" style="margin:1.25rem 0;"></div>
+          <p class="a-label" style="margin-bottom:1rem;font-size:0.75rem;color:var(--a-gray-500);">Kontakt-CTA Sektion</p>
+
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="pgCtaHeadline">CTA Überschrift</label>
+              <input class="a-input" id="pgCtaHeadline" type="text" placeholder="Starten Sie Ihr Projekt">
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="pgCtaSub">CTA Untertext</label>
+              <input class="a-input" id="pgCtaSub" type="text" placeholder="Vereinbaren Sie noch heute…">
+            </div>
+          </div>
+
+          <div class="panel-divider" style="margin:1.25rem 0;"></div>
+          <p class="a-label" style="margin-bottom:1rem;font-size:0.75rem;color:var(--a-gray-500);">Footer</p>
+
+          <div class="a-form-field">
+            <label class="a-label" for="pgFooterTagline">Footer Tagline</label>
+            <input class="a-input" id="pgFooterTagline" type="text" placeholder="Mehrwert durch digitale Prozesse.">
+          </div>
+
+          <div class="a-form-actions" style="margin-top:1.5rem;">
+            <button type="submit" class="a-btn a-btn-primary" id="pagesSubmitBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Inhalte speichern
+            </button>
+            <span class="a-form-feedback" id="pagesFeedback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Gespeichert!
+            </span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Seiten-Links -->
+      <div class="admin-panel" style="max-width:700px;">
+        <div class="panel-header">
+          <span class="panel-title">Alle Website-Seiten</span>
+        </div>
+        <p style="font-size:0.82rem;color:var(--a-gray-500);margin-bottom:1.5rem;">Klicken Sie auf eine Seite, um sie in einem neuen Tab zu öffnen.</p>
+        <div class="pages-grid">
+          <a href="/" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            <div><div class="page-link-name">Startseite</div><div class="page-link-url">/</div></div>
+          </a>
+          <a href="/service" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <div><div class="page-link-name">Leistungen Übersicht</div><div class="page-link-url">/service</div></div>
+          </a>
+          <a href="/service/sap-beratung" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <div><div class="page-link-name">SAP Beratung</div><div class="page-link-url">/service/sap-beratung</div></div>
+          </a>
+          <a href="/service/digitalisierung" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <div><div class="page-link-name">Digitalisierung</div><div class="page-link-url">/service/digitalisierung</div></div>
+          </a>
+          <a href="/service/supply-chain" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <div><div class="page-link-name">Supply Chain</div><div class="page-link-url">/service/supply-chain</div></div>
+          </a>
+          <a href="/service/cybersecurity" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <div><div class="page-link-name">Cybersecurity</div><div class="page-link-url">/service/cybersecurity</div></div>
+          </a>
+          <a href="/service/sustainability" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <div><div class="page-link-name">Green Tech</div><div class="page-link-url">/service/sustainability</div></div>
+          </a>
+          <a href="/acopa" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <div><div class="page-link-name">Über ACOPA</div><div class="page-link-url">/acopa</div></div>
+          </a>
+          <a href="/acopa/netzwerk" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <div><div class="page-link-name">Netzwerk</div><div class="page-link-url">/acopa/netzwerk</div></div>
+          </a>
+          <a href="/acopa/erfolgsgeschichte" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <div><div class="page-link-name">Erfolgsgeschichte</div><div class="page-link-url">/acopa/erfolgsgeschichte</div></div>
+          </a>
+          <a href="/acopa/referenzen" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <div><div class="page-link-name">Referenzen</div><div class="page-link-url">/acopa/referenzen</div></div>
+          </a>
+          <a href="/karriere" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+            <div><div class="page-link-name">Karriere</div><div class="page-link-url">/karriere</div></div>
+          </a>
+          <a href="/karriere/offene-stellen" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+            <div><div class="page-link-name">Offene Stellen</div><div class="page-link-url">/karriere/offene-stellen</div></div>
+          </a>
+          <a href="/news" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <div><div class="page-link-name">News & Insights</div><div class="page-link-url">/news</div></div>
+          </a>
+          <a href="/impressum" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div><div class="page-link-name">Impressum</div><div class="page-link-url">/impressum</div></div>
+          </a>
+          <a href="/datenschutz" target="_blank" class="page-link-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div><div class="page-link-name">Datenschutz</div><div class="page-link-url">/datenschutz</div></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <!-- Toast -->
 <div class="toast" id="toast" role="alert" aria-live="polite">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-    <polyline points="20 6 9 17 4 12"/>
-  </svg>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
   <span id="toastMsg"></span>
 </div>
 

@@ -1,0 +1,60 @@
+<%- include('../partials/_head', { title: post.title.de + ' – ACOPA GmbH', description: (post.excerpt && post.excerpt.de) || post.content.de.substring(0, 155) }) %>
+<%- include('../partials/_nav') %>
+
+<main id="main-content">
+
+  <section class="page-hero" style="min-height:40vh;">
+    <div class="page-hero-bg" style="background-image:url('<%= post.imageUrl %>')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-accent"></div>
+    <div class="page-hero-shape"></div>
+    <div class="container">
+      <nav class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/news">News</a><span>/</span><span><%= post.category %></span></nav>
+      <p class="section-eyebrow" style="color:var(--color-primary);margin-bottom:1rem;"><%= post.category %></p>
+      <h1 class="page-hero-title" style="max-width:800px;"><%= post.title.de %></h1>
+      <p class="page-hero-sub" style="max-width:640px;"><%= (post.excerpt && post.excerpt.de) || '' %></p>
+    </div>
+  </section>
+
+  <section class="post-section">
+    <div class="post-container">
+
+      <div class="post-meta" style="display:flex;align-items:center;gap:1.5rem;padding:1.5rem 0 2rem;border-bottom:1px solid var(--color-gray-200);margin-bottom:2.5rem;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--color-primary);display:flex;align-items:center;justify-content:center;font-size:var(--text-xs);font-weight:700;color:#fff;font-family:var(--font-mono);">
+            <%= post.author.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() %>
+          </div>
+          <div>
+            <div style="font-size:var(--text-sm);font-weight:600;color:var(--color-foreground);"><%= post.author %></div>
+            <div style="font-size:var(--text-xs);color:var(--color-gray-400);">ACOPA Experte</div>
+          </div>
+        </div>
+        <time datetime="<%= post.date %>" style="font-size:var(--text-sm);color:var(--color-gray-500);font-family:var(--font-mono);">
+          <%= new Date(post.date).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+        </time>
+        <span style="display:inline-flex;align-items:center;padding:0.25rem 0.75rem;background:var(--color-primary-light, rgba(164,196,0,0.12));color:var(--color-primary);border-radius:99px;font-size:var(--text-xs);font-weight:600;font-family:var(--font-mono);letter-spacing:0.04em;"><%= post.category %></span>
+      </div>
+
+      <div class="post-body" style="font-size:var(--text-base);color:var(--color-gray-700);line-height:1.85;max-width:100%;">
+        <% const paragraphs = post.content.de.split('\n\n'); %>
+        <% paragraphs.forEach(function(para) { %>
+          <% if (para.trim()) { %>
+            <p style="margin-bottom:1.5rem;"><%= para.trim() %></p>
+          <% } %>
+        <% }); %>
+      </div>
+
+      <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--color-gray-200);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <a href="/news" style="display:inline-flex;align-items:center;gap:0.5rem;font-size:var(--text-sm);font-weight:600;color:var(--color-gray-600);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='var(--color-gray-600)'">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 8H3M7 4L3 8l4 4"/></svg>
+          Alle Beiträge
+        </a>
+        <a href="/#contact" class="btn btn-primary" style="font-size:var(--text-sm);">Fragen? Kontakt aufnehmen</a>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<%- include('../partials/_footer') %>

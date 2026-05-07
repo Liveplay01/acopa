@@ -29,6 +29,7 @@
           <h2 class="section-headline" style="margin-bottom:2rem;">Wie können wir helfen?</h2>
 
           <form class="contact-form" id="contactForm" novalidate>
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
             <div class="cf-row">
               <div class="cf-field">
                 <label class="cf-label" for="cfName">Name <span class="cf-req">*</span></label>
@@ -124,6 +125,8 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               Antwort innerhalb von 24 Stunden garantiert
             </div>
+
+            <%- include('./partials/_social-icons', { socialClass: 'social-links--dark' }) %>
           </div>
         </div>
 

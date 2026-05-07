@@ -1151,6 +1151,12 @@ ul, ol { list-style: none; }
   font-size: var(--text-xs);
   color: rgba(255,255,255,0.2);
 }
+.footer-bottom-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
 .footer-legal {
   display: flex;
   gap: 1.5rem;
@@ -1161,6 +1167,24 @@ ul, ol { list-style: none; }
   transition: color var(--transition);
 }
 .footer-legal a:hover { color: var(--color-primary); }
+
+/* Social links layout variants */
+.social-links {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.social-links--footer .social-link {
+  width: 30px;
+  height: 30px;
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.08);
+}
+.social-links--dark .social-link {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+}
+.contact-info-card .social-links { margin-top: 1.5rem; }
 
 /* ── RESPONSIVE ───────────────────────────────────────────── */
 @media (max-width: 1024px) {

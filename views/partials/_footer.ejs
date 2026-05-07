@@ -35,9 +35,12 @@
 
     <div class="footer-bottom">
       <p class="footer-copy" data-i18n="footer.copyright">© 2026 ACOPA GmbH & Co. KG. Alle Rechte vorbehalten.</p>
-      <div class="footer-legal">
-        <a href="/impressum"   data-i18n="footer.impressum">Impressum</a>
-        <a href="/datenschutz" data-i18n="footer.privacy">Datenschutz</a>
+      <div class="footer-bottom-right">
+        <%- include('./_social-icons', { socialClass: 'social-links--footer' }) %>
+        <div class="footer-legal">
+          <a href="/impressum"   data-i18n="footer.impressum">Impressum</a>
+          <a href="/datenschutz" data-i18n="footer.privacy">Datenschutz</a>
+        </div>
       </div>
     </div>
   </div>

@@ -312,6 +312,7 @@
             <p class="section-sub section-sub--light" style="margin-bottom:2rem;"><%= pages.homepage.ctaSubtext || 'Vereinbaren Sie noch heute ein kostenloses Erstgespräch.' %></p>
           </div>
           <form class="contact-form reveal-up" id="contactForm" novalidate>
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
             <div class="form-row">
               <div class="form-field">
                 <label class="form-label" for="contactName" data-i18n="contact.name_label">Name</label>
@@ -359,12 +360,7 @@
             <p class="contact-info-value"><a href="mailto:info@acopa.de">info@acopa.de</a></p>
           </div>
           <div class="contact-socials">
-            <a href="https://www.linkedin.com/company/acopa" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="https://www.xing.com/companies/acopa" class="social-link" target="_blank" rel="noopener" aria-label="Xing">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.254.221.465.221h3.445c.528 0 .752-.315.96-.66l3.761-6.33-2.37-4.083c-.202-.349-.423-.008-.952-.008H3.648z"/></svg>
-            </a>
+            <%- include('partials/_social-icons') %>
           </div>
         </div>
       </div>

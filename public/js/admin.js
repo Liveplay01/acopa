@@ -306,6 +306,11 @@ async function loadSettings() {
     set('settingEmailKarriere', c.emailKarriere);
     set('settingLinkedin',      s.linkedin);
     set('settingXing',          s.xing);
+    set('settingInstagram',     s.instagram);
+    set('settingFacebook',      s.facebook);
+    set('settingYoutube',       s.youtube);
+    set('settingTwitter',       s.twitter);
+    set('settingKununu',        s.kununu);
   } catch (err) {
     console.error('[Admin] Failed to load settings:', err);
     showToast('Fehler beim Laden der Einstellungen.', 'error');
@@ -433,8 +438,13 @@ document.addEventListener('DOMContentLoaded', () => {
           emailKarriere: document.getElementById('settingEmailKarriere').value.trim(),
         },
         social: {
-          linkedin: document.getElementById('settingLinkedin').value.trim(),
-          xing:     document.getElementById('settingXing').value.trim(),
+          linkedin:  document.getElementById('settingLinkedin').value.trim(),
+          xing:      document.getElementById('settingXing').value.trim(),
+          instagram: document.getElementById('settingInstagram').value.trim(),
+          facebook:  document.getElementById('settingFacebook').value.trim(),
+          youtube:   document.getElementById('settingYoutube').value.trim(),
+          twitter:   document.getElementById('settingTwitter').value.trim(),
+          kununu:    document.getElementById('settingKununu').value.trim(),
         },
       };
       try {

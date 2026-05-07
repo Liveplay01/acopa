@@ -64,7 +64,11 @@ app.use(session({
   cookie: { httpOnly: true, secure: false, maxAge: 8 * 60 * 60 * 1000 },
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use((req, res, next) => { res.locals.pages = readPages(); next(); });
+app.use((req, res, next) => {
+  res.locals.pages    = readPages();
+  res.locals.settings = readSettings();
+  next();
+});
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function readPosts() {
@@ -110,6 +114,16 @@ function requireAuth(req, res, next) {
   res.redirect('/admin/login');
 }
 
+// ─── Rate limiter (in-memory, per IP) ────────────────────────────────────────
+const _rl = new Map();
+function rateLimit(ip, max = 5, windowMs = 60_000) {
+  const now = Date.now();
+  const hits = (_rl.get(ip) || []).filter(t => now - t < windowMs);
+  hits.push(now);
+  _rl.set(ip, hits);
+  return hits.length > max;
+}
+
 // ─── Public API ───────────────────────────────────────────────────────────────
 app.get('/api/posts', (req, res) => {
   const data = readPosts();
@@ -124,6 +138,9 @@ app.get('/api/posts/:id', (req, res) => {
 });
 
 app.post('/api/contact', async (req, res) => {
+  const ip = req.ip || req.socket.remoteAddress;
+  if (rateLimit(ip)) return res.status(429).json({ error: 'Zu viele Anfragen. Bitte warten.' });
+  if (req.body.website) return res.json({ success: true }); // honeypot
   const { name, email, subject, message } = req.body;
   if (!name || !email || !message) {
     return res.status(400).json({ error: 'Missing required fields' });

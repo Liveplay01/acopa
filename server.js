@@ -53,6 +53,7 @@ app.use(helmet({
     },
   },
 }));
+app.set('trust proxy', 1);
 app.use(cors({ origin: false }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -374,8 +375,9 @@ app.get('/impressum',  (req, res) => res.render('impressum'));
 app.get('/datenschutz',(req, res) => res.render('datenschutz'));
 
 // ─── Start ────────────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`ACOPA Website running at http://localhost:${PORT}`);
-  console.log(`Admin panel: http://localhost:${PORT}/admin`);
-  console.log(`Default password: ${process.env.ADMIN_PASSWORD || 'acopa2026'}`);
+process.on('uncaughtException', err => console.error('[Fatal]', err));
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`ACOPA Website running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });

@@ -157,6 +157,7 @@
       email:   document.getElementById('cfEmail').value.trim(),
       subject: document.getElementById('cfSubject').value,
       message: document.getElementById('cfMessage').value.trim(),
+      website: document.querySelector('[name="website"]')?.value || '',
     };
 
     try {

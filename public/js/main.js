@@ -411,6 +411,7 @@ function initContactForm() {
       email:   form.email.value.trim(),
       subject: form.subject.value.trim(),
       message: form.message.value.trim(),
+      website: form.querySelector('[name="website"]')?.value || '',
     };
 
     try {

@@ -391,6 +391,11 @@ app.get('/kontakt',    (req, res) => res.render('kontakt'));
 app.get('/impressum',  (req, res) => res.render('impressum'));
 app.get('/datenschutz',(req, res) => res.render('datenschutz'));
 
+// ─── 404 Catch-all ───────────────────────────────────────────────────────────
+app.use((req, res) => {
+  res.status(404).render('404', { title: 'Seite nicht gefunden – ACOPA GmbH' });
+});
+
 // ─── Start ────────────────────────────────────────────────────────────────────
 process.on('uncaughtException', err => console.error('[Fatal]', err));
 

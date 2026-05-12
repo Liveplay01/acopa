@@ -19,9 +19,21 @@
   <section class="content-section">
     <div class="container">
 
+      <% if (categories && categories.length > 1) { %>
+      <div class="news-filter" role="navigation" aria-label="Kategorie-Filter">
+        <a href="/news" class="news-filter-btn<%= !activeCategory ? ' active' : '' %>">Alle</a>
+        <% categories.forEach(function(cat) { %>
+        <a href="/news?category=<%= encodeURIComponent(cat) %>" class="news-filter-btn<%= activeCategory === cat ? ' active' : '' %>"><%= cat %></a>
+        <% }); %>
+      </div>
+      <% } %>
+
       <% if (posts.length === 0) { %>
         <div style="text-align:center;padding:4rem 0;">
-          <p style="color:var(--color-gray-500);font-size:var(--text-lg);">Noch keine Beiträge vorhanden.</p>
+          <p style="color:var(--color-gray-500);font-size:var(--text-lg);">
+            <% if (activeCategory) { %>Keine Beiträge in der Kategorie "<%= activeCategory %>".<% } else { %>Noch keine Beiträge vorhanden.<% } %>
+          </p>
+          <% if (activeCategory) { %><a href="/news" class="btn btn-outline" style="margin-top:1.5rem;">Alle Beiträge anzeigen</a><% } %>
         </div>
       <% } else { %>
 

@@ -22,10 +22,12 @@ const mailer = smtpConfigured
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const POSTS_FILE    = path.join(__dirname, 'data', 'posts.json');
-const JOBS_FILE     = path.join(__dirname, 'data', 'jobs.json');
-const SETTINGS_FILE = path.join(__dirname, 'data', 'settings.json');
-const PAGES_FILE    = path.join(__dirname, 'data', 'pages.json');
+const POSTS_FILE       = path.join(__dirname, 'data', 'posts.json');
+const JOBS_FILE        = path.join(__dirname, 'data', 'jobs.json');
+const SETTINGS_FILE    = path.join(__dirname, 'data', 'settings.json');
+const PAGES_FILE       = path.join(__dirname, 'data', 'pages.json');
+const TEAM_FILE        = path.join(__dirname, 'data', 'team.json');
+const SUBSCRIBERS_FILE = path.join(__dirname, 'data', 'subscribers.json');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -61,7 +63,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'fallback-secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, secure: false, maxAge: 8 * 60 * 60 * 1000 },
+  cookie: { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 8 * 60 * 60 * 1000 },
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
@@ -108,6 +110,22 @@ function writePages(data) {
   fs.writeFileSync(PAGES_FILE, JSON.stringify(data, null, 2), 'utf-8');
 }
 
+function readTeam() {
+  try { return JSON.parse(fs.readFileSync(TEAM_FILE, 'utf-8')); }
+  catch { return { members: [] }; }
+}
+function writeTeam(data) {
+  fs.writeFileSync(TEAM_FILE, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+function readSubscribers() {
+  try { return JSON.parse(fs.readFileSync(SUBSCRIBERS_FILE, 'utf-8')); }
+  catch { return { subscribers: [] }; }
+}
+function writeSubscribers(data) {
+  fs.writeFileSync(SUBSCRIBERS_FILE, JSON.stringify(data, null, 2), 'utf-8');
+}
+
 function requireAuth(req, res, next) {
   if (req.session && req.session.authenticated) return next();
   if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'Unauthorized' });
@@ -123,6 +141,37 @@ function rateLimit(ip, max = 5, windowMs = 60_000) {
   _rl.set(ip, hits);
   return hits.length > max;
 }
+
+// ─── Newsletter Subscribe API ─────────────────────────────────────────────────
+app.post('/api/subscribe', async (req, res) => {
+  const ip = req.ip || req.socket.remoteAddress;
+  if (rateLimit(ip, 3, 60_000)) return res.status(429).json({ error: 'Zu viele Anfragen.' });
+  if (req.body.website) return res.json({ success: true }); // honeypot
+  const { email } = req.body;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Ungültige E-Mail-Adresse.' });
+  }
+  const data = readSubscribers();
+  if (data.subscribers.some(s => s.email === email)) {
+    return res.json({ success: true }); // silently accept duplicates
+  }
+  data.subscribers.push({ email, date: new Date().toISOString() });
+  writeSubscribers(data);
+  if (mailer) {
+    try {
+      await mailer.sendMail({
+        from: `"ACOPA Newsletter" <${process.env.SMTP_USER}>`,
+        to: email,
+        subject: 'Willkommen beim ACOPA Newsletter',
+        text: 'Vielen Dank für Ihre Anmeldung zum ACOPA Newsletter. Sie erhalten ab sofort monatliche SAP & IT Insights.',
+        html: '<p>Vielen Dank für Ihre Anmeldung zum <strong>ACOPA Newsletter</strong>.<br>Sie erhalten ab sofort monatliche SAP & IT Insights.</p><p><a href="https://www.acopa.de/datenschutz">Datenschutzerklärung</a></p>',
+      });
+    } catch (err) {
+      console.error('[Subscribe] Mail error:', err.message);
+    }
+  }
+  res.json({ success: true });
+});
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 app.get('/api/posts', (req, res) => {
@@ -352,6 +401,59 @@ app.put('/api/admin/pages', requireAuth, (req, res) => {
   res.json(updated);
 });
 
+// ─── Admin Team API ───────────────────────────────────────────────────────────
+app.get('/api/admin/team', requireAuth, (req, res) => res.json(readTeam()));
+
+app.post('/api/admin/team', requireAuth, (req, res) => {
+  const { name, role, bio, linkedin, imageUrl, order } = req.body;
+  if (!name || !role) return res.status(400).json({ error: 'Name und Rolle erforderlich' });
+  const data = readTeam();
+  const member = {
+    id: uuidv4(),
+    name,
+    role,
+    bio: bio || '',
+    linkedin: linkedin || '',
+    imageUrl: imageUrl || '',
+    order: parseInt(order, 10) || data.members.length + 1,
+  };
+  data.members.push(member);
+  data.members.sort((a, b) => a.order - b.order);
+  writeTeam(data);
+  res.json(member);
+});
+
+app.put('/api/admin/team/:id', requireAuth, (req, res) => {
+  const data = readTeam();
+  const idx = data.members.findIndex(m => m.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Not found' });
+  const { name, role, bio, linkedin, imageUrl, order } = req.body;
+  data.members[idx] = {
+    ...data.members[idx],
+    ...(name && { name }),
+    ...(role && { role }),
+    ...(bio !== undefined && { bio }),
+    ...(linkedin !== undefined && { linkedin }),
+    ...(imageUrl !== undefined && { imageUrl }),
+    ...(order !== undefined && { order: parseInt(order, 10) }),
+  };
+  data.members.sort((a, b) => a.order - b.order);
+  writeTeam(data);
+  res.json(data.members[idx]);
+});
+
+app.delete('/api/admin/team/:id', requireAuth, (req, res) => {
+  const data = readTeam();
+  const idx = data.members.findIndex(m => m.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Not found' });
+  data.members.splice(idx, 1);
+  writeTeam(data);
+  res.json({ success: true });
+});
+
+// ─── Admin Subscribers API ────────────────────────────────────────────────────
+app.get('/api/admin/subscribers', requireAuth, (req, res) => res.json(readSubscribers()));
+
 // ─── Page Routes ──────────────────────────────────────────────────────────────
 app.get('/', (req, res) => res.render('index'));
 
@@ -366,6 +468,10 @@ app.get('/acopa',                     (req, res) => res.render('acopa/index'));
 app.get('/acopa/netzwerk',            (req, res) => res.render('acopa/netzwerk'));
 app.get('/acopa/erfolgsgeschichte',   (req, res) => res.render('acopa/erfolgsgeschichte'));
 app.get('/acopa/referenzen',          (req, res) => res.render('acopa/referenzen'));
+app.get('/acopa/team', (req, res) => {
+  const data = readTeam();
+  res.render('acopa/team', { members: data.members || [] });
+});
 
 app.get('/karriere',                  (req, res) => res.render('karriere/index'));
 app.get('/karriere/offene-stellen', (req, res) => {
@@ -376,8 +482,11 @@ app.get('/karriere/offene-stellen', (req, res) => {
 
 app.get('/news', (req, res) => {
   const data = readPosts();
-  const posts = (data.posts || []).filter(p => p.published);
-  res.render('news/index', { posts });
+  let posts = (data.posts || []).filter(p => p.published);
+  const category = req.query.category || '';
+  if (category) posts = posts.filter(p => p.category === category);
+  const categories = [...new Set((data.posts || []).filter(p => p.published).map(p => p.category))];
+  res.render('news/index', { posts, categories, activeCategory: category });
 });
 
 app.get('/news/:slug', (req, res) => {
@@ -390,6 +499,45 @@ app.get('/news/:slug', (req, res) => {
 app.get('/kontakt',    (req, res) => res.render('kontakt'));
 app.get('/impressum',  (req, res) => res.render('impressum'));
 app.get('/datenschutz',(req, res) => res.render('datenschutz'));
+
+// ─── Dynamic Sitemap ──────────────────────────────────────────────────────────
+app.get('/sitemap.xml', (req, res) => {
+  const data = readPosts();
+  const publishedPosts = (data.posts || []).filter(p => p.published);
+  const base = 'https://www.acopa.de';
+  const staticUrls = [
+    { loc: `${base}/`,                         changefreq: 'weekly',  priority: '1.0' },
+    { loc: `${base}/service`,                  changefreq: 'monthly', priority: '0.9' },
+    { loc: `${base}/service/sap-beratung`,     changefreq: 'monthly', priority: '0.8' },
+    { loc: `${base}/service/digitalisierung`,  changefreq: 'monthly', priority: '0.8' },
+    { loc: `${base}/service/supply-chain`,     changefreq: 'monthly', priority: '0.8' },
+    { loc: `${base}/service/cybersecurity`,    changefreq: 'monthly', priority: '0.8' },
+    { loc: `${base}/service/sustainability`,   changefreq: 'monthly', priority: '0.8' },
+    { loc: `${base}/acopa`,                    changefreq: 'monthly', priority: '0.8' },
+    { loc: `${base}/acopa/team`,               changefreq: 'monthly', priority: '0.7' },
+    { loc: `${base}/acopa/netzwerk`,           changefreq: 'monthly', priority: '0.7' },
+    { loc: `${base}/acopa/erfolgsgeschichte`,  changefreq: 'monthly', priority: '0.7' },
+    { loc: `${base}/acopa/referenzen`,         changefreq: 'monthly', priority: '0.7' },
+    { loc: `${base}/karriere`,                 changefreq: 'weekly',  priority: '0.7' },
+    { loc: `${base}/karriere/offene-stellen`,  changefreq: 'weekly',  priority: '0.7' },
+    { loc: `${base}/news`,                     changefreq: 'weekly',  priority: '0.6' },
+    { loc: `${base}/kontakt`,                  changefreq: 'yearly',  priority: '0.6' },
+    { loc: `${base}/impressum`,                changefreq: 'yearly',  priority: '0.3' },
+    { loc: `${base}/datenschutz`,              changefreq: 'yearly',  priority: '0.3' },
+  ];
+  const postUrls = publishedPosts.map(p => ({
+    loc: `${base}/news/${p.slug}`,
+    changefreq: 'monthly',
+    priority: '0.5',
+    lastmod: p.date,
+  }));
+  const allUrls = [...staticUrls, ...postUrls];
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${
+    allUrls.map(u => `  <url><loc>${u.loc}</loc>${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}<changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`).join('\n')
+  }\n</urlset>`;
+  res.set('Content-Type', 'application/xml');
+  res.send(xml);
+});
 
 // ─── 404 Catch-all ───────────────────────────────────────────────────────────
 app.use((req, res) => {

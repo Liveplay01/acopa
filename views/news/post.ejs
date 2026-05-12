@@ -1,4 +1,19 @@
-<%- include('../partials/_head', { title: post.title.de + ' – ACOPA GmbH', description: (post.excerpt && post.excerpt.de) || post.content.de.substring(0, 155) }) %>
+<%- include('../partials/_head', {
+  title: post.title.de + ' – ACOPA GmbH',
+  description: (post.excerpt && post.excerpt.de) || post.content.de.substring(0, 155),
+  ogPath: '/news/' + post.slug,
+  ogImage: post.imageUrl,
+  schemaMarkup: JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title.de,
+    "description": (post.excerpt && post.excerpt.de) || post.content.de.substring(0, 155),
+    "image": post.imageUrl,
+    "datePublished": post.date,
+    "author": { "@type": "Person", "name": post.author },
+    "publisher": { "@type": "Organization", "name": "ACOPA GmbH & Co. KG", "logo": { "@type": "ImageObject", "url": "https://www.acopa.de/assets/AcopaLogo.png" } }
+  })
+}) %>
 <%- include('../partials/_nav') %>
 
 <main id="main-content">
@@ -50,6 +65,18 @@
           Alle Beiträge
         </a>
         <a href="/#contact" class="btn btn-primary" style="font-size:var(--text-sm);">Fragen? Kontakt aufnehmen</a>
+      </div>
+
+      <!-- Ähnliche Beiträge CTA -->
+      <div style="margin-top:3rem;background:rgba(164,196,0,0.07);border:1px solid rgba(164,196,0,0.2);border-radius:var(--radius-lg);padding:2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;">
+        <div>
+          <p style="font-family:var(--font-mono);font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-primary);margin-bottom:0.35rem;">Das könnte Sie auch interessieren</p>
+          <p style="font-family:var(--font-display);font-size:1.25rem;color:var(--color-foreground);">Mehr Expertenwissen von ACOPA</p>
+        </div>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <a href="/news?category=<%= post.category %>" class="btn btn-outline" style="font-size:var(--text-sm);">Mehr aus "<%= post.category %>"</a>
+          <a href="/service" class="btn btn-primary" style="font-size:var(--text-sm);">Unsere Leistungen</a>
+        </div>
       </div>
 
     </div>

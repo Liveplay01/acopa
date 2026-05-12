@@ -1,0 +1,31 @@
+{
+  "members": [
+    {
+      "id": "team-001",
+      "name": "Dr. Michael Berger",
+      "role": "Managing Partner & SAP Architect",
+      "bio": "Über 20 Jahre Erfahrung in SAP-Transformationsprojekten bei Konzernen der Pharma- und Chemieindustrie. Spezialisiert auf S/4HANA-Migrationen und integrierte Supply-Chain-Planung.",
+      "linkedin": "https://www.linkedin.com/company/acopa",
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
+      "order": 1
+    },
+    {
+      "id": "team-002",
+      "name": "Sandra Koch",
+      "role": "Head of Digitalization & Data Science",
+      "bio": "Leidenschaftliche Datenwissenschaftlerin mit Fokus auf Machine Learning und Prozessautomatisierung. Hat über 40 Go-Digital-Programme in Mittelstand und Großkonzernen begleitet.",
+      "linkedin": "https://www.linkedin.com/company/acopa",
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+      "order": 2
+    },
+    {
+      "id": "team-003",
+      "name": "Thomas Richter",
+      "role": "Senior Consultant Supply Chain & IBP",
+      "bio": "Spezialist für SAP IBP und Supply-Chain-Optimierung. Hat globale Roll-outs in über 12 Ländern koordiniert und Planungsprozesse für führende FMCG-Konzerne transformiert.",
+      "linkedin": "https://www.linkedin.com/company/acopa",
+      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+      "order": 3
+    }
+  ]
+}

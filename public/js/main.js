@@ -455,6 +455,47 @@ function initCookieBanner() {
   });
 }
 
+// ── Newsletter Form ───────────────────────────────────────────
+function initNewsletterForm() {
+  const form = document.getElementById('newsletterForm');
+  if (!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn   = form.querySelector('button[type="submit"]');
+    const email = form.querySelector('input[type="email"]').value.trim();
+    if (!email) return;
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, website: form.querySelector('input[name="website"]').value }),
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        const success = document.getElementById('newsletterSuccess');
+        if (success) success.style.display = 'flex';
+      }
+    } catch (err) {
+      console.error('[ACOPA] Newsletter error:', err);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+}
+
+// ── FAQ Accordion ─────────────────────────────────────────────
+function initFAQ() {
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+}
+
 // ── Init ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const lang = getCurrentLang();
@@ -463,4 +504,6 @@ document.addEventListener('DOMContentLoaded', () => {
   loadNews();
   initContactForm();
   initCookieBanner();
+  initNewsletterForm();
+  initFAQ();
 });

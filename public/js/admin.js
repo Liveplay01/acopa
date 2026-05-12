@@ -48,6 +48,7 @@ function switchTab(name) {
   });
   if (name === 'jobs')     loadJobs();
   if (name === 'settings') loadSettings();
+  if (name === 'team')     loadTeam();
 }
 
 // ── Posts: Load & Render ──────────────────────────────────────
@@ -304,6 +305,7 @@ async function loadSettings() {
     set('settingPhone',         c.phone);
     set('settingEmail',         c.email);
     set('settingEmailKarriere', c.emailKarriere);
+    set('settingCalendly',      c.calendlyUrl);
     set('settingLinkedin',      s.linkedin);
     set('settingXing',          s.xing);
     set('settingInstagram',     s.instagram);
@@ -443,6 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
           phone:         document.getElementById('settingPhone').value.trim(),
           email:         document.getElementById('settingEmail').value.trim(),
           emailKarriere: document.getElementById('settingEmailKarriere').value.trim(),
+          calendlyUrl:   document.getElementById('settingCalendly').value.trim(),
         },
         social: {
           linkedin:  document.getElementById('settingLinkedin').value.trim(),
@@ -560,4 +563,113 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial load
   loadPosts();
+});
+
+// ── Team CRUD ─────────────────────────────────────────────────
+let teamMembers = [];
+let editingTeamId = null;
+
+async function loadTeam() {
+  try {
+    const res = await fetch('/api/admin/team');
+    if (res.status === 401) { window.location = '/admin/login'; return; }
+    const data = await res.json();
+    teamMembers = data.members || [];
+    renderTeamTable();
+    const badge = document.getElementById('tabBadgeTeam');
+    if (badge) badge.textContent = teamMembers.length;
+  } catch (err) {
+    console.error('[Admin] Failed to load team:', err);
+  }
+}
+
+function renderTeamTable() {
+  const tbody = document.getElementById('teamTableBody');
+  const count = document.getElementById('teamCount');
+  if (!tbody) return;
+  if (count) count.textContent = teamMembers.length;
+  if (!teamMembers.length) {
+    tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Noch keine Mitglieder angelegt.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = teamMembers.map(m => `
+    <tr>
+      <td><strong>${escapeHTML(m.name)}</strong></td>
+      <td>${escapeHTML(m.role)}</td>
+      <td style="font-family:var(--font-mono);font-size:0.8rem;">${m.order}</td>
+      <td class="table-actions">
+        <button class="a-btn a-btn-secondary" onclick="editTeamMember('${m.id}')">Bearbeiten</button>
+        <button class="a-btn a-btn-danger" onclick="deleteTeamMember('${m.id}')">Löschen</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editTeamMember(id) {
+  const m = teamMembers.find(x => x.id === id);
+  if (!m) return;
+  editingTeamId = id;
+  document.getElementById('editingTeamId').value = id;
+  document.getElementById('teamName').value = m.name || '';
+  document.getElementById('teamRole').value = m.role || '';
+  document.getElementById('teamBio').value = m.bio || '';
+  document.getElementById('teamLinkedin').value = m.linkedin || '';
+  document.getElementById('teamImageUrl').value = m.imageUrl || '';
+  document.getElementById('teamOrder').value = m.order || '';
+  document.getElementById('teamFormTitle').textContent = 'Mitglied bearbeiten';
+  document.getElementById('teamFormCancelBtn').style.display = '';
+  document.getElementById('teamFormPanel').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetTeamForm() {
+  editingTeamId = null;
+  document.getElementById('editingTeamId').value = '';
+  document.getElementById('teamForm').reset();
+  document.getElementById('teamFormTitle').textContent = 'Neues Mitglied';
+  document.getElementById('teamFormCancelBtn').style.display = 'none';
+}
+
+async function deleteTeamMember(id) {
+  if (!confirm('Mitglied wirklich löschen?')) return;
+  try {
+    const res = await fetch(`/api/admin/team/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error();
+    showToast('Mitglied gelöscht.');
+    loadTeam();
+  } catch {
+    showToast('Fehler beim Löschen.', 'error');
+  }
+}
+
+document.getElementById('teamForm')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('teamFormSubmitBtn');
+  btn.disabled = true;
+  const payload = {
+    name:     document.getElementById('teamName').value.trim(),
+    role:     document.getElementById('teamRole').value.trim(),
+    bio:      document.getElementById('teamBio').value.trim(),
+    linkedin: document.getElementById('teamLinkedin').value.trim(),
+    imageUrl: document.getElementById('teamImageUrl').value.trim(),
+    order:    document.getElementById('teamOrder').value || '99',
+  };
+  if (!payload.name || !payload.role) {
+    showToast('Name und Rolle sind erforderlich.', 'error');
+    btn.disabled = false;
+    return;
+  }
+  try {
+    const url    = editingTeamId ? `/api/admin/team/${editingTeamId}` : '/api/admin/team';
+    const method = editingTeamId ? 'PUT' : 'POST';
+    const res    = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    if (!res.ok) throw new Error();
+    showFeedback('teamFormFeedback');
+    showToast(editingTeamId ? 'Mitglied aktualisiert!' : 'Mitglied hinzugefügt!');
+    resetTeamForm();
+    loadTeam();
+  } catch {
+    showToast('Fehler beim Speichern.', 'error');
+  } finally {
+    btn.disabled = false;
+  }
 });

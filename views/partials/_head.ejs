@@ -15,6 +15,37 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <title><%= locals.title || 'ACOPA GmbH – Managementberatung & IT-Consulting' %></title>
+  <% if (locals.ogImage) { %>
+  <meta property="og:image" content="<%= locals.ogImage %>">
+  <% } else { %>
+  <meta property="og:image" content="https://www.acopa.de/assets/AcopaLogo.png">
+  <% } %>
+  <meta property="og:url" content="https://www.acopa.de<%= locals.ogPath || '' %>">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ACOPA GmbH & Co. KG",
+    "url": "https://www.acopa.de",
+    "logo": "https://www.acopa.de/assets/AcopaLogo.png",
+    "description": "Managementberatung & IT-Consulting: SAP, Digitalisierung, Cybersecurity, Supply Chain und Green Tech.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Sternstraße 68",
+      "addressLocality": "Wuppertal",
+      "postalCode": "42275",
+      "addressCountry": "DE"
+    },
+    "telephone": "+492027472217",
+    "email": "info@acopa.de",
+    "sameAs": [
+      "https://www.linkedin.com/company/acopa"
+    ]
+  }
+  </script>
+  <% if (locals.schemaMarkup) { %>
+  <script type="application/ld+json"><%- locals.schemaMarkup %></script>
+  <% } %>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Zum Inhalt springen</a>

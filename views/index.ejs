@@ -32,7 +32,30 @@
 
       <div class="hero-ctas" id="heroCtas">
         <a href="/#contact" class="btn btn-primary" data-i18n="hero.cta1">Kostenlose Beratung</a>
+        <% if (settings && settings.company && settings.company.calendlyUrl) { %>
+        <a href="<%= settings.company.calendlyUrl %>" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+          Termin buchen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </a>
+        <% } else { %>
         <a href="/service"  class="btn btn-ghost"   data-i18n="hero.cta2">Unsere Leistungen</a>
+        <% } %>
+      </div>
+      <div class="hero-trust" aria-label="Vertrauenssignale">
+        <span class="hero-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          15+ Jahre Erfahrung
+        </span>
+        <span class="hero-trust-sep" aria-hidden="true">·</span>
+        <span class="hero-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          200+ Projekte
+        </span>
+        <span class="hero-trust-sep" aria-hidden="true">·</span>
+        <span class="hero-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          SAP Silver Partner
+        </span>
       </div>
     </div>
 
@@ -164,6 +187,51 @@
         <div class="stat-item">
           <p class="stat-number"><span class="counter" data-target="30">0</span><span class="stat-plus">+</span></p>
           <p class="stat-label" data-i18n="stats.clients">Kunden</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CERTIFICATIONS ───────────────────────────────────────── -->
+  <section class="section-certs" aria-label="Zertifizierungen & Partner">
+    <div class="container">
+      <div class="certs-inner reveal-fade">
+        <p class="certs-label" data-i18n="certs.label">Zertifiziert & ausgezeichnet</p>
+        <div class="certs-row">
+          <div class="cert-item" title="SAP Silver Partner – zertifiziertes Know-how für SAP-Implementierungen">
+            <div class="cert-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            </div>
+            <span class="cert-name">SAP Silver Partner</span>
+          </div>
+          <div class="cert-divider" aria-hidden="true"></div>
+          <div class="cert-item" title="ISO 27001 konforme Sicherheitsprozesse">
+            <div class="cert-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <span class="cert-name">ISO 27001 konform</span>
+          </div>
+          <div class="cert-divider" aria-hidden="true"></div>
+          <div class="cert-item" title="DSGVO-konformes Vorgehen in allen Projekten">
+            <div class="cert-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            </div>
+            <span class="cert-name">DSGVO-konform</span>
+          </div>
+          <div class="cert-divider" aria-hidden="true"></div>
+          <div class="cert-item" title="Deutsches Rechenzentrum – Hosting made in Germany">
+            <div class="cert-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+            </div>
+            <span class="cert-name">Made in Germany</span>
+          </div>
+          <div class="cert-divider" aria-hidden="true"></div>
+          <div class="cert-item" title="24h Reaktionszeit garantiert">
+            <div class="cert-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <span class="cert-name">24h Antwort-Garantie</span>
+          </div>
         </div>
       </div>
     </div>
@@ -381,5 +449,11 @@
   </section>
 
 </main>
+
+<!-- Mobile Sticky CTA (nur auf Mobile sichtbar) -->
+<div class="mobile-sticky-cta" aria-label="Kontakt aufnehmen">
+  <span class="mobile-sticky-cta-text">Kostenlose Erstberatung</span>
+  <a href="/#contact" class="btn btn-primary" style="font-size:0.82rem;padding:0.6rem 1.25rem;">Jetzt anfragen</a>
+</div>
 
 <%- include('partials/_footer') %>

@@ -305,6 +305,31 @@
     </div>
   </section>
 
+  <!-- ── KUNDEN-TESTIMONIALS ──────────────────────────────── -->
+  <section class="content-section content-section--dark" aria-label="Kundenstimmen">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <p class="section-eyebrow" style="color:var(--color-primary);">Kundenstimmen</p>
+        <h2 class="section-headline section-headline--light">Was unsere Kunden sagen</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.6);">Führende Unternehmen aus Pharma, Chemie und Industrie vertrauen auf ACOPA.</p>
+      </div>
+      <div class="testimonials-grid">
+        <% (customerTestimonials || []).forEach(function(t) { %>
+        <div class="testimonial-card reveal-up">
+          <p class="testimonial-quote">"<%= t.quote %>"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><%= t.initials %></div>
+            <div>
+              <div class="testimonial-name"><%= t.name %></div>
+              <div class="testimonial-role"><%= t.role %></div>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
   <!-- ── NEWS ──────────────────────────────────────────────── -->
   <section id="news" class="section-news" aria-label="Neuigkeiten">
     <div class="container">

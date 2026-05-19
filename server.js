@@ -8,6 +8,7 @@ const path       = require('path');
 const fs         = require('fs');
 const nodemailer = require('nodemailer');
 const { v4: uuidv4 } = require('uuid');
+const multer     = require('multer');
 
 // ─── Mailer setup ─────────────────────────────────────────────────────────────
 const smtpConfigured = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
@@ -22,12 +23,34 @@ const mailer = smtpConfigured
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const POSTS_FILE       = path.join(__dirname, 'data', 'posts.json');
-const JOBS_FILE        = path.join(__dirname, 'data', 'jobs.json');
-const SETTINGS_FILE    = path.join(__dirname, 'data', 'settings.json');
-const PAGES_FILE       = path.join(__dirname, 'data', 'pages.json');
-const TEAM_FILE        = path.join(__dirname, 'data', 'team.json');
-const SUBSCRIBERS_FILE = path.join(__dirname, 'data', 'subscribers.json');
+const POSTS_FILE         = path.join(__dirname, 'data', 'posts.json');
+const JOBS_FILE          = path.join(__dirname, 'data', 'jobs.json');
+const SETTINGS_FILE      = path.join(__dirname, 'data', 'settings.json');
+const PAGES_FILE         = path.join(__dirname, 'data', 'pages.json');
+const TEAM_FILE          = path.join(__dirname, 'data', 'team.json');
+const SUBSCRIBERS_FILE   = path.join(__dirname, 'data', 'subscribers.json');
+const SUBMISSIONS_FILE   = path.join(__dirname, 'data', 'submissions.json');
+const TESTIMONIALS_FILE  = path.join(__dirname, 'data', 'testimonials.json');
+const UPLOADS_DIR        = path.join(__dirname, 'public', 'uploads');
+
+// Ensure uploads directory exists
+if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+
+// Multer config: disk storage, images only, max 5 MB
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => cb(null, UPLOADS_DIR),
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname).toLowerCase();
+      cb(null, `${uuidv4()}${ext}`);
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (['image/jpeg', 'image/png', 'image/webp'].includes(file.mimetype)) cb(null, true);
+    else cb(new Error('Nur JPEG, PNG oder WebP erlaubt.'));
+  },
+});
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -48,7 +71,7 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "unpkg.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com", "cdnjs.cloudflare.com"],
       fontSrc: ["'self'", "fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "images.unsplash.com", "*.unsplash.com", "picsum.photos"],
       connectSrc: ["'self'"],
@@ -124,6 +147,22 @@ function readSubscribers() {
 }
 function writeSubscribers(data) {
   fs.writeFileSync(SUBSCRIBERS_FILE, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+function readSubmissions() {
+  try { return JSON.parse(fs.readFileSync(SUBMISSIONS_FILE, 'utf-8')); }
+  catch { return { submissions: [] }; }
+}
+function writeSubmissions(data) {
+  fs.writeFileSync(SUBMISSIONS_FILE, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+function readTestimonials() {
+  try { return JSON.parse(fs.readFileSync(TESTIMONIALS_FILE, 'utf-8')); }
+  catch { return { items: [] }; }
+}
+function writeTestimonials(data) {
+  fs.writeFileSync(TESTIMONIALS_FILE, JSON.stringify(data, null, 2), 'utf-8');
 }
 
 function requireAuth(req, res, next) {
@@ -214,6 +253,20 @@ app.post('/api/contact', async (req, res) => {
   } else {
     console.log('[Contact] SMTP nicht konfiguriert –', { name, email, subject, date: new Date().toISOString() });
   }
+
+  // Always persist submission regardless of mail status
+  const subData = readSubmissions();
+  subData.submissions.unshift({
+    id: uuidv4(),
+    name,
+    email,
+    phone: req.body.phone || '',
+    subject: subject || '',
+    message,
+    date: new Date().toISOString(),
+    read: false,
+  });
+  writeSubmissions(subData);
 
   res.json({ success: true });
 });
@@ -454,8 +507,97 @@ app.delete('/api/admin/team/:id', requireAuth, (req, res) => {
 // ─── Admin Subscribers API ────────────────────────────────────────────────────
 app.get('/api/admin/subscribers', requireAuth, (req, res) => res.json(readSubscribers()));
 
+app.delete('/api/admin/subscribers/:email', requireAuth, (req, res) => {
+  const data = readSubscribers();
+  const email = decodeURIComponent(req.params.email);
+  data.subscribers = data.subscribers.filter(s => s.email !== email);
+  writeSubscribers(data);
+  res.json({ success: true });
+});
+
+// ─── Admin Upload API ─────────────────────────────────────────────────────────
+app.post('/api/admin/upload', requireAuth, upload.single('file'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'Keine Datei empfangen.' });
+  res.json({ url: `/uploads/${req.file.filename}` });
+});
+
+// ─── Admin Submissions API ────────────────────────────────────────────────────
+app.get('/api/admin/submissions', requireAuth, (req, res) => res.json(readSubmissions()));
+
+app.put('/api/admin/submissions/:id/read', requireAuth, (req, res) => {
+  const data = readSubmissions();
+  const sub = data.submissions.find(s => s.id === req.params.id);
+  if (!sub) return res.status(404).json({ error: 'Not found' });
+  sub.read = true;
+  writeSubmissions(data);
+  res.json({ success: true });
+});
+
+app.delete('/api/admin/submissions/:id', requireAuth, (req, res) => {
+  const data = readSubmissions();
+  const idx = data.submissions.findIndex(s => s.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Not found' });
+  data.submissions.splice(idx, 1);
+  writeSubmissions(data);
+  res.json({ success: true });
+});
+
+// ─── Admin Testimonials API ───────────────────────────────────────────────────
+app.get('/api/admin/testimonials', requireAuth, (req, res) => res.json(readTestimonials()));
+
+app.post('/api/admin/testimonials', requireAuth, (req, res) => {
+  const { type, quote, name, role, tenure, initials } = req.body;
+  if (!quote || !name) return res.status(400).json({ error: 'Zitat und Name erforderlich' });
+  const data = readTestimonials();
+  const item = { id: uuidv4(), type: type || 'employee', quote, name, role: role || '', tenure: tenure || '', initials: initials || name.slice(0, 2).toUpperCase() };
+  data.items.push(item);
+  writeTestimonials(data);
+  res.json(item);
+});
+
+app.put('/api/admin/testimonials/:id', requireAuth, (req, res) => {
+  const data = readTestimonials();
+  const idx = data.items.findIndex(t => t.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Not found' });
+  const { type, quote, name, role, tenure, initials } = req.body;
+  data.items[idx] = { ...data.items[idx], ...(type && { type }), ...(quote && { quote }), ...(name && { name }), ...(role !== undefined && { role }), ...(tenure !== undefined && { tenure }), ...(initials && { initials }) };
+  writeTestimonials(data);
+  res.json(data.items[idx]);
+});
+
+app.delete('/api/admin/testimonials/:id', requireAuth, (req, res) => {
+  const data = readTestimonials();
+  const idx = data.items.findIndex(t => t.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Not found' });
+  data.items.splice(idx, 1);
+  writeTestimonials(data);
+  res.json({ success: true });
+});
+
+// ─── Admin Backup API ─────────────────────────────────────────────────────────
+app.get('/api/admin/backup', requireAuth, (req, res) => {
+  const backup = {
+    exportedAt: new Date().toISOString(),
+    posts:        readPosts(),
+    jobs:         readJobs(),
+    team:         readTeam(),
+    settings:     readSettings(),
+    pages:        readPages(),
+    testimonials: readTestimonials(),
+    subscribers:  readSubscribers(),
+    submissions:  readSubmissions(),
+  };
+  const date = new Date().toISOString().split('T')[0];
+  res.setHeader('Content-Disposition', `attachment; filename="acopa-backup-${date}.json"`);
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(backup, null, 2));
+});
+
 // ─── Page Routes ──────────────────────────────────────────────────────────────
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (req, res) => {
+  const allTestimonials = readTestimonials().items || [];
+  res.render('index', { customerTestimonials: allTestimonials.filter(t => t.type === 'customer') });
+});
 
 app.get('/service',                   (req, res) => res.render('service/index'));
 app.get('/service/sap-beratung',      (req, res) => res.render('service/sap-beratung'));
@@ -473,7 +615,10 @@ app.get('/acopa/team', (req, res) => {
   res.render('acopa/team', { members: data.members || [] });
 });
 
-app.get('/karriere',                  (req, res) => res.render('karriere/index'));
+app.get('/karriere', (req, res) => {
+  const allTestimonials = readTestimonials().items || [];
+  res.render('karriere/index', { employeeTestimonials: allTestimonials.filter(t => t.type === 'employee') });
+});
 app.get('/karriere/offene-stellen', (req, res) => {
   const data = readJobs();
   const jobs = (data.jobs || []).filter(j => j.published);

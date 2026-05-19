@@ -601,3 +601,39 @@ ul { list-style: none; }
   .admin-stats  { grid-template-columns: 1fr 1fr; }
   .admin-header { padding: 0 1rem; }
 }
+
+/* ── Tab badge red (unread messages) ────────────────────────── */
+.tab-badge--red {
+  background: #fee2e2;
+  color: #c53030;
+}
+.admin-tab.active .tab-badge--red { background: #fecaca; color: #991b1b; }
+
+/* ── Testimonial filter buttons ─────────────────────────────── */
+.tfilter.active {
+  background: var(--a-primary) !important;
+  color: #fff !important;
+  border-color: var(--a-primary) !important;
+}
+
+/* ── Quill editor override ──────────────────────────────────── */
+.ql-toolbar.ql-snow {
+  border-radius: 6px 6px 0 0;
+  border-color: var(--a-gray-200) !important;
+  background: var(--a-gray-50, #f9f9f7);
+}
+.ql-container.ql-snow {
+  border-radius: 0 0 6px 6px;
+  border-color: var(--a-gray-200) !important;
+  font-family: var(--a-font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.9rem;
+}
+.ql-editor { min-height: 160px; }
+
+/* ── a-btn-danger ────────────────────────────────────────────── */
+.a-btn-danger {
+  background: #fee2e2;
+  color: #c53030;
+  border: 1px solid #fca5a5;
+}
+.a-btn-danger:hover { background: #fecaca; }

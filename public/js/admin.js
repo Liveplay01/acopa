@@ -101,6 +101,9 @@ function renderTable() {
           <button class="a-btn-icon" onclick="startEdit('${escapeHTML(post.id)}')" title="Bearbeiten">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </button>
+          <button class="a-btn-icon" onclick="duplicatePost('${escapeHTML(post.id)}')" title="Duplizieren">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          </button>
           <button class="a-btn-icon danger" onclick="deletePost('${escapeHTML(post.id)}')" title="Löschen">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
           </button>
@@ -123,6 +126,8 @@ function resetForm() {
   if (btn)    btn.innerHTML       = saveBtnHTML('Beitrag speichern');
   if (cancel) cancel.style.display = 'none';
   if (pub)    pub.checked         = true;
+  if (quillDe) quillDe.root.innerHTML = '';
+  if (quillEn) quillEn.root.innerHTML = '';
   hideFeedback('formFeedback');
 }
 
@@ -135,8 +140,12 @@ function startEdit(id) {
   document.getElementById('titleEn').value    = post.title.en    || '';
   document.getElementById('excerptDe').value  = (post.excerpt && post.excerpt.de)  || '';
   document.getElementById('excerptEn').value  = (post.excerpt && post.excerpt.en)  || '';
-  document.getElementById('contentDe').value  = (post.content && post.content.de)  || '';
-  document.getElementById('contentEn').value  = (post.content && post.content.en)  || '';
+  const cDe = (post.content && post.content.de) || '';
+  const cEn = (post.content && post.content.en) || '';
+  document.getElementById('contentDe').value = cDe;
+  document.getElementById('contentEn').value = cEn;
+  if (quillDe) quillDe.root.innerHTML = cDe;
+  if (quillEn) quillEn.root.innerHTML = cEn;
   document.getElementById('imageUrl').value   = post.imageUrl   || '';
   document.getElementById('author').value     = post.author     || '';
   document.getElementById('published').checked = post.published;
@@ -211,6 +220,9 @@ function renderJobsTable() {
         <div class="table-actions">
           <button class="a-btn-icon" onclick="startEditJob('${escapeHTML(job.id)}')" title="Bearbeiten">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="a-btn-icon" onclick="duplicateJob('${escapeHTML(job.id)}')" title="Duplizieren">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           </button>
           <button class="a-btn-icon danger" onclick="deleteJob('${escapeHTML(job.id)}')" title="Löschen">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
@@ -346,8 +358,56 @@ async function loadPages() {
   }
 }
 
+// ── Quill editor instances ────────────────────────────────────
+let quillDe = null;
+let quillEn = null;
+
+const QUILL_TOOLBAR = [
+  [{ header: [2, 3, false] }],
+  ['bold', 'italic'],
+  [{ list: 'ordered' }, { list: 'bullet' }],
+  ['link'],
+  ['clean'],
+];
+
+// ── Image Upload ──────────────────────────────────────────────
+function triggerUpload(inputId, fileInputId) {
+  document.getElementById(fileInputId)?.click();
+}
+
+async function handleUpload(fileInput, targetInputId) {
+  const file = fileInput.files[0];
+  if (!file) return;
+  const fd = new FormData();
+  fd.append('file', file);
+  try {
+    const res  = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+    if (res.status === 401) { window.location = '/admin/login'; return; }
+    const data = await res.json();
+    if (data.url) {
+      const el = document.getElementById(targetInputId);
+      if (el) el.value = data.url;
+      showToast('Bild hochgeladen!');
+    } else {
+      showToast(data.error || 'Upload fehlgeschlagen.', 'error');
+    }
+  } catch {
+    showToast('Upload fehlgeschlagen.', 'error');
+  } finally {
+    fileInput.value = '';
+  }
+}
+
 // ── Init (all listeners inside DOMContentLoaded) ──────────────
 document.addEventListener('DOMContentLoaded', () => {
+
+  // Quill init
+  if (document.getElementById('quillDe')) {
+    quillDe = new Quill('#quillDe', { theme: 'snow', modules: { toolbar: QUILL_TOOLBAR } });
+  }
+  if (document.getElementById('quillEn')) {
+    quillEn = new Quill('#quillEn', { theme: 'snow', modules: { toolbar: QUILL_TOOLBAR } });
+  }
 
   // Posts form
   const postForm = document.getElementById('postForm');
@@ -356,6 +416,8 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const btn = document.getElementById('formSubmitBtn');
       btn.disabled = true;
+      if (quillDe) document.getElementById('contentDe').value = quillDe.root.innerHTML;
+      if (quillEn) document.getElementById('contentEn').value = quillEn.root.innerHTML;
       const body = {
         title:    { de: document.getElementById('titleDe').value.trim(), en: document.getElementById('titleEn').value.trim() },
         excerpt:  { de: document.getElementById('excerptDe').value.trim(), en: document.getElementById('excerptEn').value.trim() },
@@ -482,9 +544,11 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.tab-pane').forEach(p => {
         p.style.display = p.id === `tab-${name}` ? '' : 'none';
       });
-      if (name === 'jobs')     loadJobs();
-      if (name === 'settings') loadSettings();
-      if (name === 'pages')    loadPages();
+      if (name === 'jobs')         loadJobs();
+      if (name === 'settings')     { loadSettings(); loadSubscribers(); }
+      if (name === 'pages')        loadPages();
+      if (name === 'messages')     loadMessages();
+      if (name === 'testimonials') loadTestimonials();
     });
   });
 
@@ -673,3 +737,293 @@ document.getElementById('teamForm')?.addEventListener('submit', async e => {
     btn.disabled = false;
   }
 });
+
+// ── Duplicate Post/Job ────────────────────────────────────────
+function duplicatePost(id) {
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+  resetForm();
+  document.getElementById('titleDe').value   = (post.title.de || '') + ' (Kopie)';
+  document.getElementById('titleEn').value   = (post.title.en || '') + ' (Copy)';
+  document.getElementById('excerptDe').value = (post.excerpt && post.excerpt.de) || '';
+  document.getElementById('excerptEn').value = (post.excerpt && post.excerpt.en) || '';
+  const cDe = (post.content && post.content.de) || '';
+  const cEn = (post.content && post.content.en) || '';
+  document.getElementById('contentDe').value = cDe;
+  document.getElementById('contentEn').value = cEn;
+  if (quillDe) quillDe.root.innerHTML = cDe;
+  if (quillEn) quillEn.root.innerHTML = cEn;
+  document.getElementById('imageUrl').value  = post.imageUrl || '';
+  document.getElementById('author').value    = post.author || '';
+  document.getElementById('published').checked = false;
+  for (let opt of document.getElementById('category').options) {
+    if (opt.value === post.category) { opt.selected = true; break; }
+  }
+  document.getElementById('formPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showToast('Beitrag als Vorlage geladen – bitte anpassen und speichern.');
+}
+
+function duplicateJob(id) {
+  const job = jobs.find(j => j.id === id);
+  if (!job) return;
+  resetJobForm();
+  document.getElementById('jobTitle').value        = (job.title || '') + ' (Kopie)';
+  document.getElementById('jobLocation').value     = job.location || '';
+  document.getElementById('jobStart').value        = job.start || '';
+  document.getElementById('jobDescription').value  = job.description || '';
+  document.getElementById('jobTags').value         = (job.tags || []).join(', ');
+  document.getElementById('jobEmailSubject').value = job.emailSubject || '';
+  document.getElementById('jobPublished').checked  = false;
+  for (let opt of document.getElementById('jobBadge').options) {
+    if (opt.value === job.badge) { opt.selected = true; break; }
+  }
+  document.getElementById('jobFormPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showToast('Stelle als Vorlage geladen – bitte anpassen und speichern.');
+}
+
+// ── Messages (Submissions) ────────────────────────────────────
+let messages = [];
+
+async function loadMessages() {
+  try {
+    const res  = await fetch('/api/admin/submissions');
+    if (res.status === 401) { window.location = '/admin/login'; return; }
+    const data = await res.json();
+    messages = data.submissions || [];
+    renderMessages();
+    const badge = document.getElementById('tabBadgeMessages');
+    const unread = messages.filter(m => !m.read).length;
+    if (badge) {
+      badge.textContent = unread;
+      badge.style.display = unread > 0 ? '' : 'none';
+    }
+    const count = document.getElementById('messagesCount');
+    if (count) count.textContent = messages.length;
+  } catch (err) {
+    console.error('[Admin] Failed to load messages:', err);
+  }
+}
+
+function renderMessages() {
+  const list = document.getElementById('messagesList');
+  if (!list) return;
+  if (!messages.length) {
+    list.innerHTML = '<p style="color:var(--a-gray-400);text-align:center;padding:2rem 0;">Noch keine Kontaktanfragen eingegangen.</p>';
+    return;
+  }
+  list.innerHTML = messages.map(m => `
+    <div style="border:1px solid ${m.read ? 'var(--a-gray-200)' : '#A4C400'};border-radius:8px;padding:1.25rem;background:${m.read ? 'var(--a-surface)' : '#f9ffe0'};">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem;">
+        <div>
+          <strong style="font-size:0.95rem;">${escapeHTML(m.name)}</strong>
+          ${!m.read ? '<span style="background:#A4C400;color:#fff;font-size:0.7rem;padding:1px 7px;border-radius:99px;margin-left:8px;">Neu</span>' : ''}
+          <div style="font-size:0.8rem;color:var(--a-gray-500);margin-top:2px;">
+            <a href="mailto:${escapeHTML(m.email)}" style="color:var(--a-primary);">${escapeHTML(m.email)}</a>
+            ${m.phone ? ` · ${escapeHTML(m.phone)}` : ''}
+            · ${formatDate(m.date)}
+          </div>
+          ${m.subject ? `<div style="font-size:0.8rem;color:var(--a-gray-600);margin-top:2px;">Betreff: ${escapeHTML(m.subject)}</div>` : ''}
+        </div>
+        <div style="display:flex;gap:0.4rem;flex-shrink:0;">
+          ${!m.read ? `<button class="a-btn a-btn-secondary" style="font-size:0.75rem;padding:0.3rem 0.7rem;" onclick="markMessageRead('${m.id}')">Als gelesen</button>` : ''}
+          <button class="a-btn a-btn-secondary" style="font-size:0.75rem;padding:0.3rem 0.7rem;color:#c53030;" onclick="deleteMessage('${m.id}')">Löschen</button>
+        </div>
+      </div>
+      <p style="font-size:0.87rem;color:var(--a-gray-700);line-height:1.6;white-space:pre-wrap;margin:0;">${escapeHTML(m.message)}</p>
+    </div>
+  `).join('');
+}
+
+async function markMessageRead(id) {
+  try {
+    await fetch(`/api/admin/submissions/${id}/read`, { method: 'PUT' });
+    await loadMessages();
+  } catch { showToast('Fehler.', 'error'); }
+}
+
+async function deleteMessage(id) {
+  if (!confirm('Nachricht löschen?')) return;
+  try {
+    await fetch(`/api/admin/submissions/${id}`, { method: 'DELETE' });
+    showToast('Nachricht gelöscht.');
+    await loadMessages();
+  } catch { showToast('Fehler beim Löschen.', 'error'); }
+}
+
+// ── Testimonials ──────────────────────────────────────────────
+let testimonials = [];
+let editingTId   = null;
+let tFilter      = 'all';
+
+async function loadTestimonials() {
+  try {
+    const res  = await fetch('/api/admin/testimonials');
+    if (res.status === 401) { window.location = '/admin/login'; return; }
+    const data = await res.json();
+    testimonials = data.items || [];
+    renderTestimonialsTable();
+    const count = document.getElementById('testimonialsCount');
+    if (count) count.textContent = testimonials.length;
+  } catch (err) {
+    console.error('[Admin] Failed to load testimonials:', err);
+  }
+}
+
+function renderTestimonialsTable() {
+  const tbody = document.getElementById('testimonialsTableBody');
+  if (!tbody) return;
+  const filtered = tFilter === 'all' ? testimonials : testimonials.filter(t => t.type === tFilter);
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Keine Einträge in dieser Kategorie.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filtered.map(t => `
+    <tr>
+      <td><span class="category-badge">${t.type === 'customer' ? 'Kunde' : 'Mitarbeiter'}</span></td>
+      <td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escapeHTML(t.quote)}">"${escapeHTML(t.quote.substring(0, 60))}${t.quote.length > 60 ? '…' : ''}"</td>
+      <td>${escapeHTML(t.name)}</td>
+      <td>
+        <div class="table-actions">
+          <button class="a-btn-icon" onclick="editTestimonial('${t.id}')" title="Bearbeiten">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="a-btn-icon danger" onclick="deleteTestimonial('${t.id}')" title="Löschen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filterTestimonials(type, btn) {
+  tFilter = type;
+  document.querySelectorAll('.tfilter').forEach(b => b.classList.toggle('active', b === btn));
+  renderTestimonialsTable();
+}
+
+function editTestimonial(id) {
+  const t = testimonials.find(x => x.id === id);
+  if (!t) return;
+  editingTId = id;
+  document.getElementById('editingTId').value = id;
+  document.getElementById('tType').value   = t.type   || 'employee';
+  document.getElementById('tQuote').value  = t.quote  || '';
+  document.getElementById('tName').value   = t.name   || '';
+  document.getElementById('tInitials').value = t.initials || '';
+  document.getElementById('tRole').value   = t.role   || '';
+  document.getElementById('tTenure').value = t.tenure || '';
+  document.getElementById('tFormTitle').textContent = 'Testimonial bearbeiten';
+  document.getElementById('tFormCancelBtn').style.display = '';
+  document.getElementById('tFormPanel').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetTForm() {
+  editingTId = null;
+  document.getElementById('tForm')?.reset();
+  document.getElementById('editingTId').value = '';
+  document.getElementById('tFormTitle').textContent = 'Neues Testimonial';
+  document.getElementById('tFormCancelBtn').style.display = 'none';
+  hideFeedback('tFormFeedback');
+}
+
+async function deleteTestimonial(id) {
+  const t = testimonials.find(x => x.id === id);
+  if (!confirm(`Testimonial von "${t?.name || id}" löschen?`)) return;
+  try {
+    await fetch(`/api/admin/testimonials/${id}`, { method: 'DELETE' });
+    showToast('Testimonial gelöscht.');
+    loadTestimonials();
+  } catch { showToast('Fehler beim Löschen.', 'error'); }
+}
+
+document.getElementById('tForm')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('tFormSubmitBtn');
+  btn.disabled = true;
+  const payload = {
+    type:     document.getElementById('tType').value,
+    quote:    document.getElementById('tQuote').value.trim(),
+    name:     document.getElementById('tName').value.trim(),
+    initials: document.getElementById('tInitials').value.trim(),
+    role:     document.getElementById('tRole').value.trim(),
+    tenure:   document.getElementById('tTenure').value.trim(),
+  };
+  if (!payload.quote || !payload.name) {
+    showToast('Zitat und Name sind erforderlich.', 'error');
+    btn.disabled = false;
+    return;
+  }
+  try {
+    const url    = editingTId ? `/api/admin/testimonials/${editingTId}` : '/api/admin/testimonials';
+    const method = editingTId ? 'PUT' : 'POST';
+    const res    = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    if (!res.ok) throw new Error();
+    showFeedback('tFormFeedback');
+    showToast(editingTId ? 'Testimonial aktualisiert!' : 'Testimonial hinzugefügt!');
+    resetTForm();
+    loadTestimonials();
+  } catch { showToast('Fehler beim Speichern.', 'error'); }
+  finally { btn.disabled = false; }
+});
+
+// ── Subscribers ───────────────────────────────────────────────
+let subscribers = [];
+
+async function loadSubscribers() {
+  try {
+    const res  = await fetch('/api/admin/subscribers');
+    if (res.status === 401) return;
+    const data = await res.json();
+    subscribers = data.subscribers || [];
+    renderSubscribersTable();
+  } catch (err) {
+    console.error('[Admin] Failed to load subscribers:', err);
+  }
+}
+
+function renderSubscribersTable() {
+  const el = document.getElementById('subscribersTable');
+  if (!el) return;
+  if (!subscribers.length) {
+    el.innerHTML = '<p style="color:var(--a-gray-400);font-size:0.85rem;">Noch keine Abonnenten.</p>';
+    return;
+  }
+  el.innerHTML = `
+    <p style="font-size:0.82rem;color:var(--a-gray-500);margin-bottom:0.75rem;">${subscribers.length} Abonnent${subscribers.length !== 1 ? 'en' : ''}</p>
+    <div style="display:flex;flex-direction:column;gap:0.4rem;">
+      ${subscribers.map(s => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0.75rem;background:var(--a-gray-50,#f9f9f7);border-radius:6px;font-size:0.83rem;">
+          <div>
+            <span>${escapeHTML(s.email)}</span>
+            <span style="color:var(--a-gray-400);margin-left:1rem;">${formatDate(s.date)}</span>
+          </div>
+          <button class="a-btn-icon danger" onclick="deleteSubscriber('${escapeHTML(s.email)}')" title="Entfernen" style="flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+async function deleteSubscriber(email) {
+  if (!confirm(`Abonnent "${email}" entfernen?`)) return;
+  try {
+    await fetch(`/api/admin/subscribers/${encodeURIComponent(email)}`, { method: 'DELETE' });
+    showToast('Abonnent entfernt.');
+    loadSubscribers();
+  } catch { showToast('Fehler beim Entfernen.', 'error'); }
+}
+
+function exportSubscribersCsv() {
+  if (!subscribers.length) { showToast('Keine Abonnenten vorhanden.', 'error'); return; }
+  const rows = ['E-Mail,Anmeldedatum', ...subscribers.map(s => `${s.email},${s.date}`)];
+  const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `acopa-newsletter-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}

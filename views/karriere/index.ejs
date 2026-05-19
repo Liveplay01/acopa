@@ -101,36 +101,18 @@
         <h2 class="section-headline">Was unsere Experten sagen</h2>
       </div>
       <div class="testimonials-grid">
+        <% (employeeTestimonials || []).forEach(function(t) { %>
         <div class="testimonial-card reveal-up">
-          <p class="testimonial-quote">"Ich schätze die Flexibilität, die Freiheit und die Verantwortung, die mir ACOPA gibt. Das ermöglicht mir, wirklich selbstständig zu arbeiten und kontinuierlich zu wachsen."</p>
+          <p class="testimonial-quote">"<%= t.quote %>"</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar">SK</div>
+            <div class="testimonial-avatar"><%= t.initials %></div>
             <div>
-              <div class="testimonial-name">Senior SAP Consultant</div>
-              <div class="testimonial-role">5 Jahre bei ACOPA</div>
+              <div class="testimonial-name"><%= t.name %></div>
+              <div class="testimonial-role"><%= t.tenure %></div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card reveal-up">
-          <p class="testimonial-quote">"Die Aufgaben sind abwechslungsreich und es gibt ständig neue Herausforderungen – es wird nie langweilig. Und das internationale Team macht die Arbeit besonders bereicherndes Erlebnis."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">MH</div>
-            <div>
-              <div class="testimonial-name">Data Science Engineer</div>
-              <div class="testimonial-role">3 Jahre bei ACOPA</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card reveal-up">
-          <p class="testimonial-quote">"Bei ACOPA habe ich die Möglichkeit bekommen, mich in neue Themen einzuarbeiten und wirklich Expertise aufzubauen. Das wertschätzende Miteinander ist dabei besonders. Hier fühlt man sich als Partner, nicht als Ressource."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">LP</div>
-            <div>
-              <div class="testimonial-name">Supply Chain Consultant</div>
-              <div class="testimonial-role">4 Jahre bei ACOPA</div>
-            </div>
-          </div>
-        </div>
+        <% }); %>
       </div>
     </div>
   </section>

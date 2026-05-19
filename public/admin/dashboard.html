@@ -7,7 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.snow.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
 </head>
 <body class="admin-page">
 
@@ -55,6 +57,15 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
     Team
     <span class="tab-badge" id="tabBadgeTeam">–</span>
+  </button>
+  <button class="admin-tab" data-tab="messages">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    Nachrichten
+    <span class="tab-badge tab-badge--red" id="tabBadgeMessages" style="display:none;"></span>
+  </button>
+  <button class="admin-tab" data-tab="testimonials">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Testimonials
   </button>
 </nav>
 
@@ -132,24 +143,25 @@
             <textarea class="a-textarea" id="excerptEn" name="excerptEn" placeholder="Short summary in English" style="min-height:70px;"></textarea>
           </div>
           <div class="a-form-field">
-            <div class="a-label-row">
-              <label class="a-label" for="contentDe">Inhalt <span class="a-lang-hint">DE</span></label>
-              <button type="button" class="a-preview-btn" onclick="togglePreview('contentDe','previewDe')">Vorschau</button>
-            </div>
-            <textarea class="a-textarea" id="contentDe" name="contentDe" placeholder="Vollständiger Artikel auf Deutsch&#10;&#10;Markdown wird unterstützt: **fett**, *kursiv*, ## Überschrift"></textarea>
-            <div class="a-md-preview" id="previewDe" style="display:none;"></div>
+            <label class="a-label">Inhalt <span class="a-lang-hint">DE</span></label>
+            <div id="quillDe" style="min-height:180px;background:#fff;border-radius:6px;"></div>
+            <textarea id="contentDe" name="contentDe" style="display:none;"></textarea>
           </div>
           <div class="a-form-field">
-            <div class="a-label-row">
-              <label class="a-label" for="contentEn">Content <span class="a-lang-hint">EN</span></label>
-              <button type="button" class="a-preview-btn" onclick="togglePreview('contentEn','previewEn')">Preview</button>
-            </div>
-            <textarea class="a-textarea" id="contentEn" name="contentEn" placeholder="Full article in English&#10;&#10;Markdown supported: **bold**, *italic*, ## Heading"></textarea>
-            <div class="a-md-preview" id="previewEn" style="display:none;"></div>
+            <label class="a-label">Content <span class="a-lang-hint">EN</span></label>
+            <div id="quillEn" style="min-height:180px;background:#fff;border-radius:6px;"></div>
+            <textarea id="contentEn" name="contentEn" style="display:none;"></textarea>
           </div>
           <div class="a-form-field">
-            <label class="a-label" for="imageUrl">Bild-URL (optional)</label>
-            <input class="a-input" id="imageUrl" name="imageUrl" type="url" placeholder="https://images.unsplash.com/...">
+            <label class="a-label" for="imageUrl">Bild</label>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+              <input class="a-input" id="imageUrl" name="imageUrl" type="text" placeholder="URL oder Datei hochladen…" style="flex:1;">
+              <button type="button" class="a-btn a-btn-secondary" onclick="triggerUpload('imageUrl','postFileInput')" style="white-space:nowrap;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Hochladen
+              </button>
+              <input type="file" id="postFileInput" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="handleUpload(this,'imageUrl')">
+            </div>
           </div>
           <div class="a-form-row">
             <div class="a-form-field">
@@ -404,6 +416,32 @@
           </div>
           <p class="a-form-error" id="pwError" style="display:none;color:#c53030;font-size:0.82rem;margin-top:0.5rem;"></p>
         </form>
+
+        <div class="panel-divider" style="margin:2rem 0;"></div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
+          <p class="panel-title" style="margin:0;">Newsletter-Abonnenten</p>
+          <div style="display:flex;gap:0.5rem;">
+            <button type="button" class="a-btn a-btn-secondary" onclick="exportSubscribersCsv()" style="font-size:0.8rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              CSV exportieren
+            </button>
+          </div>
+        </div>
+        <div id="subscribersTable" style="font-size:0.83rem;color:var(--a-gray-600);">Wird geladen…</div>
+
+        <div class="panel-divider" style="margin:2rem 0;"></div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;">
+          <div>
+            <p class="panel-title" style="margin:0 0 0.25rem;">Daten-Backup</p>
+            <p style="font-size:0.8rem;color:var(--a-gray-500);margin:0;">Alle Inhalte als JSON-Datei herunterladen.</p>
+          </div>
+          <a href="/api/admin/backup" class="a-btn a-btn-secondary" style="text-decoration:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Backup herunterladen
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -639,8 +677,15 @@
             </div>
           </div>
           <div class="a-form-field">
-            <label class="a-label" for="teamImageUrl">Foto-URL (optional)</label>
-            <input class="a-input" id="teamImageUrl" type="url" placeholder="https://images.unsplash.com/...">
+            <label class="a-label" for="teamImageUrl">Foto</label>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+              <input class="a-input" id="teamImageUrl" type="text" placeholder="URL oder Datei hochladen…" style="flex:1;">
+              <button type="button" class="a-btn a-btn-secondary" onclick="triggerUpload('teamImageUrl','teamFileInput')" style="white-space:nowrap;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Hochladen
+              </button>
+              <input type="file" id="teamFileInput" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="handleUpload(this,'teamImageUrl')">
+            </div>
           </div>
           <div class="a-form-actions">
             <button type="submit" class="a-btn a-btn-primary" id="teamFormSubmitBtn">
@@ -648,6 +693,101 @@
               Mitglied speichern
             </button>
             <span class="a-form-feedback" id="teamFormFeedback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Gespeichert!
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Tab: Nachrichten ───────────────────────────────────── -->
+  <div id="tab-messages" class="tab-pane" style="display:none;">
+    <div class="admin-panels admin-panels--single">
+      <div class="admin-panel" style="max-width:800px;">
+        <div class="panel-header">
+          <span class="panel-title">Kontaktanfragen</span>
+          <span class="panel-badge" id="messagesCount">0</span>
+        </div>
+        <div id="messagesList" style="display:flex;flex-direction:column;gap:1rem;padding:1.5rem;">
+          <p style="color:var(--a-gray-500);text-align:center;">Wird geladen…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Tab: Testimonials ──────────────────────────────────── -->
+  <div id="tab-testimonials" class="tab-pane" style="display:none;">
+    <div class="admin-panels">
+      <!-- Testimonials Table -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <span class="panel-title">Stimmen & Zitate</span>
+          <span class="panel-badge" id="testimonialsCount">0</span>
+        </div>
+        <div style="display:flex;gap:0.5rem;padding:1rem 1.5rem 0;">
+          <button class="a-btn a-btn-secondary tfilter active" data-filter="all" onclick="filterTestimonials('all',this)" style="font-size:0.78rem;">Alle</button>
+          <button class="a-btn a-btn-secondary tfilter" data-filter="customer" onclick="filterTestimonials('customer',this)" style="font-size:0.78rem;">Kundenstimmen</button>
+          <button class="a-btn a-btn-secondary tfilter" data-filter="employee" onclick="filterTestimonials('employee',this)" style="font-size:0.78rem;">Mitarbeiterstimmen</button>
+        </div>
+        <div class="posts-table-wrap">
+          <table class="posts-table">
+            <thead>
+              <tr><th>Typ</th><th>Zitat (Auszug)</th><th>Name</th><th></th></tr>
+            </thead>
+            <tbody id="testimonialsTableBody">
+              <tr><td colspan="4" class="empty-state">Wird geladen…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Testimonial Form -->
+      <div class="admin-panel" id="tFormPanel">
+        <div class="panel-header">
+          <span class="panel-title" id="tFormTitle">Neues Testimonial</span>
+          <button class="a-btn a-btn-secondary" id="tFormCancelBtn" style="display:none;" onclick="resetTForm()">Abbrechen</button>
+        </div>
+        <form class="a-form" id="tForm" novalidate>
+          <input type="hidden" id="editingTId" value="">
+          <div class="a-form-field">
+            <label class="a-label" for="tType">Typ</label>
+            <select class="a-select" id="tType">
+              <option value="customer">Kundenstimme</option>
+              <option value="employee">Mitarbeiterstimme</option>
+            </select>
+          </div>
+          <div class="a-form-field">
+            <label class="a-label" for="tQuote">Zitat</label>
+            <textarea class="a-textarea" id="tQuote" placeholder="Das Zitat der Person…" style="min-height:90px;" required></textarea>
+          </div>
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="tName">Name / Bezeichnung</label>
+              <input class="a-input" id="tName" type="text" placeholder="z.B. Head of IT, Pharma-Unternehmen" required>
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="tInitials">Kürzel (Avatar)</label>
+              <input class="a-input" id="tInitials" type="text" placeholder="z.B. BH" maxlength="3">
+            </div>
+          </div>
+          <div class="a-form-row">
+            <div class="a-form-field">
+              <label class="a-label" for="tRole">Rolle / Kontext</label>
+              <input class="a-input" id="tRole" type="text" placeholder="z.B. SAP IBP Projekt">
+            </div>
+            <div class="a-form-field">
+              <label class="a-label" for="tTenure">Dauer / Angabe</label>
+              <input class="a-input" id="tTenure" type="text" placeholder="z.B. 3 Jahre bei ACOPA">
+            </div>
+          </div>
+          <div class="a-form-actions">
+            <button type="submit" class="a-btn a-btn-primary" id="tFormSubmitBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Testimonial speichern
+            </button>
+            <span class="a-form-feedback" id="tFormFeedback">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               Gespeichert!
             </span>

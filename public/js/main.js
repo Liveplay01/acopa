@@ -299,6 +299,16 @@ function initNav() {
       });
     });
 
+    // Close on backdrop click (tap on overlay outside nav content)
+    mobileMenu.addEventListener('click', e => {
+      if (e.target === mobileMenu) {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+
     // Accordion toggles for mobile sub-menus
     mobileMenu.querySelectorAll('[data-mobile-toggle]').forEach(toggle => {
       toggle.addEventListener('click', () => {
@@ -496,6 +506,18 @@ function initFAQ() {
   });
 }
 
+// ── Marquee Touch Pause ───────────────────────────────────────
+function initMarqueeTouchPause() {
+  document.querySelectorAll('.marquee-track').forEach(track => {
+    track.addEventListener('touchstart', () => {
+      track.style.animationPlayState = 'paused';
+    }, { passive: true });
+    track.addEventListener('touchend', () => {
+      track.style.animationPlayState = 'running';
+    }, { passive: true });
+  });
+}
+
 // ── Init ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const lang = getCurrentLang();
@@ -506,4 +528,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initCookieBanner();
   initNewsletterForm();
   initFAQ();
+  initMarqueeTouchPause();
 });

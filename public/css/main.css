@@ -2262,7 +2262,7 @@ ul, ol { list-style: none; }
   left: 0;
   right: 0;
   z-index: 200;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
   background: var(--color-foreground);
   border-top: 1px solid rgba(255,255,255,0.08);
   gap: 0.75rem;
@@ -2276,7 +2276,7 @@ ul, ol { list-style: none; }
 }
 @media (max-width: 640px) {
   .mobile-sticky-cta { display: flex; }
-  body { padding-bottom: 72px; }
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
 }
 
 /* ── FAQ Accordion ───────────────────────────────────────────── */
@@ -2412,4 +2412,171 @@ ul, ol { list-style: none; }
   border-color: var(--color-primary);
   color: var(--color-primary);
   background: rgba(164,196,0,0.07);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE OPTIMIERUNGEN
+   ═══════════════════════════════════════════════════════════ */
+
+/* 2C – Touch-Action: eliminiert 300ms Tap-Delay auf iOS/Android */
+a, button, .btn, .nav-link, .job-card, .feature-card, .news-card,
+.benefit-card, .testimonial-card, .nav-mobile-link, .mobile-group-header {
+  touch-action: manipulation;
+}
+
+/* 2D – Minimale Touch-Target-Größen (iOS HIG: 44×44px) */
+.btn { min-height: 44px; }
+.nav-mobile-link,
+.mobile-group-header {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+.news-filter-btn { min-height: 40px; }
+
+/* 2F – Overflow Fix: verhindert horizontales Scrollen */
+body { overflow-x: hidden; }
+.feature-card, .news-card, .benefit-card, .testimonial-card,
+.why-card, .whitepaper-card { min-width: 0; }
+
+/* Whitepaper Grid */
+.whitepaper-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.whitepaper-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.whitepaper-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+.whitepaper-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(164,196,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.whitepaper-icon svg { width: 24px; height: 24px; }
+.whitepaper-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+.whitepaper-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--color-foreground);
+  line-height: 1.35;
+}
+.whitepaper-desc {
+  font-size: var(--text-sm);
+  color: var(--color-gray-600);
+  line-height: 1.7;
+  flex: 1;
+}
+.whitepaper-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-gray-200);
+  margin-top: auto;
+}
+.whitepaper-meta {
+  font-size: var(--text-xs);
+  color: var(--color-gray-400);
+}
+
+/* Partner-Logos Grid */
+.partner-logos-section { margin-top: 4rem; }
+.partner-logos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.partner-logo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-gray-200);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-foreground);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  letter-spacing: -0.01em;
+}
+.partner-logo-chip:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(164,196,0,0.08);
+}
+.partner-logo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ── Mobile-spezifische Fixes ────────────────────────────── */
+@media (max-width: 768px) {
+  /* 2A – iOS Zoom Prevention: Inputs < 16px lösen Auto-Zoom aus */
+  input, textarea, select { font-size: 16px !important; }
+
+  /* 2J – Breadcrumb & Page-Hero Lesbarkeit */
+  .breadcrumb { font-size: 0.75rem; }
+  .page-hero-sub { font-size: 0.95rem; }
+
+  /* 2B – Footer Safe-Area für Notch-Geräte */
+  .footer { padding-bottom: calc(2rem + env(safe-area-inset-bottom)); }
+
+  /* Whitepaper Grid mobile */
+  .whitepaper-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  /* 2I – Newsletter Form: stacked layout auf kleinen Screens */
+  .newsletter-form {
+    flex-direction: column;
+    min-width: 0;
+  }
+  .newsletter-input { min-width: 0; width: 100%; }
+  .newsletter-form .btn { width: 100%; justify-content: center; }
+
+  /* Whitepaper Grid: single column */
+  .whitepaper-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 400px) {
+  /* 2E – About-Image-Badge: zentriert auf sehr kleinen Screens */
+  .about-image-badge {
+    bottom: -0.5rem;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    padding: 0.4rem 0.75rem;
+  }
 }

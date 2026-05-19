@@ -1,0 +1,85 @@
+{
+  "items": [
+    {
+      "id": "t-cust-1",
+      "type": "customer",
+      "quote": "ACOPA hat unser SAP IBP-Projekt nicht nur technisch exzellent umgesetzt, sondern unser Team durch den gesamten Change-Prozess begleitet. Das Ergebnis übertrifft unsere Erwartungen deutlich.",
+      "name": "Head of IT, Pharmaunternehmen",
+      "role": "Großprojekt SAP IBP",
+      "tenure": "",
+      "initials": "BH"
+    },
+    {
+      "id": "t-cust-2",
+      "type": "customer",
+      "quote": "Was ACOPA von anderen Beratungen unterscheidet, ist die Kombination aus tiefem Fachverständnis und echter Partnerschaft. Die Experten denken mit – auch über das Projekt hinaus.",
+      "name": "VP Supply Chain, Chemieunternehmen",
+      "role": "Supply Chain Transformation",
+      "tenure": "",
+      "initials": "MW"
+    },
+    {
+      "id": "t-cust-3",
+      "type": "customer",
+      "quote": "Die Flexibilität des Netzwerk-Modells ist beeindruckend: Wir bekommen immer genau die Experten, die wir für die aktuelle Phase brauchen – keine aufgeblähten Teams, kein Overhead.",
+      "name": "CTO, Industrieunternehmen",
+      "role": "Digitalisierung & SAP S/4HANA",
+      "tenure": "",
+      "initials": "AK"
+    },
+    {
+      "id": "t-emp-1",
+      "type": "employee",
+      "quote": "Ich schätze die Flexibilität, die Freiheit und die Verantwortung, die mir ACOPA gibt. Das ermöglicht mir, wirklich selbstständig zu arbeiten und kontinuierlich zu wachsen.",
+      "name": "Senior SAP Consultant",
+      "role": "Senior SAP Consultant",
+      "tenure": "5 Jahre bei ACOPA",
+      "initials": "SK"
+    },
+    {
+      "id": "t-emp-2",
+      "type": "employee",
+      "quote": "Die Aufgaben sind abwechslungsreich und es gibt ständig neue Herausforderungen – es wird nie langweilig. Und das internationale Team macht die Arbeit besonders bereicherndes Erlebnis.",
+      "name": "Data Science Engineer",
+      "role": "Data Science Engineer",
+      "tenure": "3 Jahre bei ACOPA",
+      "initials": "MH"
+    },
+    {
+      "id": "t-emp-3",
+      "type": "employee",
+      "quote": "Bei ACOPA habe ich die Möglichkeit bekommen, mich in neue Themen einzuarbeiten und wirklich Expertise aufzubauen. Das wertschätzende Miteinander ist dabei besonders. Hier fühlt man sich als Partner, nicht als Ressource.",
+      "name": "Supply Chain Consultant",
+      "role": "Supply Chain Consultant",
+      "tenure": "4 Jahre bei ACOPA",
+      "initials": "LP"
+    },
+    {
+      "id": "t-emp-4",
+      "type": "employee",
+      "quote": "Die Work-Life-Balance bei ACOPA ist auf einem Niveau, das ich so von keiner anderen Beratung kenne. Flexible Arbeitszeiten und echtes Vertrauen – das macht den Unterschied.",
+      "name": "SAP ABAP Developer",
+      "role": "SAP ABAP Developer",
+      "tenure": "2 Jahre bei ACOPA",
+      "initials": "JB"
+    },
+    {
+      "id": "t-emp-5",
+      "type": "employee",
+      "quote": "Weiterbildung ist hier kein leeres Versprechen. Ich konnte innerhalb von zwei Jahren drei SAP-Zertifizierungen ablegen – voll unterstützt und gefördert vom Unternehmen.",
+      "name": "SAP IBP Consultant",
+      "role": "SAP IBP Consultant",
+      "tenure": "2,5 Jahre bei ACOPA",
+      "initials": "TP"
+    },
+    {
+      "id": "t-emp-6",
+      "type": "employee",
+      "quote": "Als internationaler Experte war mir ein vielfältiges Team wichtig. Bei ACOPA arbeite ich mit Kolleginnen und Kollegen aus sieben Ländern zusammen – das bereichert sowohl die Arbeit als auch die Ergebnisse.",
+      "name": "Data Science Engineer",
+      "role": "Data Science Engineer",
+      "tenure": "1,5 Jahre bei ACOPA",
+      "initials": "RN"
+    }
+  ]
+}

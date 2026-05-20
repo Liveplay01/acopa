@@ -27,7 +27,6 @@ const POSTS_FILE         = path.join(__dirname, 'data', 'posts.json');
 const JOBS_FILE          = path.join(__dirname, 'data', 'jobs.json');
 const SETTINGS_FILE      = path.join(__dirname, 'data', 'settings.json');
 const PAGES_FILE         = path.join(__dirname, 'data', 'pages.json');
-const TEAM_FILE          = path.join(__dirname, 'data', 'team.json');
 const SUBSCRIBERS_FILE   = path.join(__dirname, 'data', 'subscribers.json');
 const SUBMISSIONS_FILE   = path.join(__dirname, 'data', 'submissions.json');
 const TESTIMONIALS_FILE  = path.join(__dirname, 'data', 'testimonials.json');
@@ -131,14 +130,6 @@ function readPages() {
 }
 function writePages(data) {
   fs.writeFileSync(PAGES_FILE, JSON.stringify(data, null, 2), 'utf-8');
-}
-
-function readTeam() {
-  try { return JSON.parse(fs.readFileSync(TEAM_FILE, 'utf-8')); }
-  catch { return { members: [] }; }
-}
-function writeTeam(data) {
-  fs.writeFileSync(TEAM_FILE, JSON.stringify(data, null, 2), 'utf-8');
 }
 
 function readSubscribers() {
@@ -454,56 +445,6 @@ app.put('/api/admin/pages', requireAuth, (req, res) => {
   res.json(updated);
 });
 
-// ─── Admin Team API ───────────────────────────────────────────────────────────
-app.get('/api/admin/team', requireAuth, (req, res) => res.json(readTeam()));
-
-app.post('/api/admin/team', requireAuth, (req, res) => {
-  const { name, role, bio, linkedin, imageUrl, order } = req.body;
-  if (!name || !role) return res.status(400).json({ error: 'Name und Rolle erforderlich' });
-  const data = readTeam();
-  const member = {
-    id: uuidv4(),
-    name,
-    role,
-    bio: bio || '',
-    linkedin: linkedin || '',
-    imageUrl: imageUrl || '',
-    order: parseInt(order, 10) || data.members.length + 1,
-  };
-  data.members.push(member);
-  data.members.sort((a, b) => a.order - b.order);
-  writeTeam(data);
-  res.json(member);
-});
-
-app.put('/api/admin/team/:id', requireAuth, (req, res) => {
-  const data = readTeam();
-  const idx = data.members.findIndex(m => m.id === req.params.id);
-  if (idx === -1) return res.status(404).json({ error: 'Not found' });
-  const { name, role, bio, linkedin, imageUrl, order } = req.body;
-  data.members[idx] = {
-    ...data.members[idx],
-    ...(name && { name }),
-    ...(role && { role }),
-    ...(bio !== undefined && { bio }),
-    ...(linkedin !== undefined && { linkedin }),
-    ...(imageUrl !== undefined && { imageUrl }),
-    ...(order !== undefined && { order: parseInt(order, 10) }),
-  };
-  data.members.sort((a, b) => a.order - b.order);
-  writeTeam(data);
-  res.json(data.members[idx]);
-});
-
-app.delete('/api/admin/team/:id', requireAuth, (req, res) => {
-  const data = readTeam();
-  const idx = data.members.findIndex(m => m.id === req.params.id);
-  if (idx === -1) return res.status(404).json({ error: 'Not found' });
-  data.members.splice(idx, 1);
-  writeTeam(data);
-  res.json({ success: true });
-});
-
 // ─── Admin Subscribers API ────────────────────────────────────────────────────
 app.get('/api/admin/subscribers', requireAuth, (req, res) => res.json(readSubscribers()));
 
@@ -580,7 +521,6 @@ app.get('/api/admin/backup', requireAuth, (req, res) => {
     exportedAt: new Date().toISOString(),
     posts:        readPosts(),
     jobs:         readJobs(),
-    team:         readTeam(),
     settings:     readSettings(),
     pages:        readPages(),
     testimonials: readTestimonials(),
@@ -610,10 +550,6 @@ app.get('/acopa',                     (req, res) => res.render('acopa/index'));
 app.get('/acopa/netzwerk',            (req, res) => res.render('acopa/netzwerk'));
 app.get('/acopa/erfolgsgeschichte',   (req, res) => res.render('acopa/erfolgsgeschichte'));
 app.get('/acopa/referenzen',          (req, res) => res.render('acopa/referenzen'));
-app.get('/acopa/team', (req, res) => {
-  const data = readTeam();
-  res.render('acopa/team', { members: data.members || [] });
-});
 
 app.get('/karriere', (req, res) => {
   const allTestimonials = readTestimonials().items || [];
@@ -659,7 +595,6 @@ app.get('/sitemap.xml', (req, res) => {
     { loc: `${base}/service/cybersecurity`,    changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/service/sustainability`,   changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/acopa`,                    changefreq: 'monthly', priority: '0.8' },
-    { loc: `${base}/acopa/team`,               changefreq: 'monthly', priority: '0.7' },
     { loc: `${base}/acopa/netzwerk`,           changefreq: 'monthly', priority: '0.7' },
     { loc: `${base}/acopa/erfolgsgeschichte`,  changefreq: 'monthly', priority: '0.7' },
     { loc: `${base}/acopa/referenzen`,         changefreq: 'monthly', priority: '0.7' },

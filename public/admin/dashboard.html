@@ -53,11 +53,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
     Seiten
   </button>
-  <button class="admin-tab" data-tab="team">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-    Team
-    <span class="tab-badge" id="tabBadgeTeam">–</span>
-  </button>
   <button class="admin-tab" data-tab="messages">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
     Nachrichten
@@ -612,92 +607,6 @@
             <div><div class="page-link-name">Datenschutz</div><div class="page-link-url">/datenschutz</div></div>
           </a>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── Tab: Team ──────────────────────────────────────────────── -->
-  <div id="tab-team" class="tab-pane" style="display:none;">
-    <div class="admin-panels">
-      <!-- Team Table -->
-      <div class="admin-panel">
-        <div class="panel-header">
-          <span class="panel-title">Team-Mitglieder</span>
-          <span class="panel-badge" id="teamCount">0</span>
-        </div>
-        <div class="posts-table-wrap">
-          <table class="posts-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Rolle</th>
-                <th>Reihenfolge</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="teamTableBody">
-              <tr><td colspan="4" class="empty-state">Team wird geladen…</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Team Form -->
-      <div class="admin-panel" id="teamFormPanel">
-        <div class="panel-header">
-          <span class="panel-title" id="teamFormTitle">Neues Mitglied</span>
-          <button class="a-btn a-btn-secondary" id="teamFormCancelBtn" style="display:none;" onclick="resetTeamForm()">Abbrechen</button>
-        </div>
-
-        <form class="a-form" id="teamForm" novalidate>
-          <input type="hidden" id="editingTeamId" value="">
-
-          <div class="a-form-row">
-            <div class="a-form-field">
-              <label class="a-label" for="teamName">Name</label>
-              <input class="a-input" id="teamName" type="text" placeholder="Dr. Max Mustermann" required>
-            </div>
-            <div class="a-form-field">
-              <label class="a-label" for="teamRole">Rolle / Position</label>
-              <input class="a-input" id="teamRole" type="text" placeholder="Senior SAP Consultant" required>
-            </div>
-          </div>
-          <div class="a-form-field">
-            <label class="a-label" for="teamBio">Kurzbiografie</label>
-            <textarea class="a-textarea" id="teamBio" placeholder="Expertise, Erfahrung, Schwerpunkte…" style="min-height:80px;"></textarea>
-          </div>
-          <div class="a-form-row">
-            <div class="a-form-field">
-              <label class="a-label" for="teamLinkedin">LinkedIn URL</label>
-              <input class="a-input" id="teamLinkedin" type="url" placeholder="https://linkedin.com/in/...">
-            </div>
-            <div class="a-form-field">
-              <label class="a-label" for="teamOrder">Reihenfolge</label>
-              <input class="a-input" id="teamOrder" type="number" min="1" placeholder="1">
-            </div>
-          </div>
-          <div class="a-form-field">
-            <label class="a-label" for="teamImageUrl">Foto</label>
-            <div style="display:flex;gap:0.5rem;align-items:center;">
-              <input class="a-input" id="teamImageUrl" type="text" placeholder="URL oder Datei hochladen…" style="flex:1;">
-              <button type="button" class="a-btn a-btn-secondary" onclick="triggerUpload('teamImageUrl','teamFileInput')" style="white-space:nowrap;flex-shrink:0;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                Hochladen
-              </button>
-              <input type="file" id="teamFileInput" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="handleUpload(this,'teamImageUrl')">
-            </div>
-          </div>
-          <div class="a-form-actions">
-            <button type="submit" class="a-btn a-btn-primary" id="teamFormSubmitBtn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-              Mitglied speichern
-            </button>
-            <span class="a-form-feedback" id="teamFormFeedback">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Gespeichert!
-            </span>
-          </div>
-        </form>
       </div>
     </div>
   </div>

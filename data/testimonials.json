@@ -3,29 +3,56 @@
     {
       "id": "t-cust-1",
       "type": "customer",
-      "quote": "ACOPA hat unser SAP IBP-Projekt nicht nur technisch exzellent umgesetzt, sondern unser Team durch den gesamten Change-Prozess begleitet. Das Ergebnis übertrifft unsere Erwartungen deutlich.",
-      "name": "Head of IT, Pharmaunternehmen",
-      "role": "Großprojekt SAP IBP",
+      "quote": "Ich schätze wirklich Ihr sehr hohes Maß an Kundenorientierung und Ihren sehr lösungsorientierten Ansatz.",
+      "name": "Head Global Supply Planning Analysts",
+      "role": "International Pharma DAX · Konzepterstellung & Training für BI",
       "tenure": "",
-      "initials": "BH"
+      "initials": "HP"
     },
     {
       "id": "t-cust-2",
       "type": "customer",
-      "quote": "Was ACOPA von anderen Beratungen unterscheidet, ist die Kombination aus tiefem Fachverständnis und echter Partnerschaft. Die Experten denken mit – auch über das Projekt hinaus.",
-      "name": "VP Supply Chain, Chemieunternehmen",
-      "role": "Supply Chain Transformation",
+      "quote": "Hochmotivierte Mitarbeiter, die schnell die Kundenbedürfnisse verstehen und das liefern, was erforderlich ist.",
+      "name": "Head Global Supply Chain Analyst",
+      "role": "Pharma · KPI Rollout/Support",
       "tenure": "",
-      "initials": "MW"
+      "initials": "SC"
     },
     {
       "id": "t-cust-3",
       "type": "customer",
-      "quote": "Die Flexibilität des Netzwerk-Modells ist beeindruckend: Wir bekommen immer genau die Experten, die wir für die aktuelle Phase brauchen – keine aufgeblähten Teams, kein Overhead.",
-      "name": "CTO, Industrieunternehmen",
-      "role": "Digitalisierung & SAP S/4HANA",
+      "quote": "Die ACOPA kümmert sich schnell und gründlich um alle Fragen während des Implementierungsprozesses.",
+      "name": "Manager P.S.",
+      "role": "BASF Coatings · Implementierung SAP APO PPDS (SCM)",
       "tenure": "",
-      "initials": "AK"
+      "initials": "PS"
+    },
+    {
+      "id": "t-cust-4",
+      "type": "customer",
+      "quote": "Sie haben für viel Transparenz gesorgt und auch einen neuen Blick auf bereits lang andauernde Prozesse geworfen.",
+      "name": "Head Global Supply Planning Analysts",
+      "role": "International Pharma DAX · Konzepterstellung & Training für BI",
+      "tenure": "",
+      "initials": "HP"
+    },
+    {
+      "id": "t-cust-5",
+      "type": "customer",
+      "quote": "Die Acopa bietet Unterstützung bei der Definition von KPIs, die dem Unternehmen helfen.",
+      "name": "Head Global Supply Chain Analyst",
+      "role": "Pharma · KPI Rollout/Support",
+      "tenure": "",
+      "initials": "SC"
+    },
+    {
+      "id": "t-cust-6",
+      "type": "customer",
+      "quote": "Mit ACOPA als federführende Hand bei der Implementierung von SAP APO konnten die Prozesse effektiv gestrafft werden.",
+      "name": "Manager P.S.",
+      "role": "BASF Coatings · Implementierung SAP APO PPDS (SCM)",
+      "tenure": "",
+      "initials": "PS"
     },
     {
       "id": "t-emp-1",

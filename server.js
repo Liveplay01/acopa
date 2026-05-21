@@ -545,6 +545,7 @@ app.get('/service/digitalisierung',   (req, res) => res.render('service/digitali
 app.get('/service/supply-chain',      (req, res) => res.render('service/supply-chain'));
 app.get('/service/cybersecurity',     (req, res) => res.render('service/cybersecurity'));
 app.get('/service/sustainability',    (req, res) => res.render('service/sustainability'));
+app.get('/service/kinaxis',           (req, res) => res.render('service/kinaxis'));
 
 app.get('/acopa',                     (req, res) => res.render('acopa/index'));
 app.get('/acopa/netzwerk',            (req, res) => res.render('acopa/netzwerk'));

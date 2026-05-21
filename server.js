@@ -72,7 +72,7 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "unpkg.com"],
       styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com", "cdnjs.cloudflare.com"],
       fontSrc: ["'self'", "fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "images.unsplash.com", "*.unsplash.com", "picsum.photos", "logo.clearbit.com"],
+      imgSrc: ["'self'", "data:", "images.unsplash.com", "*.unsplash.com", "picsum.photos"],
       connectSrc: ["'self'"],
     },
   },

@@ -9,6 +9,7 @@ const fs         = require('fs');
 const nodemailer = require('nodemailer');
 const { v4: uuidv4 } = require('uuid');
 const multer     = require('multer');
+const compression = require('compression');
 
 // ─── Mailer setup ─────────────────────────────────────────────────────────────
 const smtpConfigured = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
@@ -51,6 +52,7 @@ const upload = multer({
   },
 });
 
+app.use(compression());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -595,6 +597,7 @@ app.get('/sitemap.xml', (req, res) => {
     { loc: `${base}/service/supply-chain`,     changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/service/cybersecurity`,    changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/service/sustainability`,   changefreq: 'monthly', priority: '0.8' },
+    { loc: `${base}/service/kinaxis`,          changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/acopa`,                    changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/acopa/netzwerk`,           changefreq: 'monthly', priority: '0.7' },
     { loc: `${base}/acopa/erfolgsgeschichte`,  changefreq: 'monthly', priority: '0.7' },

@@ -1,0 +1,42 @@
+# ACOPA GmbH – Managementberatung & IT-Consulting
+
+> ACOPA GmbH & Co. KG ist eine unabhängige Unternehmensberatung mit Sitz in Wuppertal, Deutschland.
+> Wir verbinden Management-Know-how mit technologischer Expertise – von SAP-Implementierung über
+> Cybersecurity bis hin zu nachhaltiger Digitalisierung. Unsere Berater kommen aus der Industrie
+> und sprechen die Sprache unserer Kunden.
+
+## Leistungen
+
+- [SAP Beratung](https://www.acopa.de/service/sap-beratung): SAP-Implementierung, -Migration und -Optimierung (SAP S/4HANA, SAP ERP). Zertifizierte SAP-Berater begleiten Ihr Unternehmen von der Anforderungsanalyse bis zum Go-live.
+- [Digitalisierung](https://www.acopa.de/service/digitalisierung): Digitale Transformation von Geschäftsprozessen. Wir analysieren bestehende Prozesse, identifizieren Automatisierungspotenziale und implementieren maßgeschneiderte digitale Lösungen.
+- [Supply Chain Management](https://www.acopa.de/service/supply-chain): Optimierung von Lieferketten durch datengetriebene Entscheidungen, Planungstools und Prozessverbesserungen. Spezialisierung auf Kinaxis RapidResponse.
+- [Cybersecurity](https://www.acopa.de/service/cybersecurity): IT-Sicherheitsberatung, Risikoanalysen, Penetrationstests und ISMS-Aufbau nach ISO 27001. Schutz kritischer Infrastrukturen.
+- [Nachhaltigkeit & Green Tech](https://www.acopa.de/service/sustainability): ESG-Beratung, CO₂-Bilanzierung, Nachhaltigkeitsreporting und Green IT-Strategien.
+- [Kinaxis RapidResponse](https://www.acopa.de/service/kinaxis): Implementierung und Optimierung der Kinaxis RapidResponse Plattform für integrierte Supply-Chain-Planung und Echtzeit-Entscheidungen.
+
+## Über ACOPA
+
+- [Über uns](https://www.acopa.de/acopa): Geschichte, Werte und Kultur von ACOPA. Gegründet mit dem Anspruch, unabhängige und umsetzungsorientierte Beratung zu bieten.
+- [Netzwerk & Partner](https://www.acopa.de/acopa/netzwerk): Unser Partnernetzwerk aus Technologieanbietern, Hochschulen und Branchenexperten.
+- [Erfolgsgeschichten](https://www.acopa.de/acopa/erfolgsgeschichte): Referenzprojekte und Fallstudien aus verschiedenen Branchen (Industrie, Handel, Logistik).
+- [Referenzen](https://www.acopa.de/acopa/referenzen): Auszug aus unseren Kundenprojekten.
+
+## Karriere
+
+- [Karriere bei ACOPA](https://www.acopa.de/karriere): Warum ACOPA ein attraktiver Arbeitgeber ist – Unternehmenskultur, Entwicklungsmöglichkeiten, Benefits.
+- [Offene Stellen](https://www.acopa.de/karriere/offene-stellen): Aktuelle Stellenangebote für Berater, Projektmanager und Spezialisten.
+
+## Kontakt & Rechtliches
+
+- [Kontakt](https://www.acopa.de/kontakt): Kontaktformular, Adresse und Anfahrt. ACOPA GmbH & Co. KG, Sternstraße 68, 42275 Wuppertal.
+- [News & Blog](https://www.acopa.de/news): Fachartikel, Trendberichte und Projektnews aus der Welt der Unternehmensberatung.
+- [Impressum](https://www.acopa.de/impressum)
+- [Datenschutz](https://www.acopa.de/datenschutz)
+
+## Kontaktdaten
+
+- Adresse: Sternstraße 68, 42275 Wuppertal, Deutschland
+- Telefon: +49 202 7472217
+- E-Mail: info@acopa.de
+- LinkedIn: https://www.linkedin.com/company/acopa
+- Website: https://www.acopa.de

@@ -37,24 +37,6 @@
       "published": true
     },
     {
-      "id": "job-003",
-      "title": {
-        "de": "Developer SAP Cloud Platform / Fiori / ABAP (m/w/d)",
-        "en": "SAP Cloud Platform / Fiori / ABAP Developer (m/f/d)"
-      },
-      "badge": "Vollzeit",
-      "location": "Wuppertal / Remote",
-      "type": "Vollzeit",
-      "start": "Ab sofort",
-      "description": {
-        "de": "Für die Entwicklung und Erweiterung von SAP-Lösungen suchen wir erfahrene Entwickler mit Kenntnissen in ABAP, SAP Fiori/UI5 und der SAP Business Technology Platform. Sie entwickeln individuelle Erweiterungen, APIs und moderne Benutzeroberflächen – und haben Spaß daran, komplexe Anforderungen in elegante Lösungen umzusetzen.",
-        "en": "For the development and extension of SAP solutions, we are looking for experienced developers with knowledge in ABAP, SAP Fiori/UI5, and the SAP Business Technology Platform. You develop custom extensions, APIs, and modern user interfaces – and enjoy translating complex requirements into elegant solutions."
-      },
-      "tags": ["ABAP", "SAP Fiori", "SAP BTP", "UI5"],
-      "emailSubject": "Bewerbung Developer SAP Cloud/Fiori/ABAP",
-      "published": true
-    },
-    {
       "id": "job-004",
       "title": {
         "de": "SAP Consultant SCM (m/w/d)",

@@ -133,7 +133,7 @@
       <h2 class="cta-title">Bleiben Sie auf dem Laufenden.</h2>
       <p class="cta-sub">Erhalten Sie neue Insights und Expertenbeiträge direkt in Ihr Postfach – natürlich ohne Spam.</p>
       <div class="cta-buttons">
-        <a href="mailto:info@acopa.de?subject=Newsletter-Anmeldung" class="btn btn-primary">Newsletter abonnieren</a>
+        <a href="#newsletterForm" class="btn btn-primary" onclick="event.preventDefault();document.getElementById('newsletterForm').querySelector('input[type=email]').focus();document.getElementById('newsletterForm').scrollIntoView({behavior:'smooth'});">Newsletter abonnieren</a>
         <a href="/#contact" class="btn btn-ghost">Kontakt aufnehmen</a>
       </div>
     </div>

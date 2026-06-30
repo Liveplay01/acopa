@@ -545,7 +545,8 @@ app.get('/service',                   (req, res) => res.render('service/index'))
 app.get('/service/sap-beratung',      (req, res) => res.render('service/sap-beratung'));
 app.get('/service/digitalisierung',   (req, res) => res.render('service/digitalisierung'));
 app.get('/service/supply-chain',      (req, res) => res.render('service/supply-chain'));
-app.get('/service/cybersecurity',     (req, res) => res.render('service/cybersecurity'));
+app.get('/service/sap-joule',         (req, res) => res.render('service/sap-joule'));
+app.get('/service/cybersecurity',     (req, res) => res.redirect(301, '/service/sap-joule'));
 app.get('/service/sustainability',    (req, res) => res.render('service/sustainability'));
 app.get('/service/kinaxis',           (req, res) => res.render('service/kinaxis'));
 
@@ -595,7 +596,7 @@ app.get('/sitemap.xml', (req, res) => {
     { loc: `${base}/service/sap-beratung`,     changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/service/digitalisierung`,  changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/service/supply-chain`,     changefreq: 'monthly', priority: '0.8' },
-    { loc: `${base}/service/cybersecurity`,    changefreq: 'monthly', priority: '0.8' },
+    { loc: `${base}/service/sap-joule`,        changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/service/sustainability`,   changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/service/kinaxis`,          changefreq: 'monthly', priority: '0.8' },
     { loc: `${base}/acopa`,                    changefreq: 'monthly', priority: '0.8' },

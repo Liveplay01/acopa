@@ -1562,6 +1562,9 @@ ul, ol { list-style: none; }
   letter-spacing: 0.04em;
   text-align: right;
   padding-top: 0.9rem;
+  position: relative;
+  z-index: 1;
+  padding-right: 1rem;
 }
 
 .timeline-content {
@@ -1603,7 +1606,7 @@ ul, ol { list-style: none; }
 @media (max-width: 580px) {
   .timeline::before { left: 0; }
   .timeline-item { grid-template-columns: 1fr; padding-left: 1.5rem; }
-  .timeline-year { text-align: left; padding-top: 0; }
+  .timeline-year { text-align: left; padding-top: 0; padding-right: 0; }
   .timeline-content::before { left: -2.25rem; }
 }
 

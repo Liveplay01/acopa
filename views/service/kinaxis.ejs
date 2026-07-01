@@ -1,173 +1,306 @@
-<%- include('../partials/_head', { title: 'Kinaxis Maestro Implementierung – ACOPA GmbH', description: 'ACOPA ist Ihr erfahrener Partner für Kinaxis Maestro: KI-gestützte Supply-Chain-Planung, Demand Planning, S&OP und Control Tower – von der Konzeption bis zum Go-Live.' }) %>
-<%- include('../partials/_nav') %>
+<%- include('../partials/_head', { title: 'Kinaxis Maestro Implementierung – ACOPA GmbH & Co. KG' ,
+  description: 'ACOPA ist Ihr erfahrener Partner für Kinaxis Maestro: KI-gestützte Supply-Chain-Planung, Demand Planning, S&OP und Control Tower – von der Konzeption bis zum Go-Live.'
+  }) %>
+  <%- include('../partials/_nav') %>
 
-<main id="main-content">
+    <main id="main-content">
 
-  <section class="page-hero">
-    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1920&q=80')"></div>
-    <div class="page-hero-overlay"></div>
-    <div class="page-hero-accent"></div>
-    <div class="page-hero-shape"></div>
-    <div class="container">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a><span>/</span><a href="/service">Service</a><span>/</span><span>Kinaxis</span>
-      </nav>
-      <p class="section-eyebrow" style="color:var(--color-primary);margin-bottom:1rem;">Service</p>
-      <h1 class="page-hero-title">Kinaxis Maestro –<br><span class="accent">KI-gestützte Supply Chain Planung.</span></h1>
-      <p class="page-hero-sub">ACOPA implementiert Kinaxis Maestro™ – die KI-native End-to-End-Plattform für Supply-Chain-Management. Von der Konzeption über die Integration bis zum Go-Live begleiten wir Sie auf dem gesamten Weg.</p>
-      <div class="page-hero-ctas">
-        <a href="/#contact" class="btn btn-primary">Beratung anfragen</a>
-        <a href="/service" class="btn btn-ghost">Alle Leistungen</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Intro -->
-  <section class="content-section">
-    <div class="container">
-      <div class="content-grid">
-        <div class="reveal-left">
-          <p class="section-eyebrow">Unser Fokus</p>
-          <h2 class="section-headline">End-to-End Transparenz für Ihre gesamte Lieferkette.</h2>
-          <p class="section-sub">Kinaxis Maestro™ vereint Predictive AI, Generative AI und Agentic AI zu einer einzigartigen Plattform für Supply-Chain-Management. Von der Bedarfsprognose über die Versorgungsplanung bis hin zur Echtzeit-Ausführung – alles in einem System, vollständig vernetzt.</p>
-          <p class="section-sub" style="margin-top:1rem;">ACOPA verbindet tiefes Supply-Chain-Prozesswissen mit technischer Implementierungserfahrung – und stimmt Maestro so auf Ihre Systemlandschaft ab, dass es von Tag eins produktiv läuft.</p>
+      <section class="page-hero">
+        <div class="page-hero-bg"
+          style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1920&q=80')">
         </div>
-        <div class="reveal-right">
-          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
-               alt="Kinaxis Supply Chain Planning Dashboard" loading="lazy"
-               style="width:100%;height:400px;object-fit:cover;border-radius:var(--radius-lg);">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Leistungsfelder -->
-  <section class="content-section content-section--alt">
-    <div class="container">
-      <div class="section-header reveal-up">
-        <p class="section-eyebrow">Leistungsfelder</p>
-        <h2 class="section-headline">Was wir für Sie tun</h2>
-        <p class="section-sub">ACOPA begleitet Sie durch alle Phasen Ihrer Kinaxis-Implementierung – von der strategischen Planung bis zur operativen Exzellenz.</p>
-      </div>
-
-      <div class="feature-grid">
-
-        <div class="feature-card reveal-up">
-          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          <div class="feature-card-title">Demand Planning</div>
-          <p class="feature-card-desc">KI-gestützte Bedarfsprognose mit statistischen Modellen und maschinellem Lernen. Wir konfigurieren Maestro so, dass Ihre Forecast-Genauigkeit messbar steigt und Überbestände sowie Engpässe minimiert werden.</p>
-        </div>
-
-        <div class="feature-card reveal-up">
-          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-          <div class="feature-card-title">Supply Planning</div>
-          <p class="feature-card-desc">Szenario-basierte Versorgungsplanung für ein belastbares Liefernetzwerk. Maestro ermöglicht simultane What-if-Simulationen – wir implementieren die Szenarien, die für Ihre Branche und Lieferkette entscheidend sind.</p>
-        </div>
-
-        <div class="feature-card reveal-up">
-          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="6" height="6" rx="1"/><rect x="16" y="3" width="6" height="6" rx="1"/><rect x="9" y="10" width="6" height="6" rx="1"/><path d="M5 9v4M19 9v4M12 16v5"/></svg>
-          <div class="feature-card-title">S&OP / IBP</div>
-          <p class="feature-card-desc">Sales & Operations Planning und Integrated Business Planning mit Kinaxis: Alle Abteilungen arbeiten auf einer gemeinsamen Datenbasis. Wir orchestrieren den S&OP-Prozess und richten Maestro auf Ihre Governance-Strukturen aus.</p>
-        </div>
-
-        <div class="feature-card reveal-up">
-          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-          <div class="feature-card-title">Control Tower</div>
-          <p class="feature-card-desc">Echtzeit-Netzwerktransparenz vom Lieferanten bis zum Kunden. Wir konfigurieren den Maestro Control Tower so, dass Ihr Team Störungen frühzeitig erkennt und proaktiv reagieren kann – mit KI-gestützten Handlungsempfehlungen.</p>
-        </div>
-
-        <div class="feature-card reveal-up">
-          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-          <div class="feature-card-title">Implementierung & Roll-out</div>
-          <p class="feature-card-desc">Technische Integration mit Ihrem SAP- oder ERP-System, Datenmigration, Systemkonfiguration und Schulungen für Key-User und End-User. Wir steuern den gesamten Roll-out – lokal und international.</p>
-        </div>
-
-        <div class="feature-card reveal-up">
-          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <div class="feature-card-title">Hypercare & Support</div>
-          <p class="feature-card-desc">Intensive Betreuungsphase nach Go-Live mit vollem Support-Einsatz. Wir stabilisieren das System, optimieren die Performance und schulen Ihr Team – damit Maestro von Anfang an seinen vollen Wert entfaltet.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Kinaxis Maestro Plattform -->
-  <section class="content-section">
-    <div class="container">
-      <div class="section-header reveal-up" style="max-width:640px;">
-        <p class="section-eyebrow">Die Plattform</p>
-        <h2 class="section-headline">Kinaxis Maestro™ – drei Säulen, eine Plattform</h2>
-        <p class="section-sub">Maestro kombiniert alle Supply-Chain-Funktionen in einem durchgängigen System – mit KI in jeder Schicht.</p>
-      </div>
-
-      <div class="approach-steps">
-        <div class="approach-step reveal-up">
-          <div class="approach-step-num">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-accent"></div>
+        <div class="page-hero-shape"></div>
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a><span>/</span><a href="/service">Service</a><span>/</span><span>Kinaxis</span>
+          </nav>
+          <p class="section-eyebrow" style="color:var(--color-primary);margin-bottom:1rem;">Service</p>
+          <h1 class="page-hero-title">Kinaxis Maestro –<br><span class="accent">KI-gestützte Supply Chain
+              Planung.</span></h1>
+          <p class="page-hero-sub">ACOPA unterstützt Sie bei der Implementierung von Kinaxis Maestro® - einer
+            KI-gestützten Supply-Chain-Orchestrierungsplattform für die integrierte End-to-End-Planung. Von der
+            Konzeption über die Integration bis zum Go-Live begleiten wir Sie auf dem gesamten Weg.</p>
+          <div class="page-hero-ctas">
+            <a href="/#contact" class="btn btn-primary">Beratung anfragen</a>
+            <a href="/service" class="btn btn-ghost">Alle Leistungen</a>
           </div>
-          <div class="approach-step-title">Planung</div>
-          <p class="approach-step-desc">Demand Planning, Supply Planning, S&OP und Produktionsplanung (Scheduling) – vollständig integriert, KI-unterstützt, szenario-fähig.</p>
         </div>
-        <div class="approach-step reveal-up">
-          <div class="approach-step-num">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </section>
+
+      <!-- Intro -->
+      <section class="content-section">
+        <div class="container">
+          <div class="content-grid">
+            <div class="reveal-left">
+              <p class="section-eyebrow">Unser Fokus</p>
+              <h2 class="section-headline">End-to-End Transparenz für Ihre gesamte Lieferkette.</h2>
+              <p class="section-sub">Sich verändernde Prioritäten und Störungen sind in komplexen Lieferketten
+                allgegenwärtig. Durch die Concurrent Planning Technologie in Kinaxis Maestro® werden die Auswirkungen
+                entlang der gesamten Lieferkette in Echtzeit sichtbar. Organisationen werden so in die Lage versetzt,
+                schnell und angemessen zu reagieren.</p>
+              <p class="section-sub" style="margin-top:1rem;">ACOPA verbindet tiefes Supply-Chain-Prozesswissen mit
+                technischer Implementierungserfahrung und stimmt Kinaxis Maestro® optimal auf Ihre Prozesse und
+                Systemlandschaft ab - von der ersten Analyse bis zum stabilen Betrieb nach Go-Live.</p>
+            </div>
+            <div class="reveal-right">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+                alt="Kinaxis Supply Chain Planning Dashboard" loading="lazy"
+                style="width:100%;height:400px;object-fit:cover;border-radius:var(--radius-lg);">
+            </div>
           </div>
-          <div class="approach-step-title">Ausführung</div>
-          <p class="approach-step-desc">Order Management, Transportation Management und Returns Management – nahtlos verbunden mit der Planungsebene für maximale Reaktionsfähigkeit.</p>
         </div>
-        <div class="approach-step reveal-up">
-          <div class="approach-step-num">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </section>
+
+      <!-- Leistungsfelder -->
+      <section class="content-section content-section--alt">
+        <div class="container">
+          <div class="section-header reveal-up">
+            <p class="section-eyebrow">Leistungsfelder</p>
+            <h2 class="section-headline">Was wir für Sie tun</h2>
+            <p class="section-sub">ACOPA begleitet Sie durch alle Phasen Ihrer Kinaxis Maestro® Implementierung – von der Planung bis zur operativen Exzellenz.</p>
           </div>
-          <div class="approach-step-title">Transparenz</div>
-          <p class="approach-step-desc">Control Tower mit Echtzeit-Sichtbarkeit über das gesamte Netzwerk – ergänzt durch KI-Agenten, die Anomalien erkennen und Handlungsempfehlungen liefern.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- FAQ -->
-  <section class="content-section faq-section content-section--alt" aria-label="Häufige Fragen Kinaxis">
-    <div class="container" style="max-width:760px;">
-      <div class="section-header reveal-up">
-        <p class="section-eyebrow">FAQ</p>
-        <h2 class="section-headline">Häufig gestellte Fragen</h2>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item reveal-up">
-          <button class="faq-question" aria-expanded="false">Was ist Kinaxis Maestro und wie unterscheidet es sich von RapidResponse? <span class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3l3 3 3-3"/></svg></span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Maestro™ ist die aktuelle, KI-native Weiterentwicklung der bewährten RapidResponse-Plattform. Während RapidResponse auf konkurrierender Planung und Szenario-Analysen aufbaut, integriert Maestro zusätzlich Predictive AI, Generative AI und autonome KI-Agenten. Das Ergebnis: eine End-to-End-Plattform, die Planung und Ausführung in Echtzeit verbindet.</div></div>
-        </div>
-        <div class="faq-item reveal-up">
-          <button class="faq-question" aria-expanded="false">Für welche Branchen eignet sich Kinaxis besonders? <span class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3l3 3 3-3"/></svg></span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Kinaxis ist besonders stark in Branchen mit komplexen, globalen Lieferketten: Pharma & Life Science, Automotive, Aerospace, Konsumgüter und Industriegüter. ACOPA bringt tiefes Branchenwissen in Pharma, Chemie, FMCG und Maschinenbau mit und kann Kinaxis so konfigurieren, dass es Ihre spezifischen regulatorischen und prozessualen Anforderungen erfüllt.</div></div>
-        </div>
-        <div class="faq-item reveal-up">
-          <button class="faq-question" aria-expanded="false">Wie integriert sich Kinaxis mit unserem SAP-System? <span class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3l3 3 3-3"/></svg></span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Kinaxis verfügt über zertifizierte Konnektoren für SAP S/4HANA, SAP ECC und SAP IBP. ACOPA bringt SAP-Expertise und Kinaxis-Know-how zusammen: Wir gestalten die Integrations-Architektur, definieren die Datenschnittstellen und stellen sicher, dass beide Systeme synchron und konsistent arbeiten – ohne Datenduplizierung und mit klarer Systemverantwortung.</div></div>
-        </div>
-        <div class="faq-item reveal-up">
-          <button class="faq-question" aria-expanded="false">Wie läuft eine Kinaxis-Implementierung mit ACOPA ab? <span class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3l3 3 3-3"/></svg></span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Eine typische Implementierung startet mit einer Ist-Analyse Ihrer Supply-Chain-Prozesse und Systemlandschaft. Darauf aufbauend definieren wir gemeinsam den Soll-Zustand, konfigurieren Kinaxis in iterativen Sprints, schulen Ihre Key-User und begleiten Sie durch den Go-Live. Die Hypercare-Phase stellt sicher, dass das System stabil läuft, bevor wir es in Ihren regulären Betrieb übergeben.</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
+          <div class="feature-grid">
 
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="container">
-      <p class="section-eyebrow cta-eyebrow">Kinaxis</p>
-      <h2 class="cta-title">Starten Sie Ihre Kinaxis-Journey.</h2>
-      <p class="cta-sub">Unsere Experten analysieren Ihre Supply-Chain-Landschaft und zeigen Ihnen, wie Kinaxis Maestro™ konkreten Mehrwert für Ihr Unternehmen schafft.</p>
-      <div class="cta-buttons">
-        <a href="/#contact" class="btn btn-primary">Beratung anfragen</a>
-        <a href="/service/supply-chain" class="btn btn-ghost">Supply Chain</a>
-      </div>
-    </div>
-  </section>
+            <div class="feature-card reveal-up">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+              <div class="feature-card-title">Blueprint</div>
+              <p class="feature-card-desc">Aufnahme der As-Is Prozesse, gemeinsames Erarbeiten der To-Be Prozesse und Planung der Integration in die bestehende Systemlandschaft. Wir übersetzen Ihre Geschäftsanforderungen in effiziente Kinaxis Maestro® Lösungen.</p>
+            </div>
 
-</main>
+            <div class="feature-card reveal-up">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <div class="feature-card-title">Implementierung &amp; Roll-out</div>
+              <p class="feature-card-desc">Systemkonfiguration, technische Integration mit Ihrem ERP-System, Datenmigration und Schulungen für Key-User und End-User. Wir steuern den gesamten Roll-out – lokal und global.</p>
+            </div>
 
-<%- include('../partials/_footer') %>
+            <div class="feature-card reveal-up">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+              <div class="feature-card-title">Hypercare &amp; Support</div>
+              <p class="feature-card-desc">Intensive Betreuungsphase nach Go-Live und Übernahme anfallender Supportaufgaben. Wir stabilisieren das System, optimieren die Performance und schulen Ihr Team.</p>
+            </div>
+
+          </div>
+
+            <div class="feature-card reveal-up">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path
+                  d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                <line x1="12" y1="22.08" x2="12" y2="12" />
+              </svg>
+              <div class="feature-card-title">Supply Planning</div>
+              <p class="feature-card-desc">Szenario-basierte Versorgungsplanung für ein belastbares Liefernetzwerk.
+                Maestro ermöglicht simultane What-if-Simulationen – wir implementieren die Szenarien, die für Ihre
+                Branche und Lieferkette entscheidend sind.</p>
+            </div>
+
+            <div class="feature-card reveal-up">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="3" width="6" height="6" rx="1" />
+                <rect x="16" y="3" width="6" height="6" rx="1" />
+                <rect x="9" y="10" width="6" height="6" rx="1" />
+                <path d="M5 9v4M19 9v4M12 16v5" />
+              </svg>
+              <div class="feature-card-title">S&OP / IBP</div>
+              <p class="feature-card-desc">Sales & Operations Planning und Integrated Business Planning mit Kinaxis:
+                Alle Abteilungen arbeiten auf einer gemeinsamen Datenbasis. Wir orchestrieren den S&OP-Prozess und
+                richten Maestro auf Ihre Governance-Strukturen aus.</p>
+            </div>
+
+            <div class="feature-card reveal-up">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10" />
+                <path
+                  d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+              </svg>
+              <div class="feature-card-title">Control Tower</div>
+              <p class="feature-card-desc">Echtzeit-Netzwerktransparenz vom Lieferanten bis zum Kunden. Wir
+                konfigurieren den Maestro Control Tower so, dass Ihr Team Störungen frühzeitig erkennt und proaktiv
+                reagieren kann – mit KI-gestützten Handlungsempfehlungen.</p>
+            </div>
+
+            <div class="feature-card reveal-up">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+              <div class="feature-card-title">Implementierung & Roll-out</div>
+              <p class="feature-card-desc">Technische Integration mit Ihrem SAP- oder ERP-System, Datenmigration,
+                Systemkonfiguration und Schulungen für Key-User und End-User. Wir steuern den gesamten Roll-out – lokal
+                und international.</p>
+            </div>
+
+            <div class="feature-card reveal-up">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <div class="feature-card-title">Hypercare & Support</div>
+              <p class="feature-card-desc">Intensive Betreuungsphase nach Go-Live mit vollem Support-Einsatz. Wir
+                stabilisieren das System, optimieren die Performance und schulen Ihr Team – damit Maestro von Anfang an
+                seinen vollen Wert entfaltet.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Kinaxis Maestro Plattform -->
+      <section class="content-section">
+        <div class="container">
+          <div class="section-header reveal-up" style="max-width:640px;">
+            <p class="section-eyebrow">Die Plattform</p>
+            <h2 class="section-headline">Kinaxis Maestro® - fünf Foundation Packages, eine Plattform</h2>
+            <p class="section-sub">Maestro bietet eine umfangreiche Liste an Anwendungen für das Supply Chain Management. Diese Anwendungen sind in Foundation Packages gruppiert, die unterschiedliche Bereiche abdecken:</p>
+          </div>
+
+          <div class="approach-steps">
+            <div class="approach-step reveal-up">
+              <div class="approach-step-num">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+              </div>
+              <div class="approach-step-title">Demand Planning</div>
+              <p class="approach-step-desc">Unterstützt verschiedene Demand Planning Prozesse, wie die Erstellung einer statistischen Prognose oder die Identifikation und Behebung von Ausreißern in historischen Daten.</p>
+            </div>
+            <div class="approach-step reveal-up">
+              <div class="approach-step-num">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+              <div class="approach-step-title">Supply Planning</div>
+              <p class="approach-step-desc">Unterstützt verschiedener Supply Planning Rollen und Prozesse, wie die Abstimmung des Angebots mit dem Consensus Demand Planning, oder die Identifizierung von unter- bzw. überausgelasteten Ressourcen.</p>
+            </div>
+            <div class="approach-step reveal-up">
+              <div class="approach-step-num">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="6" height="6" rx="1" />
+                  <rect x="16" y="3" width="6" height="6" rx="1" />
+                  <rect x="9" y="10" width="6" height="6" rx="1" />
+                  <path d="M5 9v4M19 9v4M12 16v5" />
+                </svg>
+              </div>
+              <div class="approach-step-title">S&amp;OP</div>
+              <p class="approach-step-desc">Unterstützt den iterativen Sales &amp; Operations Planning Prozess. Hier werden in regelmäßigen Abständen Kundennachfrage und verfügbare Mengen überprüft und es wird ein Plan entwickelt, um die organisatorischen, finanziellen und strategischen Unternehmensziele zu erreichen.</p>
+            </div>
+            <div class="approach-step reveal-up">
+              <div class="approach-step-num">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path
+                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                </svg>
+              </div>
+              <div class="approach-step-title">Inventory Management</div>
+              <p class="approach-step-desc">Unterstützt verschiedene Bestandsmanagementprozesse, wie etwa die Identifikation, Analyse und Behebung von Bestandsproblemen oder die Aktualisierung von Bestandszielen.</p>
+            </div>
+            <div class="approach-step reveal-up">
+              <div class="approach-step-num">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+              </div>
+              <div class="approach-step-title">Command and Control Center</div>
+              <p class="approach-step-desc">Control Tower mit Echtzeit-Sichtbarkeit über das gesamte Netzwerk – ergänzt durch KI-Agenten, die Anomalien erkennt und Handlungsempfehlungen liefern.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="content-section faq-section content-section--alt" aria-label="Häufige Fragen Kinaxis">
+        <div class="container" style="max-width:760px;">
+          <div class="section-header reveal-up">
+            <p class="section-eyebrow">FAQ</p>
+            <h2 class="section-headline">Häufig gestellte Fragen</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq-item reveal-up">
+              <button class="faq-question" aria-expanded="false">Was ist Kinaxis Maestro und wie unterscheidet es sich
+                von RapidResponse? <span class="faq-icon" aria-hidden="true"><svg width="10" height="10"
+                    viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 3l3 3 3-3" />
+                  </svg></span></button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Maestro™ ist die aktuelle, KI-native Weiterentwicklung der bewährten
+                  RapidResponse-Plattform. Während RapidResponse auf konkurrierender Planung und Szenario-Analysen
+                  aufbaut, integriert Maestro zusätzlich Predictive AI, Generative AI und autonome KI-Agenten. Das
+                  Ergebnis: eine End-to-End-Plattform, die Planung und Ausführung in Echtzeit verbindet.</div>
+              </div>
+            </div>
+            <div class="faq-item reveal-up">
+              <button class="faq-question" aria-expanded="false">Für welche Branchen eignet sich Kinaxis besonders?
+                <span class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M2 3l3 3 3-3" />
+                  </svg></span></button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Kinaxis ist besonders stark in Branchen mit komplexen, globalen
+                  Lieferketten: Pharma & Life Science, Automotive, Aerospace, Konsumgüter und Industriegüter. ACOPA
+                  bringt tiefes Branchenwissen in Pharma, Chemie, FMCG und Maschinenbau mit und kann Kinaxis so
+                  konfigurieren, dass es Ihre spezifischen regulatorischen und prozessualen Anforderungen erfüllt.</div>
+              </div>
+            </div>
+            <div class="faq-item reveal-up">
+              <button class="faq-question" aria-expanded="false">Wie integriert sich Kinaxis mit unserem SAP-System?
+                <span class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M2 3l3 3 3-3" />
+                  </svg></span></button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Kinaxis verfügt über zertifizierte Konnektoren für SAP S/4HANA, SAP ECC
+                  und SAP IBP. ACOPA bringt SAP-Expertise und Kinaxis-Know-how zusammen: Wir gestalten die
+                  Integrations-Architektur, definieren die Datenschnittstellen und stellen sicher, dass beide Systeme
+                  synchron und konsistent arbeiten – ohne Datenduplizierung und mit klarer Systemverantwortung.</div>
+              </div>
+            </div>
+            <div class="faq-item reveal-up">
+              <button class="faq-question" aria-expanded="false">Wie läuft eine Kinaxis-Implementierung mit ACOPA ab?
+                <span class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M2 3l3 3 3-3" />
+                  </svg></span></button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Eine typische Implementierung startet mit einer Ist-Analyse Ihrer
+                  Supply-Chain-Prozesse und Systemlandschaft. Darauf aufbauend definieren wir gemeinsam den
+                  Soll-Zustand, konfigurieren Kinaxis in iterativen Sprints, schulen Ihre Key-User und begleiten Sie
+                  durch den Go-Live. Die Hypercare-Phase stellt sicher, dass das System stabil läuft, bevor wir es in
+                  Ihren regulären Betrieb übergeben.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta-section">
+        <div class="container">
+          <p class="section-eyebrow cta-eyebrow">Kinaxis Maestro®</p>
+          <h2 class="cta-title">Starten Sie Ihre Kinaxis Maestro®-Journey.</h2>
+          <p class="cta-sub">Unsere Experten analysieren Ihre Supply Chain und zeigen Ihnen, wie Kinaxis Maestro®
+            konkreten Mehrwert für Ihr Unternehmen schafft.</p>
+          <div class="cta-buttons">
+            <a href="/#contact" class="btn btn-primary">Beratung anfragen</a>
+            <a href="/service/supply-chain" class="btn btn-ghost">Supply Chain</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <%- include('../partials/_footer') %>

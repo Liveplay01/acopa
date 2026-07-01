@@ -1,7 +1,7 @@
 {
   "name": "acopa-website",
   "version": "1.0.0",
-  "description": "ACOPA GmbH – Managementberatung & IT-Consulting Website + CMS",
+  "description": "ACOPA GmbH & Co. KG – Managementberatung & IT-Consulting Website + CMS",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

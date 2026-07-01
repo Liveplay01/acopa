@@ -626,7 +626,7 @@ app.get('/sitemap.xml', (req, res) => {
 
 // ─── 404 Catch-all ───────────────────────────────────────────────────────────
 app.use((req, res) => {
-  res.status(404).render('404', { title: 'Seite nicht gefunden – ACOPA GmbH' });
+  res.status(404).render('404', { title: 'Seite nicht gefunden – ACOPA GmbH & Co. KG' });
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────

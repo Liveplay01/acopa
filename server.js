@@ -6,10 +6,19 @@ const helmet     = require('helmet');
 const cors       = require('cors');
 const path       = require('path');
 const fs         = require('fs');
+const crypto     = require('crypto');
 const nodemailer = require('nodemailer');
 const { v4: uuidv4 } = require('uuid');
 const multer     = require('multer');
 const compression = require('compression');
+
+// ─── Startup safety checks ────────────────────────────────────────────────────
+// Fehlende Secrets erlauben Session-Fälschung bzw. laden ein unsicheres Default-
+// Passwort. Server bewusst nicht mit unsicheren Fallbacks starten lassen.
+if (!process.env.SESSION_SECRET) {
+  console.error('[Fatal] SESSION_SECRET fehlt in config/.env. Server wird nicht gestartet.');
+  process.exit(1);
+}
 
 // ─── Mailer setup ─────────────────────────────────────────────────────────────
 const smtpConfigured = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
@@ -62,7 +71,11 @@ function loadPasswordHash() {
     const s = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf-8'));
     if (s.auth && s.auth.passwordHash) return s.auth.passwordHash;
   } catch {}
-  return bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'acopa2026', 10);
+  if (!process.env.ADMIN_PASSWORD) {
+    console.error('[Fatal] ADMIN_PASSWORD fehlt in config/.env und es existiert noch kein gespeichertes Admin-Passwort. Server wird nicht gestartet.');
+    process.exit(1);
+  }
+  return bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10);
 }
 let passwordHash = loadPasswordHash();
 
@@ -78,16 +91,24 @@ app.use(helmet({
       connectSrc: ["'self'"],
     },
   },
+  hsts: { maxAge: 15552000, includeSubDomains: true, preload: false }, // 180 Tage
 }));
 app.set('trust proxy', 1);
 app.use(cors({ origin: false }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'fallback-secret',
+  name: 'acopa.sid',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 8 * 60 * 60 * 1000 },
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 8 * 60 * 60 * 1000,
+  },
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
@@ -172,6 +193,38 @@ function rateLimit(ip, max = 5, windowMs = 60_000) {
   hits.push(now);
   _rl.set(ip, hits);
   return hits.length > max;
+}
+
+// ─── Login brute-force protection (in-memory, per IP) ────────────────────────
+// Sperrt eine IP für 15 Minuten, nachdem 5 Login-Versuche fehlgeschlagen sind.
+const _loginAttempts = new Map();
+const LOGIN_MAX_FAILS   = 5;
+const LOGIN_LOCK_MS     = 15 * 60_000;
+function isLoginLocked(ip) {
+  const entry = _loginAttempts.get(ip);
+  return !!(entry && entry.lockedUntil && Date.now() < entry.lockedUntil);
+}
+function recordLoginFailure(ip) {
+  const entry = _loginAttempts.get(ip) || { fails: 0, lockedUntil: 0 };
+  entry.fails += 1;
+  if (entry.fails >= LOGIN_MAX_FAILS) {
+    entry.lockedUntil = Date.now() + LOGIN_LOCK_MS;
+    entry.fails = 0;
+  }
+  _loginAttempts.set(ip, entry);
+}
+function clearLoginAttempts(ip) {
+  _loginAttempts.delete(ip);
+}
+
+// ─── CSRF protection (session-bound token, for /api/admin/*) ────────────────
+function requireCsrf(req, res, next) {
+  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
+  const token = req.headers['x-csrf-token'];
+  if (!token || !req.session.csrfToken || token !== req.session.csrfToken) {
+    return res.status(403).json({ error: 'Ungültiges oder fehlendes CSRF-Token.' });
+  }
+  next();
 }
 
 // ─── Newsletter Subscribe API ─────────────────────────────────────────────────
@@ -277,11 +330,18 @@ app.get('/admin/login', (req, res) => {
 });
 
 app.post('/admin/login', (req, res) => {
+  const ip = req.ip || req.socket.remoteAddress;
+  if (isLoginLocked(ip)) {
+    return res.redirect('/admin/login?error=locked');
+  }
   const { password } = req.body;
-  if (bcrypt.compareSync(password, passwordHash)) {
+  if (password && bcrypt.compareSync(password, passwordHash)) {
+    clearLoginAttempts(ip);
     req.session.authenticated = true;
+    req.session.csrfToken = crypto.randomBytes(32).toString('hex');
     return res.redirect('/admin/dashboard');
   }
+  recordLoginFailure(ip);
   res.redirect('/admin/login?error=1');
 });
 
@@ -291,6 +351,14 @@ app.get('/admin/logout', (req, res) => {
 
 app.get('/admin/dashboard', requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin', 'dashboard.html'));
+});
+
+// Alle /api/admin/* State-Changing Requests benötigen ein gültiges CSRF-Token.
+app.use('/api/admin', requireCsrf);
+
+app.get('/api/admin/csrf-token', requireAuth, (req, res) => {
+  if (!req.session.csrfToken) req.session.csrfToken = crypto.randomBytes(32).toString('hex');
+  res.json({ token: req.session.csrfToken });
 });
 
 // ─── Admin API (CRUD) ─────────────────────────────────────────────────────────
@@ -459,9 +527,29 @@ app.delete('/api/admin/subscribers/:email', requireAuth, (req, res) => {
 });
 
 // ─── Admin Upload API ─────────────────────────────────────────────────────────
-app.post('/api/admin/upload', requireAuth, upload.single('file'), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: 'Keine Datei empfangen.' });
-  res.json({ url: `/uploads/${req.file.filename}` });
+// Verifiziert die tatsächlichen Magic Bytes der Datei, da der vom Client
+// gesendete mimetype beliebig fälschbar ist (fileFilter allein reicht nicht).
+function hasValidImageSignature(filePath) {
+  const buf = Buffer.alloc(12);
+  const fd = fs.openSync(filePath, 'r');
+  fs.readSync(fd, buf, 0, 12, 0);
+  fs.closeSync(fd);
+  const isJpeg = buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff;
+  const isPng  = buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+  const isWebp = buf.subarray(0, 4).toString('ascii') === 'RIFF' && buf.subarray(8, 12).toString('ascii') === 'WEBP';
+  return isJpeg || isPng || isWebp;
+}
+
+app.post('/api/admin/upload', requireAuth, (req, res) => {
+  upload.single('file')(req, res, (err) => {
+    if (err) return res.status(400).json({ error: err.message || 'Upload fehlgeschlagen.' });
+    if (!req.file) return res.status(400).json({ error: 'Keine Datei empfangen.' });
+    if (!hasValidImageSignature(req.file.path)) {
+      fs.unlink(req.file.path, () => {});
+      return res.status(400).json({ error: 'Datei ist kein gültiges JPEG-, PNG- oder WebP-Bild.' });
+    }
+    res.json({ url: `/uploads/${req.file.filename}` });
+  });
 });
 
 // ─── Admin Submissions API ────────────────────────────────────────────────────

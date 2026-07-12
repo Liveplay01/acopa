@@ -46,7 +46,7 @@
   }
   </script>
   <% if (locals.schemaMarkup) { %>
-  <script type="application/ld+json"><%- locals.schemaMarkup %></script>
+  <script type="application/ld+json"><%- locals.schemaMarkup.replace(/</g, '\\u003c') %></script>
   <% } %>
 </head>
 <body>

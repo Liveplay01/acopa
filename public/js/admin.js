@@ -8,6 +8,27 @@ let editingId = null;
 let jobs = [];
 let editingJobId = null;
 
+// ── CSRF: transparently attach token to mutating /api/admin/* requests ────
+let _csrfToken = null;
+async function ensureCsrfToken() {
+  if (_csrfToken) return _csrfToken;
+  const res = await window._rawFetch('/api/admin/csrf-token');
+  const data = await res.json();
+  _csrfToken = data.token;
+  return _csrfToken;
+}
+
+window._rawFetch = window.fetch.bind(window);
+window.fetch = async (input, init = {}) => {
+  const url = typeof input === 'string' ? input : input.url;
+  const method = (init.method || 'GET').toUpperCase();
+  if (url && url.startsWith('/api/admin') && !url.startsWith('/api/admin/csrf-token') && method !== 'GET') {
+    await ensureCsrfToken();
+    init = { ...init, headers: { ...(init.headers || {}), 'X-CSRF-Token': _csrfToken } };
+  }
+  return window._rawFetch(input, init);
+};
+
 // ── Toast ─────────────────────────────────────────────────────
 function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast');

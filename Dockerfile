@@ -7,7 +7,10 @@ RUN npm ci --omit=dev
 
 COPY . .
 
-RUN mkdir -p /app/data /app/public/uploads
+RUN mkdir -p /app/data /app/public/uploads \
+    && chown -R node:node /app
+
+USER node
 
 EXPOSE 8081
 

@@ -42,10 +42,13 @@
 
       <script>
         const params = new URLSearchParams(window.location.search);
-        if (params.get('error') === '1') {
+        const errType = params.get('error');
+        if (errType === '1' || errType === 'locked') {
           const err = document.createElement('p');
           err.className = 'login-error';
-          err.textContent = 'Falsches Passwort. Bitte versuchen Sie es erneut.';
+          err.textContent = errType === 'locked'
+            ? 'Zu viele Fehlversuche. Bitte warten Sie 15 Minuten, bevor Sie es erneut versuchen.'
+            : 'Falsches Passwort. Bitte versuchen Sie es erneut.';
           document.querySelector('.login-form').prepend(err);
         }
       </script>

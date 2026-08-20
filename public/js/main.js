@@ -41,6 +41,8 @@ const translations = {
       uiux_desc:    'Nutzerzentrierte Designs und optimierte Benutzererfahrungen.',
       change_title: 'Change Management',
       change_desc:  'Anwenderschulungen und begleitetes Organisationsmanagement für erfolgreiche digitale Transformationen – wir nehmen Ihr Team mit auf die Reise.',
+      kinaxis_title:'Kinaxis Maestro',
+      kinaxis_desc: 'Von der Konzeption über die Integration bis zum Go-Live begleiten wir Sie auf dem gesamten Weg bei der Implementierung von Kinaxis Maestro®.',
     },
     stats: {
       years:    'Jahre Erfahrung',
@@ -146,6 +148,8 @@ const translations = {
       uiux_desc:    'User-centered designs and optimized user experiences.',
       change_title: 'Change Management',
       change_desc:  'User training and guided organizational change management for successful digital transformations – we bring your team along for the journey.',
+      kinaxis_title:'Kinaxis Maestro',
+      kinaxis_desc: 'From conception through integration to go-live, we guide you all the way through your Kinaxis Maestro® implementation.',
     },
     stats: {
       years:    'Years of Experience',
@@ -259,6 +263,7 @@ function applyTranslations(lang) {
 function setLang(lang) {
   localStorage.setItem('acopa-lang', lang);
   applyTranslations(lang);
+  if (window.acopaAutoTranslate) window.acopaAutoTranslate(lang);
   loadNews(); // reload news in new language
 }
 
@@ -522,6 +527,7 @@ function initMarqueeTouchPause() {
 document.addEventListener('DOMContentLoaded', () => {
   const lang = getCurrentLang();
   applyTranslations(lang);
+  if (window.acopaAutoTranslate) window.acopaAutoTranslate(lang);
   initNav();
   loadNews();
   initContactForm();

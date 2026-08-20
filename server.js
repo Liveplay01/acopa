@@ -88,7 +88,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com", "cdnjs.cloudflare.com"],
       fontSrc: ["'self'", "fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "images.unsplash.com", "*.unsplash.com", "picsum.photos"],
-      connectSrc: ["'self'"],
+      connectSrc: ["'self'", "api.mymemory.translated.net"],
     },
   },
   hsts: { maxAge: 15552000, includeSubDomains: true, preload: false }, // 180 Tage
